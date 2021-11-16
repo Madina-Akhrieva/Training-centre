@@ -1,0 +1,85 @@
+package com.epam.jwd.onlinetraining.dao.impl;
+
+import com.epam.jwd.onlinetraining.dao.api.Dao;
+import com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool;
+import com.epam.jwd.onlinetraining.dao.connectionpool.impl.ConnectionPoolImpl;
+import com.epam.jwd.onlinetraining.dao.model.Account;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.sql.*;
+import java.util.Objects;
+
+
+public class AccountDaoImpl implements Dao<Account, Integer> {
+    private static final Logger LOGGER = LogManager.getLogger(AccountDaoImpl.class);
+    private static final String SQL_SAVE_ACCOUNT = "INSERT INTO account(email, password) VALUES (?, ?); ";
+    public static final String SQL_UPDATE_ACCOUNT = "UPDATE account SET password=? WHERE id_account=?";
+    private static final String SQL_DELETE_ACCOUNT = "DELETE FROM account  WHERE id_account=?";
+    private ConnectionPool pool = ConnectionPoolImpl.getInstance();
+
+    public AccountDaoImpl() {
+
+    }
+
+//    public AccountDaoImpl(/*ConnectionPool connectionPool*/) {
+//      this.pool=conenctionPool;
+//    }
+
+    @Override
+    public Account save(Account account) {
+        LOGGER.debug("save account to database");
+        try (Connection connection = pool.requestConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_ACCOUNT, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, account.getEmail());
+            preparedStatement.setString(2, account.getPassword());
+            preparedStatement.executeUpdate();
+
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys();) {
+                while (resultSet.next()) {
+                    Integer id = resultSet.getInt(1);
+                    account.setId(id);
+                }
+            }
+
+        } catch (SQLException exception) {
+            LOGGER.error("sql exception in save method", exception);
+            exception.printStackTrace();
+        }
+        LOGGER.debug("account is saved successfully");
+        return account;
+    }
+
+
+    @Override
+    public Boolean update(Account account) {
+        Boolean result = false;
+        try (final Connection connection = pool.requestConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ACCOUNT);) {
+            preparedStatement.setString(1, account.getPassword());
+            preparedStatement.setInt(2, account.getId());
+            result = Objects.equals(preparedStatement.executeUpdate(), 1);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return result;
+    }
+
+
+    public Boolean delete(Account account) {
+        Boolean result = false;
+        try (final Connection connection = pool.requestConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_ACCOUNT);) {
+            preparedStatement.setInt(1, account.getId());
+            result = Objects.equals(preparedStatement.executeUpdate(), 1);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return result;
+    }
+
+    public Account findById(Integer id) {
+        Account account = new Account();
+        return account;
+    }
+}
