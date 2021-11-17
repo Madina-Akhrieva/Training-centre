@@ -6,4 +6,6 @@ import com.epam.jwd.onlinetraining.dao.model.AbstractEntity;
 public interface Dao<T extends AbstractEntity<K>, K> {
     T save(T entity);
     Boolean update(T entity);
+    T findById(K id);
+
 }

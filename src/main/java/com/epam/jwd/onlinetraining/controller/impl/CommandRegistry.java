@@ -3,13 +3,17 @@ package com.epam.jwd.onlinetraining.controller.impl;
 import com.epam.jwd.onlinetraining.controller.command.Command;
 
 public enum CommandRegistry {
-    MAIN_PAGE(ShowMainPageCommand.INSTANCE),
-    DEFAULT(ShowMainPageCommand.INSTANCE);
+    MAIN_PAGE(ShowMainPageCommand.INSTANCE,"main_page"),
+    SIGN_UP_PAGE(SignUpPageCommand.INSTANCE, "sign_up"),
+    LOGIN_PAGE(ShowLoginPageCommand.INSTANCE, "login"),
+    DEFAULT(ShowMainPageCommand.INSTANCE, "");
 
     private final Command command;
+    private final String path;
 
-    CommandRegistry(Command command) {
+    CommandRegistry(Command command, String path) {
         this.command = command;
+        this.path = path;
     }
 
     public Command getCommand() {
@@ -22,13 +26,13 @@ public enum CommandRegistry {
 
     //итерируется по константам enum, проверяет, чтобы они соответствовали name, если видит,
     // что название конст соотв комманды то возвращ command из const
-      public static Command of(String name) {
+    public static Command of(String name) {
         for (CommandRegistry constant : values()) {
-            if (constant.name().equals(name)) {
+            if (constant.path.equalsIgnoreCase(name)) {
                 return constant.getCommand();
             }
 
         }
-         return DEFAULT.command;
+        return DEFAULT.command;
     }
 }

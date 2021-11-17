@@ -49,7 +49,7 @@ public class Task extends AbstractEntity<Integer> {
         return feedback;
     }
 
-    public Integer getCourseId() { return  course.getId(); }
+    public Integer getCourseId() { return  courseId; }
 
     public void setCourse(Course course) {
         this.course = course;

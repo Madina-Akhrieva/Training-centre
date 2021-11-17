@@ -74,6 +74,11 @@ public class UserDaoImpl implements Dao<User, Integer> {
 
     }
 
+    @Override
+    public User findById(Integer id) {
+        return null;
+    }
+
 
     public List<User> findAll() {
         try(Connection connection = pool.requestConnection();

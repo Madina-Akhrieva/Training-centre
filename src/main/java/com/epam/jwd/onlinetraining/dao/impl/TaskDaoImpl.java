@@ -9,7 +9,7 @@ import com.epam.jwd.onlinetraining.dao.model.Task;
 import java.sql.*;
 import java.util.List;
 
-public class TaskDaoImpl implements Dao<Task, Integer>, TaskDao<Task, Integer> {
+public class TaskDaoImpl implements  TaskDao<Task, Integer> {
     private static final String SQL_SAVE_TASK = "INSERT INTO task (course_id, description, task_number, task_answer, feedback) values (?,?,?,?,?)";
     private ConnectionPool pool = ConnectionPoolImpl.getInstance();
 
@@ -39,6 +39,11 @@ public class TaskDaoImpl implements Dao<Task, Integer>, TaskDao<Task, Integer> {
 
     @Override
     public Boolean update(Task entity) {
+        return null;
+    }
+
+    @Override
+    public Task findById(Integer id) {
         return null;
     }
 

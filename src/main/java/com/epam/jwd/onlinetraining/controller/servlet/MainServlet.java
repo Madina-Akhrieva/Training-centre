@@ -2,6 +2,8 @@ package com.epam.jwd.onlinetraining.controller.servlet;
 
 import com.epam.jwd.onlinetraining.controller.command.Command;
 import com.epam.jwd.onlinetraining.controller.command.CommandResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import javax.servlet.RequestDispatcher;
@@ -9,12 +11,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-
-
-
 @WebServlet("/controller")
-public class Controller extends HttpServlet {
-
+public class MainServlet extends HttpServlet {
+    private static final Logger LOGGER = LogManager.getLogger(MainServlet.class);
 
     //метод doGet должен понимать как отркагировать на запрос клиента и понять какя команда должна отработать и
     // по этой команде и подобрать
@@ -27,25 +26,31 @@ public class Controller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        LOGGER.debug("caught req and resp in doGet method");
         final String commandName = request.getParameter("command");
         final Command command = Command.of(commandName);
         final CommandResponse commandResponse = command.execute(null);
         proceedWithResponse(request, response, commandResponse);
+        LOGGER.debug("doGet method is finished");
     }
 
     private void proceedWithResponse(HttpServletRequest request, HttpServletResponse response,
                                      CommandResponse commandResponse) {
         try{
+            LOGGER.debug("We entered to proceedWithResponse method ");
             forwardOrRedirectToResponseLocation(request, response, commandResponse);
         }catch (ServletException e){
+            LOGGER.error("ServletException exception occurred", e);
             e.printStackTrace();
         }catch (IOException e){
+            LOGGER.error("IO exception occurred ", e);
             e.printStackTrace();
         }
     }
 
     private void forwardOrRedirectToResponseLocation(HttpServletRequest request, HttpServletResponse response,
                                                      CommandResponse commandResponse) throws IOException, ServletException {
+        LOGGER.debug("We are in forwardOrRedirectToResponseLocation method ");
         if (commandResponse.isRedirect()) {
             response.sendRedirect(commandResponse.getPath());
 
@@ -54,5 +59,6 @@ public class Controller extends HttpServlet {
             final RequestDispatcher dispatcher = request.getRequestDispatcher(desiredPath);
             dispatcher.forward(request, response);
         }
+
     }
 }

@@ -16,19 +16,19 @@ public class CourseService implements Service<UserDto, Integer> {
     CourseDaoImpl courseDaoImpl = new CourseDaoImpl();
     List<Task> tasksList = new ArrayList<>();
 
-    public Course save(Course course) {
-        try {
-            for (Task taskFromTaskList : course.getTasksList()) {
-                Task task = taskDaoImpl.save(taskFromTaskList);
-                tasksList.add(task);
-
-            }
-            course.setTasksList(tasksList);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-        return courseDaoImpl.save(course);
-    }
+//    public Course save(Course course) {
+//        try {
+//            for (Task taskFromTaskList : course.getTasksList()) {
+//                Task task = taskDaoImpl.save(taskFromTaskList);
+//                tasksList.add(task);
+//
+//            }
+//            course.setTasksList(tasksList);
+//        } catch (Exception exception) {
+//            exception.printStackTrace();
+//        }
+//        return courseDaoImpl.save(course);
+//    }
 
     @Override
     public UserDto create(UserDto entity) {
