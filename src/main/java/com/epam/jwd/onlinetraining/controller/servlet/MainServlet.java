@@ -2,10 +2,13 @@ package com.epam.jwd.onlinetraining.controller.servlet;
 
 import com.epam.jwd.onlinetraining.controller.command.Command;
 import com.epam.jwd.onlinetraining.controller.command.CommandResponse;
+import com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool;
+import com.epam.jwd.onlinetraining.dao.connectionpool.impl.ConnectionPoolImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
+import java.util.Arrays;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -23,10 +26,25 @@ public class MainServlet extends HttpServlet {
     //т.е. у каждой константы будет команда которая ец соответсувует будет способ ее достать
     //здесь на каждую команду создаем константу
 
+
+    @Override
+    public void init() throws ServletException {
+        ConnectionPoolImpl.getInstance().init();
+    }
+
+    @Override
+    public void destroy() {
+        ConnectionPoolImpl.getInstance().shutdown();
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         LOGGER.debug("caught req and resp in doGet method");
+
+        //todo:to be deleted
+        request.setAttribute("users", Arrays.asList("Bob", "Alice","Masha"));
+
         final String commandName = request.getParameter("command");
         final Command command = Command.of(commandName);
         final CommandResponse commandResponse = command.execute(null);
