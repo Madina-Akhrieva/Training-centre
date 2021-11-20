@@ -86,7 +86,6 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
             try {
                 this.wait();
             } catch (InterruptedException e) {
-                e.printStackTrace();
                 Thread.currentThread().interrupt();
                 LOGGER.error("occurred by InterruptedException", e);
             } finally {
@@ -101,15 +100,16 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
     @Override
     public void returnConnection(Connection connection) {
         LOGGER.info("return connection");
+        getInstanceLock.lock();
         if (usedConnections.remove(connection)) {
             availableConnections.add((ProxyConnection) connection);
             notify();
         }
+        getInstanceLock.unlock();
 
     }
 
     private boolean initializeConnections(int amount) throws ConnectionPoolException {
-
         LOGGER.info("start initializing connections");
         try {
             Class.forName(DRIVER);
@@ -122,9 +122,10 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
         } catch (SQLException e) {
             throw new ConnectionPoolException();
         } catch (ClassNotFoundException e) {
+            LOGGER.error("occurred by ClassNotFoundException ", e);
             e.printStackTrace();
         }
-        LOGGER.info("connection are initialized");
+        LOGGER.debug("connections are initialized");
         return true;
     }
 
@@ -138,7 +139,7 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
         try {
             connection.realClose();
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            LOGGER.error("could not close connections",exception);
         }
         LOGGER.info("close connection");
     }
