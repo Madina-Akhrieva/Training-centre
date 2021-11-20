@@ -10,9 +10,7 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -91,6 +89,7 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
         }
     }
 
+    //todo : add throw interrupted exception
     @Override
     public synchronized Connection requestConnection() {
         LOGGER.info("request connection");
@@ -119,22 +118,31 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
         getInstanceLock.lock();
         if (usedConnections.remove(connection)) {
             availableConnections.add((ProxyConnection) connection);
-            notifyAll();
+            this.notifyAll();
+        }else{
+            LOGGER.warn("attempt to return unknown connection to connection pool. Connection: {}",connection);
         }
         getInstanceLock.unlock();
     }
 
     @Override
-    public void shutdown() {
+    public boolean shutdown() {
         getInstanceLock.lock();
-        closeConnections(availableConnections);
-        closeConnections(usedConnections);
-        deregisterDrivers();
-        initialized = false;
-        LOGGER.debug("shutdown method finished");
+        if(initialized) {
+            closeConnections();
+            deregisterDrivers();
+            initialized = false;
+            return true;
+        }
         getInstanceLock.unlock();
+        LOGGER.debug("shutdown method finished");
+        return false;
     }
 
+    private void closeConnections() {
+        closeConnections(availableConnections);
+        closeConnections(usedConnections);
+    }
 
 
     private void closeConnections(Deque<ProxyConnection> connections) {

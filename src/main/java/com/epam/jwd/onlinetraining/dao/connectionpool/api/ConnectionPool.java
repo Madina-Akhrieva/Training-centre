@@ -8,8 +8,9 @@ import java.sql.Connection;
 public interface ConnectionPool {
     boolean init() throws CouldNotInitializeConnectionPool;
 
-    void shutdown();
+    boolean shutdown();
 
+    //todo : add interrupted exception
     Connection requestConnection();
 
     void returnConnection(Connection connection);

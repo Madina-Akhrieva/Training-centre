@@ -1,5 +1,7 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
+import com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool;
+import com.epam.jwd.onlinetraining.dao.connectionpool.exception.CouldNotInitializeConnectionPool;
 import com.epam.jwd.onlinetraining.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.jwd.onlinetraining.dao.model.*;
 import com.epam.jwd.onlinetraining.service.impl.CourseService;
@@ -7,11 +9,37 @@ import com.epam.jwd.onlinetraining.service.impl.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 
 public class Main {
     private static final Logger LOGGER = LogManager.getLogger(Main.class);
 
-    public static void main(String[] args) {
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/onlinecourse";
+    private static final String USER = "root";
+    private static final String PASS = "12345678";
+    private static final ConnectionPool connectionPoll  = ConnectionPoolImpl.getInstance();
+    public static void main(String[] args) throws SQLException {
+
+            CourseDaoImpl courseDao = new CourseDaoImpl();
+            Course course = new Course(1,"new title", 6,"java", "description", null);
+            Course course1 = courseDao.save(course);
+
+            Task task = new Task(course1.getId(), "new task", 5, "answer", "feedback");
+            TaskDaoImpl taskDao = new TaskDaoImpl();
+            taskDao.save(task);
+
+            taskDao.save(task);
+
+        connectionPoll.shutdown();
+//        ConnectionPoolImpl connectionPool = new ConnectionPoolImpl();
+//        connectionPool.init();
+//        Connection connection = connectionPool.requestConnection();
+//        connectionPool.returnConnection(connection);
+//        connectionPool.returnConnection(DriverManager.getConnection(DB_URL, USER, PASS));
+//        connectionPool.shutdown();
         //задача ментора состоит в том, чтобы оценивать работы студентов и давать отзывы на ыполненные задания
         //задача администратора составлять эти курсы и добавлять на курсы задания
         //задача пльзователя просто отправлять ответ наэти задания
@@ -21,18 +49,10 @@ public class Main {
         //тут адмминимтратор заходит на страничку и указывает что он хочет создать какой-то курс  и говорит по какой тебе будет этот курс
         //
 
-        CourseDaoImpl courseDao = new CourseDaoImpl();
-        Course course = new Course(1,"new title", 6,"java", "description", null);
-        Course course1 = courseDao.save(course);
+
 
         //здесь у нас сохранен курс без тасков
         //заходит ментор, видит таск
-
-        Task task = new Task(course1.getId(), "new task", 5,"answer", "feedback");
-        TaskDaoImpl taskDao = new TaskDaoImpl();
-        taskDao.save(task);
-
-        taskDao.save(task);
 
 
 //        TaskDaoImpl taskDao = new TaskDaoImpl();
@@ -65,7 +85,6 @@ public class Main {
 //        course.setTasksList(tasksList);
 //
 //        courseService.save(course);
-        ConnectionPoolImpl connectionPool = new ConnectionPoolImpl();
-        connectionPool.shutdown();
+//        connectionPool.shutdown();
     }
 }
