@@ -112,7 +112,7 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
     private boolean initializeConnections(int amount) throws ConnectionPoolException {
         LOGGER.info("start initializing connections");
         try {
-            Class.forName(DRIVER);
+            registerDrivers();
             for (int i = 0; i < amount; i++) {
                 final Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
                 final ProxyConnection proxyConnection = new ProxyConnection(this, connection);
@@ -121,11 +121,18 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
 
         } catch (SQLException e) {
             throw new ConnectionPoolException();
-        } catch (ClassNotFoundException e) {
-            LOGGER.error("could not initialize connections", e);
         }
         LOGGER.debug("connections are initialized");
         return true;
+    }
+
+    private void registerDrivers() {
+        try {
+            DriverManager.registerDriver(DriverManager.getDriver(DB_URL));
+            LOGGER.trace("drivers registered successfully");
+        } catch (SQLException e) {
+            LOGGER.error("couldn't register drivers",e);
+        }
     }
 
 
@@ -138,7 +145,7 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
         try {
             connection.realClose();
         } catch (SQLException exception) {
-            LOGGER.error("could not close connections",exception);
+            LOGGER.error("could not close connections", exception);
         }
         LOGGER.info("close connection");
     }
