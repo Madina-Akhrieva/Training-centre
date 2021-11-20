@@ -122,8 +122,7 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
         } catch (SQLException e) {
             throw new ConnectionPoolException();
         } catch (ClassNotFoundException e) {
-            LOGGER.error("occurred by ClassNotFoundException ", e);
-            e.printStackTrace();
+            LOGGER.error("could not initialize connections", e);
         }
         LOGGER.debug("connections are initialized");
         return true;
