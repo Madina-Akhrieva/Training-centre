@@ -64,15 +64,31 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
         return initialized;
     }
 
-    @Override
-    public void shutdown() {
-        getInstanceLock.lock();
-        closeConnections(availableConnections);
-        closeConnections(usedConnections);
-        deregisterDrivers();
-        initialized = false;
-        LOGGER.debug("shutdown method finished");
-        getInstanceLock.unlock();
+
+    private boolean initializeConnections(int amount) throws ConnectionPoolException {
+        LOGGER.info("start initializing connections");
+        try {
+            registerDrivers();
+            for (int i = 0; i < amount; i++) {
+                final Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
+                final ProxyConnection proxyConnection = new ProxyConnection(this, connection);
+                availableConnections.add(proxyConnection);
+            }
+
+        } catch (SQLException e) {
+            throw new ConnectionPoolException();
+        }
+        LOGGER.debug("connections are initialized");
+        return true;
+    }
+
+    private void registerDrivers() {
+        try {
+            DriverManager.registerDriver(DriverManager.getDriver(DB_URL));
+            LOGGER.trace("drivers registered successfully");
+        } catch (SQLException e) {
+            LOGGER.error("couldn't register drivers", e);
+        }
     }
 
     @Override
@@ -103,37 +119,22 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
         getInstanceLock.lock();
         if (usedConnections.remove(connection)) {
             availableConnections.add((ProxyConnection) connection);
-            notify();
+            notifyAll();
         }
         getInstanceLock.unlock();
-
     }
 
-    private boolean initializeConnections(int amount) throws ConnectionPoolException {
-        LOGGER.info("start initializing connections");
-        try {
-            registerDrivers();
-            for (int i = 0; i < amount; i++) {
-                final Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
-                final ProxyConnection proxyConnection = new ProxyConnection(this, connection);
-                availableConnections.add(proxyConnection);
-            }
-
-        } catch (SQLException e) {
-            throw new ConnectionPoolException();
-        }
-        LOGGER.debug("connections are initialized");
-        return true;
+    @Override
+    public void shutdown() {
+        getInstanceLock.lock();
+        closeConnections(availableConnections);
+        closeConnections(usedConnections);
+        deregisterDrivers();
+        initialized = false;
+        LOGGER.debug("shutdown method finished");
+        getInstanceLock.unlock();
     }
 
-    private void registerDrivers() {
-        try {
-            DriverManager.registerDriver(DriverManager.getDriver(DB_URL));
-            LOGGER.trace("drivers registered successfully");
-        } catch (SQLException e) {
-            LOGGER.error("couldn't register drivers",e);
-        }
-    }
 
 
     private void closeConnections(Deque<ProxyConnection> connections) {
