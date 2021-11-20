@@ -8,6 +8,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -26,6 +28,10 @@ public class AccountDaoImpl implements Dao<Account, Integer> {
 //      this.pool=conenctionPool;
 //    }
 
+    public static void main(String[] args) {
+
+    }
+
     @Override
     public Account save(Account account) {
         LOGGER.debug("save account to database");
@@ -34,6 +40,8 @@ public class AccountDaoImpl implements Dao<Account, Integer> {
             preparedStatement.setString(1, account.getEmail());
             preparedStatement.setString(2, account.getPassword());
             preparedStatement.executeUpdate();
+
+            List<Account> accountList = new ArrayList<>();
 
             try (ResultSet resultSet = preparedStatement.getGeneratedKeys();) {
                 while (resultSet.next()) {

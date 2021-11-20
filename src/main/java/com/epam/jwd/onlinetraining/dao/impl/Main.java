@@ -1,5 +1,6 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
+import com.epam.jwd.onlinetraining.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.jwd.onlinetraining.dao.model.*;
 import com.epam.jwd.onlinetraining.service.impl.CourseService;
 import com.epam.jwd.onlinetraining.service.impl.UserService;
@@ -15,6 +16,7 @@ public class Main {
         //задача администратора составлять эти курсы и добавлять на курсы задания
         //задача пльзователя просто отправлять ответ наэти задания
         //у администратора будет кнопка создать курс, и кнопка добавить задания
+
         CourseService courseService = new CourseService();
         //тут адмминимтратор заходит на страничку и указывает что он хочет создать какой-то курс  и говорит по какой тебе будет этот курс
         //
@@ -28,6 +30,8 @@ public class Main {
 
         Task task = new Task(course1.getId(), "new task", 5,"answer", "feedback");
         TaskDaoImpl taskDao = new TaskDaoImpl();
+        taskDao.save(task);
+
         taskDao.save(task);
 
 
@@ -61,5 +65,7 @@ public class Main {
 //        course.setTasksList(tasksList);
 //
 //        courseService.save(course);
+        ConnectionPoolImpl connectionPool = new ConnectionPoolImpl();
+        connectionPool.shutdown();
     }
 }

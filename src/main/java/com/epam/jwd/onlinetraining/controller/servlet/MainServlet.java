@@ -3,6 +3,7 @@ package com.epam.jwd.onlinetraining.controller.servlet;
 import com.epam.jwd.onlinetraining.controller.command.Command;
 import com.epam.jwd.onlinetraining.controller.command.CommandResponse;
 import com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool;
+import com.epam.jwd.onlinetraining.dao.connectionpool.exception.CouldNotInitializeConnectionPool;
 import com.epam.jwd.onlinetraining.dao.connectionpool.impl.ConnectionPoolImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,7 +30,11 @@ public class MainServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        ConnectionPoolImpl.getInstance().init();
+        try {
+            ConnectionPoolImpl.getInstance().init();
+        } catch (CouldNotInitializeConnectionPool e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -3,11 +3,20 @@ package com.epam.jwd.onlinetraining.dao.model;
 import java.util.Objects;
 
 public class Mentor extends AbstractEntity<Integer>{
+
     private String universityTitle;
     private Integer amountOfWorkExperience;
     private Integer universityDegreeAvailability;
 
     public Mentor() {
+    }
+
+    public Mentor(Integer id, String universityTitle,
+                  Integer amountOfWorkExperience, Integer universityDegreeAvailability) {
+        super(id);
+        this.universityTitle = universityTitle;
+        this.amountOfWorkExperience = amountOfWorkExperience;
+        this.universityDegreeAvailability = universityDegreeAvailability;
     }
 
     public Mentor(String universityTitle, Integer amountOfWorkExperience, Integer universityDegreeAvailability) {
@@ -53,5 +62,15 @@ public class Mentor extends AbstractEntity<Integer>{
     @Override
     public int hashCode() {
         return Objects.hash(universityTitle, amountOfWorkExperience, universityDegreeAvailability);
+    }
+
+    @Override
+    public String toString() {
+        return "Mentor{" +
+                "id=" + id +
+                ", universityTitle='" + universityTitle + '\'' +
+                ", amountOfWorkExperience=" + amountOfWorkExperience +
+                ", universityDegreeAvailability=" + universityDegreeAvailability +
+                '}';
     }
 }
