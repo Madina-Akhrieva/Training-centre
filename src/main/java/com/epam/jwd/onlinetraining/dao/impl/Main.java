@@ -20,20 +20,26 @@ public class Main {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/onlinecourse";
     private static final String USER = "root";
     private static final String PASS = "12345678";
-    private static final ConnectionPool connectionPoll  = ConnectionPoolImpl.getInstance();
+
     public static void main(String[] args) throws SQLException {
+        ConnectionPool connectionPoll = ConnectionPoolImpl.getInstance();
+        connectionPoll.init();
 
-            CourseDaoImpl courseDao = new CourseDaoImpl();
-            Course course = new Course(1,"new title", 6,"java", "description", null);
-            Course course1 = courseDao.save(course);
 
-            Task task = new Task(course1.getId(), "new task", 5, "answer", "feedback");
-            TaskDaoImpl taskDao = new TaskDaoImpl();
-            taskDao.save(task);
 
-            taskDao.save(task);
+        CourseDaoImpl courseDao = new CourseDaoImpl();
+        Course course = new Course(1, "new title", 6, "java", "description", null);
+        Course course1 = courseDao.save(course);
 
         connectionPoll.shutdown();
+//
+//        Task task = new Task(course1.getId(), "new task", 5, "answer", "feedback");
+//        TaskDaoImpl taskDao = new TaskDaoImpl();
+//        taskDao.save(task);
+//
+//        taskDao.save(task);
+//
+//        connectionPoll.shutdown();
 //        ConnectionPoolImpl connectionPool = new ConnectionPoolImpl();
 //        connectionPool.init();
 //        Connection connection = connectionPool.requestConnection();
@@ -48,7 +54,6 @@ public class Main {
         CourseService courseService = new CourseService();
         //тут адмминимтратор заходит на страничку и указывает что он хочет создать какой-то курс  и говорит по какой тебе будет этот курс
         //
-
 
 
         //здесь у нас сохранен курс без тасков

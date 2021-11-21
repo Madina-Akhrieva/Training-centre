@@ -6,7 +6,7 @@ import com.epam.jwd.onlinetraining.dao.connectionpool.exception.CouldNotInitiali
 import java.sql.Connection;
 
 public interface ConnectionPool {
-    boolean init() throws CouldNotInitializeConnectionPool;
+    boolean init();
 
     boolean shutdown();
 

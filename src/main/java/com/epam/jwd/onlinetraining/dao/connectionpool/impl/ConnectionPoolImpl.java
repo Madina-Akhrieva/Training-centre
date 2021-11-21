@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool {
@@ -28,6 +29,7 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
     private static boolean initialized = false;
 
     private static final ReentrantLock getInstanceLock = new ReentrantLock();
+    Condition condition = getInstanceLock.newCondition();
 
     private final BlockingDeque<ProxyConnection> availableConnections = new LinkedBlockingDeque<>();
     private final BlockingDeque<ProxyConnection> usedConnections = new LinkedBlockingDeque<>();
@@ -51,7 +53,9 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
         LOGGER.info("init method start");
         if (!initialized) {
             try {
-                initialized = initializeConnections(CONNECTION_POOL_SIZE);
+                registerDrivers();
+                initializeConnections(CONNECTION_POOL_SIZE);
+                initialized = true;
             } catch (ConnectionPoolException e) {
                 LOGGER.error("occurred by ConnectionPoolException", e);
             } finally {
@@ -63,10 +67,10 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
     }
 
 
-    private boolean initializeConnections(int amount) throws ConnectionPoolException {
+    private void initializeConnections(int amount) throws ConnectionPoolException {
         LOGGER.info("start initializing connections");
         try {
-            registerDrivers();
+
             for (int i = 0; i < amount; i++) {
                 final Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
                 final ProxyConnection proxyConnection = new ProxyConnection(this, connection);
@@ -77,7 +81,7 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
             throw new ConnectionPoolException();
         }
         LOGGER.debug("connections are initialized");
-        return true;
+
     }
 
     private void registerDrivers() {
@@ -91,7 +95,7 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
 
     //todo : add throw interrupted exception
     @Override
-    public synchronized Connection requestConnection() {
+    public  Connection requestConnection() {
         LOGGER.info("request connection");
         getInstanceLock.lock();
         if (!initialized) {
@@ -99,7 +103,9 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
         }
         while (availableConnections.isEmpty()) {
             try {
-                this.wait();
+                //todo : to ask about
+                condition.await();
+//                this.wait();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 LOGGER.error("occurred by InterruptedException", e);
@@ -118,7 +124,8 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
         getInstanceLock.lock();
         if (usedConnections.remove(connection)) {
             availableConnections.add((ProxyConnection) connection);
-            this.notifyAll();
+            condition.signalAll();
+//            this.notifyAll();
         }else{
             LOGGER.warn("attempt to return unknown connection to connection pool. Connection: {}",connection);
         }

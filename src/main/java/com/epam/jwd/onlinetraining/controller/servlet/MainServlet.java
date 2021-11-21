@@ -30,16 +30,14 @@ public class MainServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        try {
-            ConnectionPoolImpl.getInstance().init();
-        } catch (CouldNotInitializeConnectionPool e) {
-            e.printStackTrace();
-        }
+
+//            ConnectionPoolImpl.getInstance().init();
+
     }
 
     @Override
     public void destroy() {
-        ConnectionPoolImpl.getInstance().shutdown();
+//        ConnectionPoolImpl.getInstance().shutdown();
     }
 
     @Override
