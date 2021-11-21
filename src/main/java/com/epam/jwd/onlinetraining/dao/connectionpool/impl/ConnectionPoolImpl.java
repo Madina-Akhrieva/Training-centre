@@ -50,7 +50,6 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
     @Override
     public boolean init() {
         getInstanceLock.lock();
-        LOGGER.info("init method start");
         if (!initialized) {
             try {
                 registerDrivers();
@@ -62,18 +61,17 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
                 getInstanceLock.unlock();
             }
         }
-        LOGGER.info("init method finished");
         return initialized;
     }
 
 
     private void initializeConnections(int amount) throws ConnectionPoolException {
-        LOGGER.info("start initializing connections");
         try {
 
             for (int i = 0; i < amount; i++) {
                 final Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
                 final ProxyConnection proxyConnection = new ProxyConnection(this, connection);
+                LOGGER.info("connection is initialized {}", connection);
                 availableConnections.add(proxyConnection);
             }
 
@@ -96,16 +94,13 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
     //todo : add throw interrupted exception
     @Override
     public  Connection requestConnection() {
-        LOGGER.info("request connection");
         getInstanceLock.lock();
         if (!initialized) {
             init();
         }
         while (availableConnections.isEmpty()) {
             try {
-                //todo : to ask about
                 condition.await();
-//                this.wait();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 LOGGER.error("occurred by InterruptedException", e);
@@ -114,13 +109,14 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
             }
         }
         ProxyConnection connection = availableConnections.poll();
+        LOGGER.info("request connection {}",connection);
         usedConnections.add(connection);
         return connection;
     }
 
     @Override
     public void returnConnection(Connection connection) {
-        LOGGER.info("return connection");
+
         getInstanceLock.lock();
         if (usedConnections.remove(connection)) {
             availableConnections.add((ProxyConnection) connection);
@@ -129,6 +125,7 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
         }else{
             LOGGER.warn("attempt to return unknown connection to connection pool. Connection: {}",connection);
         }
+        LOGGER.info("return connection {}", connection);
         getInstanceLock.unlock();
     }
 
@@ -142,7 +139,6 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
             return true;
         }
         getInstanceLock.unlock();
-        LOGGER.debug("shutdown method finished");
         return false;
     }
 
@@ -153,17 +149,17 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
 
 
     private void closeConnections(Deque<ProxyConnection> connections) {
-        LOGGER.info("close connections");
         connections.forEach(this::closeConnection);
+
     }
 
     private void closeConnection(ProxyConnection connection) {
         try {
             connection.realClose();
+            LOGGER.info("closed connection {}",connection);
         } catch (SQLException exception) {
             LOGGER.error("could not close connections", exception);
         }
-        LOGGER.info("close connection");
     }
 
     private static void deregisterDrivers() {
