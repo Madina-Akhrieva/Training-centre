@@ -21,7 +21,6 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
     private static final String DB_URL = "jdbc:mysql://localhost:3306/onlinecourse";
     private static final String USER = "root";
     private static final String PASS = "12345678";
-    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final int CONNECTION_POOL_SIZE = 8;
 
     private static ConnectionPool INSTANCE;
@@ -145,6 +144,8 @@ public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao
     private void closeConnections() {
         closeConnections(availableConnections);
         closeConnections(usedConnections);
+        LOGGER.debug("connections are closed");
+
     }
 
 
