@@ -1,95 +1,114 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
+import com.epam.jwd.onlinetraining.dao.api.ResultSetExtractor;
+import com.epam.jwd.onlinetraining.dao.api.StatementPreparator;
 import com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool;
 import com.epam.jwd.onlinetraining.dao.connectionpool.exception.CouldNotInitializeConnectionPool;
 import com.epam.jwd.onlinetraining.dao.connectionpool.impl.ConnectionPoolImpl;
-import com.epam.jwd.onlinetraining.dao.model.*;
-import com.epam.jwd.onlinetraining.service.impl.CourseService;
-import com.epam.jwd.onlinetraining.service.impl.UserService;
+
+import com.epam.jwd.onlinetraining.dao.exception.EntityExtractionFailedException;
+import com.epam.jwd.onlinetraining.dao.model.AbstractEntity;
+import com.epam.jwd.onlinetraining.dao.model.Course;
+import com.epam.jwd.onlinetraining.dao.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 
 public class Main {
     private static final Logger LOGGER = LogManager.getLogger(Main.class);
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/onlinecourse";
-    private static final String USER = "root";
-    private static final String PASS = "12345678";
+    private static final ConnectionPool connectionPoll = ConnectionPoolImpl.getInstance();
+    private static final String SELECT_ALL_SQL = "select * from course_user";
+    private static final String FIND_USERS_OLDER_THAN_SQL = "select * from course_user where age > 30";
 
-    public static void main(String[] args) throws SQLException {
-        ConnectionPool connectionPoll = ConnectionPoolImpl.getInstance();
+//    private static final String ROLE_ID_COLUMN_NAME = ;
+
+    public static void main(String[] args) {
+        LOGGER.debug("start program");
         connectionPoll.init();
-
-
-
+        final List<User> users = fetchUsersFromDb();
+        users.forEach(user -> LOGGER.trace("found user {}", user));
         CourseDaoImpl courseDao = new CourseDaoImpl();
         Course course = new Course(1, "new title", 6, "java", "description", null);
         Course course1 = courseDao.save(course);
-
         connectionPoll.shutdown();
-//
-//        Task task = new Task(course1.getId(), "new task", 5, "answer", "feedback");
-//        TaskDaoImpl taskDao = new TaskDaoImpl();
-//        taskDao.save(task);
-//
-//        taskDao.save(task);
-//
-//        connectionPoll.shutdown();
-//        ConnectionPoolImpl connectionPool = new ConnectionPoolImpl();
-//        connectionPool.init();
-//        Connection connection = connectionPool.requestConnection();
-//        connectionPool.returnConnection(connection);
-//        connectionPool.returnConnection(DriverManager.getConnection(DB_URL, USER, PASS));
-//        connectionPool.shutdown();
-        //задача ментора состоит в том, чтобы оценивать работы студентов и давать отзывы на ыполненные задания
-        //задача администратора составлять эти курсы и добавлять на курсы задания
-        //задача пльзователя просто отправлять ответ наэти задания
-        //у администратора будет кнопка создать курс, и кнопка добавить задания
+        LOGGER.debug("end program");
+    }
 
-        CourseService courseService = new CourseService();
-        //тут адмминимтратор заходит на страничку и указывает что он хочет создать какой-то курс  и говорит по какой тебе будет этот курс
-        //
+    private static List<User> fetchUsersFromDb() {
+        return executeStatement(SELECT_ALL_SQL, Main::extractUser);
+    }
+
+    private static List<User> fetchUsersOlderThan(int i) {
+        return executePrepared(
+                FIND_USERS_OLDER_THAN_SQL,
+                Main::extractUser,
+                st -> st.setInt(1, i)
+        );
+    }
+
+    private static <T extends AbstractEntity<Integer>> List<T> executePrepared(String sql,
+                                                                               ResultSetExtractor<T> extractor,
+                                                                               StatementPreparator statementPreparation) {
+        try (final Connection connection = connectionPoll.requestConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
+            if (statementPreparation != null) {
+                statementPreparation.accept(statement);
+            }
+            final ResultSet resultSet = statement.executeQuery();
+            return extractor.extractAll(resultSet);
+        } catch (SQLException e) {
+            LOGGER.error("sql exception occurred", e);
+            LOGGER.debug("sql: {}", sql);
+        } catch (EntityExtractionFailedException e) {
+            LOGGER.error("could not extract entity", e);
+        }
+        return Collections.emptyList();
+    }
+
+    private static <T extends AbstractEntity<Integer>> List<T> executeStatement(String sql,
+                                                                                ResultSetExtractor<T> extractor) {
+        try (final Connection connection = connectionPoll.requestConnection();
+             final Statement statement = connection.createStatement();
+             final ResultSet resultSet = statement.executeQuery(sql)) {
+            return extractor.extractAll(resultSet);
+        } catch (SQLException e) {
+            LOGGER.error("sql exception occurred", e);
+            LOGGER.debug("sql: {}", sql);
+        } catch (EntityExtractionFailedException e) {
+            LOGGER.error("could not extract entity", e);
+        }
+        return Collections.emptyList();
+    }
 
 
-        //здесь у нас сохранен курс без тасков
-        //заходит ментор, видит таск
-
-
-//        TaskDaoImpl taskDao = new TaskDaoImpl();
-//        Task task2 = new Task(course.getId(), "description", 6,"answer", "feedback");
-//        Task task3 = new Task(course.getId(), "description", 5,"answer", "feedback");
-//        Task task4 = new Task(course.getId(), "description", 5,"answer", "feedback");
-//        Task task5 = new Task(course.getId(), "description", 5,"answer", "feedback");
-//        Task task6 = new Task(course.getId(), "description", 5,"answer", "feedback");
-//        List<Task> tasksList =  new ArrayList<>();
-//
-
-        //ментор может создавать курс
-        //изначаль когда создается курс у него не никаких заданий, задания модет добавлять  ментор
-        //поэтому изначально у таска list  с курсами пустой а заполняется когда добавляется новое задание
-        //у таска при добавлении на курс будет id куоса на который он был добавлен
-        //
-
-
-//
-//        tasksList.add(task);
-//        tasksList.add(task2);
-//        tasksList.add(task3);
-//        tasksList.add(task4);
-//        tasksList.add(task5);
-//        tasksList.add(task6);
-//
-//        for (Task taskElement: tasksList) {
-//            taskDao.save(taskElement);
-//        }
-//        course.setTasksList(tasksList);
-//
-//        courseService.save(course);
-//        connectionPool.shutdown();
+    private static User extractUser(ResultSet resultSet) throws EntityExtractionFailedException {
+        try {
+            return new User(
+                    resultSet.getInt("role_id"),
+                    resultSet.getString("phone"),
+                    resultSet.getString("first_name"),
+                    resultSet.getString("last_name")
+//                    new  Account(
+//                            resultSet.getInt(""),
+//                            resultSet.getString(""),
+//                            resultSet.getString("")
+//                    ),
+//                    UserRole.getRoleById()
+            );
+        } catch (SQLException e) {
+            LOGGER.error("could not extract value from result set", e);
+            throw new EntityExtractionFailedException("failed to extract user");
+        }
     }
 }

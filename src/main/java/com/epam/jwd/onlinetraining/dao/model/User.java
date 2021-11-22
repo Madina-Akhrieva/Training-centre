@@ -16,17 +16,6 @@ public class User extends AbstractEntity<Integer> {
         return account.getId();
     }
 
-    public User(Integer roleId, String phone,
-                String firstName, String lastName, Account account,
-                UserRole userRole) {
-        this.roleId = roleId;
-        this.phone = phone;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.account = account;
-        this.userRole = userRole;
-    }
-
     public User(Integer id, Integer roleId,
                 String phone,
                 String firstName, String lastName,
@@ -38,6 +27,19 @@ public class User extends AbstractEntity<Integer> {
         this.lastName = lastName;
         this.account = account;
         this.userRole = userRole;
+    }
+
+
+    public User(Integer roleId, String phone,
+                String firstName, String lastName, Account account,
+                UserRole userRole) {
+        this(null, roleId, phone, firstName, lastName, account, userRole);
+    }
+
+    public User(Integer roleId, String phone,
+                String firstName, String lastName) {
+
+        this(null, roleId, phone, firstName, lastName, null, null);
     }
 
     //todo:comment

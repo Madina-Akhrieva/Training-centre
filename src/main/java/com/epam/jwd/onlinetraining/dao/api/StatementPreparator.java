@@ -6,6 +6,6 @@ import java.sql.SQLException;
 @FunctionalInterface
 public interface StatementPreparator {
 
-    void accept(PreparedStatement statement) throws SQLException;
+    void accept(PreparedStatement t) throws SQLException;
 
 }

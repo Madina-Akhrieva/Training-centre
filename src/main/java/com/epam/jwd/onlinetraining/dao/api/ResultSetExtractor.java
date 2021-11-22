@@ -1,6 +1,7 @@
 package com.epam.jwd.onlinetraining.dao.api;
 
 import com.epam.jwd.onlinetraining.dao.exception.EntityExtractionFailedException;
+import com.epam.jwd.onlinetraining.dao.model.AbstractEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @FunctionalInterface
-public interface ResultSetExtractor<T> {
+public interface ResultSetExtractor<T extends AbstractEntity<Integer>> {
 
     T extract(ResultSet resultSet) throws EntityExtractionFailedException;
 
