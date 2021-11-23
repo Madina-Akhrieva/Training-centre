@@ -11,6 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 
 public class AccountDaoImpl implements Dao<Account, Integer> {
@@ -89,5 +90,20 @@ public class AccountDaoImpl implements Dao<Account, Integer> {
     public Account findById(Integer id) {
         Account account = new Account();
         return account;
+    }
+
+    @Override
+    public Boolean delete(Integer id) {
+        return null;
+    }
+
+    @Override
+    public List<Account> read() {
+        return null;
+    }
+
+    @Override
+    public Optional<Account> read(Integer id) {
+        return Optional.empty();
     }
 }

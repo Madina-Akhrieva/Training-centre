@@ -1,9 +1,9 @@
-package com.epam.jwd.onlinetraining.controller.servlet;
+package com.epam.jwd.onlinetraining.controller.impl;
 
+import com.epam.jwd.onlinetraining.controller.api.RequestFactory;
 import com.epam.jwd.onlinetraining.controller.command.Command;
+import com.epam.jwd.onlinetraining.controller.command.CommandRequest;
 import com.epam.jwd.onlinetraining.controller.command.CommandResponse;
-import com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool;
-import com.epam.jwd.onlinetraining.dao.connectionpool.exception.CouldNotInitializeConnectionPool;
 import com.epam.jwd.onlinetraining.dao.connectionpool.impl.ConnectionPoolImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,8 +16,13 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 @WebServlet("/controller")
-public class MainServlet extends HttpServlet {
-    private static final Logger LOGGER = LogManager.getLogger(MainServlet.class);
+public class Controller extends HttpServlet {
+    public static final String COMMAND_PARAM_NAME = "command";
+    private static final Logger LOGGER = LogManager.getLogger(Controller.class);
+
+    private final RequestFactory requestFactory = RequestFactory.getInstance();
+
+
 
     //метод doGet должен понимать как отркагировать на запрос клиента и понять какя команда должна отработать и
     // по этой команде и подобрать
@@ -29,41 +34,40 @@ public class MainServlet extends HttpServlet {
 
 
     @Override
-    public void init() throws ServletException {
-
-//            ConnectionPoolImpl.getInstance().init();
-
+    public void init(){
+        ConnectionPoolImpl.getInstance().init();
     }
 
     @Override
     public void destroy() {
-//        ConnectionPoolImpl.getInstance().shutdown();
+        ConnectionPoolImpl.getInstance().shutdown();
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest httpRequest, HttpServletResponse httpResponse)
             throws ServletException, IOException {
         LOGGER.debug("caught req and resp in doGet method");
 
         //todo:to be deleted
-        request.setAttribute("users", Arrays.asList("Bob", "Alice","Masha"));
+        httpRequest.setAttribute("users", Arrays.asList("Bob", "Alice", "Masha"));
 
-        final String commandName = request.getParameter("command");
+        final String commandName = httpRequest.getParameter(COMMAND_PARAM_NAME);
         final Command command = Command.of(commandName);
-        final CommandResponse commandResponse = command.execute(null);
-        proceedWithResponse(request, response, commandResponse);
+        final CommandRequest commandRequest = requestFactory.createRequest(httpRequest);
+        final CommandResponse commandResponse = command.execute(commandRequest);
+        proceedWithResponse(httpRequest, httpResponse, commandResponse);
         LOGGER.debug("doGet method is finished");
     }
 
     private void proceedWithResponse(HttpServletRequest request, HttpServletResponse response,
                                      CommandResponse commandResponse) {
-        try{
+        try {
             LOGGER.debug("We entered to proceedWithResponse method ");
             forwardOrRedirectToResponseLocation(request, response, commandResponse);
-        }catch (ServletException e){
+        } catch (ServletException e) {
             LOGGER.error("ServletException exception occurred", e);
             e.printStackTrace();
-        }catch (IOException e){
+        } catch (IOException e) {
             LOGGER.error("IO exception occurred ", e);
             e.printStackTrace();
         }
@@ -75,7 +79,7 @@ public class MainServlet extends HttpServlet {
         if (commandResponse.isRedirect()) {
             response.sendRedirect(commandResponse.getPath());
 
-        }else{
+        } else {
             final String desiredPath = commandResponse.getPath();
             final RequestDispatcher dispatcher = request.getRequestDispatcher(desiredPath);
             dispatcher.forward(request, response);

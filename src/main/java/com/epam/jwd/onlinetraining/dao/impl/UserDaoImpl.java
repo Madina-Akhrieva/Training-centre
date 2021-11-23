@@ -6,6 +6,7 @@ import com.epam.jwd.onlinetraining.dao.model.User;
 
 import java.sql.*;
 import java.util.List;
+import java.util.Optional;
 
 
 public class UserDaoImpl implements Dao<User, Integer> {
@@ -77,6 +78,21 @@ public class UserDaoImpl implements Dao<User, Integer> {
     @Override
     public User findById(Integer id) {
         return null;
+    }
+
+    @Override
+    public Boolean delete(Integer id) {
+        return null;
+    }
+
+    @Override
+    public List<User> read() {
+        return null;
+    }
+
+    @Override
+    public Optional<User> read(Integer id) {
+        return Optional.empty();
     }
 
 

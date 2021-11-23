@@ -34,9 +34,14 @@
                     </form>
 
                     <div class="text-end">
-                        <button type="button" class="btn btn-outline-light me-2" ><a href="/controller?command=login">Login</a></button>
-                        <button type="button" class="btn btn-warning"><a href="/controller?command=sign_up">Sign-up</a></button>
+                        <button type="button" class="btn btn-outline-light me-2" >
+                            <a href="/controller?command=show_login">Login</a>
+                        </button>
+                        <button type="button" class="btn btn-warning">
+                            <a href="/controller?command=sign_up">Sign-up</a>
+                        </button>
                     </div>
+
                 </div>
             </div>
         </header>

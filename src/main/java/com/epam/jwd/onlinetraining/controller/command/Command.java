@@ -1,7 +1,5 @@
 package com.epam.jwd.onlinetraining.controller.command;
 
-import com.epam.jwd.onlinetraining.controller.impl.CommandRegistry;
-
 public interface Command {
     CommandResponse execute (CommandRequest request);
 

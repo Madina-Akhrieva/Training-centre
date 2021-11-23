@@ -8,6 +8,7 @@ import com.epam.jwd.onlinetraining.dao.model.Task;
 
 import java.sql.*;
 import java.util.List;
+import java.util.Optional;
 
 public class TaskDaoImpl implements  TaskDao<Task, Integer> {
     private static final String SQL_SAVE_TASK = "INSERT INTO task (course_id, description, task_number, task_answer, feedback) values (?,?,?,?,?)";
@@ -50,5 +51,15 @@ public class TaskDaoImpl implements  TaskDao<Task, Integer> {
     @Override
     public Boolean delete(Integer id) {
         return null;
+    }
+
+    @Override
+    public List<Task> read() {
+        return null;
+    }
+
+    @Override
+    public Optional<Task> read(Integer id) {
+        return Optional.empty();
     }
 }

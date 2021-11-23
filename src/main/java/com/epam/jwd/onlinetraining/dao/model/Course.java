@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Course extends AbstractEntity<Integer>{
+public class Course extends Entity<Integer> {
     private Integer courseId;
     private Integer mentorId;
     private String title;

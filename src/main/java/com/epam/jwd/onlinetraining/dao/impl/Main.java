@@ -3,11 +3,10 @@ package com.epam.jwd.onlinetraining.dao.impl;
 import com.epam.jwd.onlinetraining.dao.api.ResultSetExtractor;
 import com.epam.jwd.onlinetraining.dao.api.StatementPreparator;
 import com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool;
-import com.epam.jwd.onlinetraining.dao.connectionpool.exception.CouldNotInitializeConnectionPool;
 import com.epam.jwd.onlinetraining.dao.connectionpool.impl.ConnectionPoolImpl;
 
 import com.epam.jwd.onlinetraining.dao.exception.EntityExtractionFailedException;
-import com.epam.jwd.onlinetraining.dao.model.AbstractEntity;
+import com.epam.jwd.onlinetraining.dao.model.Entity;
 import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.User;
 import org.apache.logging.log4j.LogManager;
@@ -18,10 +17,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 
 public class Main {
@@ -57,9 +54,9 @@ public class Main {
         );
     }
 
-    private static <T extends AbstractEntity<Integer>> List<T> executePrepared(String sql,
-                                                                               ResultSetExtractor<T> extractor,
-                                                                               StatementPreparator statementPreparation) {
+    private static <T extends Entity<Integer>> List<T> executePrepared(String sql,
+                                                                       ResultSetExtractor<T> extractor,
+                                                                       StatementPreparator statementPreparation) {
         try (final Connection connection = connectionPoll.requestConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
             if (statementPreparation != null) {
@@ -76,8 +73,8 @@ public class Main {
         return Collections.emptyList();
     }
 
-    private static <T extends AbstractEntity<Integer>> List<T> executeStatement(String sql,
-                                                                                ResultSetExtractor<T> extractor) {
+    private static <T extends Entity<Integer>> List<T> executeStatement(String sql,
+                                                                        ResultSetExtractor<T> extractor) {
         try (final Connection connection = connectionPoll.requestConnection();
              final Statement statement = connection.createStatement();
              final ResultSet resultSet = statement.executeQuery(sql)) {

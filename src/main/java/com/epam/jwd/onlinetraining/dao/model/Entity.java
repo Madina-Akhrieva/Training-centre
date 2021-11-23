@@ -1,11 +1,11 @@
 package com.epam.jwd.onlinetraining.dao.model;
 
-public class AbstractEntity<T> {
+public class Entity<T> {
     protected T id;
 
-    public AbstractEntity() {
+    public Entity() {
     }
-    public AbstractEntity(T id) {
+    public Entity(T id) {
         this.id = id;
     }
 

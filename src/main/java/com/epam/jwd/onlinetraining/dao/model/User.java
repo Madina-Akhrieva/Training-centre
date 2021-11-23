@@ -1,9 +1,8 @@
 package com.epam.jwd.onlinetraining.dao.model;
 
-import java.util.Date;
 import java.util.Objects;
 
-public class User extends AbstractEntity<Integer> {
+public class User extends Entity<Integer> {
 
     private Integer roleId;
     private String phone;

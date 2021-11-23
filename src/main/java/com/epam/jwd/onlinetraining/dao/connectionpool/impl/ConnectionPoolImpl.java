@@ -15,7 +15,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-public final class ConnectionPoolImpl implements com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool {
+public final class ConnectionPoolImpl implements ConnectionPool {
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPoolImpl.class);
 
     private static final String DB_URL = "jdbc:mysql://localhost:3306/onlinecourse";
