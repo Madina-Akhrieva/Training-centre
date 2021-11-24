@@ -21,31 +21,24 @@ public class Controller extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
 
     private final RequestFactory requestFactory = RequestFactory.getInstance();
-
-
-
     //метод doGet должен понимать как отркагировать на запрос клиента и понять какя команда должна отработать и
     // по этой команде и подобрать
     // соответсвующий класс для ответа пользователю и обрабатывать, значит нуден механизм с помощью которого мы будем понимать как команда должна отработать
-
     //мы создадим enum Command Registry в котором будут перечислены команды
     //т.е. у каждой константы будет команда которая ец соответсувует будет способ ее достать
     //здесь на каждую команду создаем константу
-
-
     @Override
     public void init(){
-        ConnectionPoolImpl.getInstance().init();
+//        ConnectionPoolImpl.getInstance().init();
     }
 
     @Override
     public void destroy() {
-        ConnectionPoolImpl.getInstance().shutdown();
+//        ConnectionPoolImpl.getInstance().shutdown();
     }
 
     @Override
-    protected void doGet(HttpServletRequest httpRequest, HttpServletResponse httpResponse)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest httpRequest, HttpServletResponse httpResponse){
         LOGGER.debug("caught req and resp in doGet method");
 
         //todo:to be deleted
@@ -78,7 +71,6 @@ public class Controller extends HttpServlet {
         LOGGER.debug("We are in forwardOrRedirectToResponseLocation method ");
         if (commandResponse.isRedirect()) {
             response.sendRedirect(commandResponse.getPath());
-
         } else {
             final String desiredPath = commandResponse.getPath();
             final RequestDispatcher dispatcher = request.getRequestDispatcher(desiredPath);

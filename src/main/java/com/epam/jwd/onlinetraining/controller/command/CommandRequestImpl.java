@@ -1,4 +1,4 @@
-package com.epam.jwd.onlinetraining.controller.impl;
+package com.epam.jwd.onlinetraining.controller.command;
 
 import com.epam.jwd.onlinetraining.controller.command.CommandRequest;
 

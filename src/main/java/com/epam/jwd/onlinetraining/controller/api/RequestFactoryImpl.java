@@ -2,14 +2,14 @@ package com.epam.jwd.onlinetraining.controller.api;
 
 import com.epam.jwd.onlinetraining.controller.command.CommandRequest;
 import com.epam.jwd.onlinetraining.controller.command.CommandResponse;
-import com.epam.jwd.onlinetraining.controller.impl.CommandRequestImpl;
-import com.epam.jwd.onlinetraining.controller.impl.CommandResponseImpl;
+import com.epam.jwd.onlinetraining.controller.command.CommandRequestImpl;
+import com.epam.jwd.onlinetraining.controller.command.CommandResponseImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public enum SimpleRequestFactory implements RequestFactory {
+public enum RequestFactoryImpl implements RequestFactory {
     INSTANCE;
 
     private final Map<String, CommandResponse> forwardResponseCache = new ConcurrentHashMap<>();

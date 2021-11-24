@@ -1,6 +1,4 @@
-package com.epam.jwd.onlinetraining.controller.impl;
-
-import com.epam.jwd.onlinetraining.controller.command.CommandResponse;
+package com.epam.jwd.onlinetraining.controller.command;
 
 import java.util.Objects;
 
