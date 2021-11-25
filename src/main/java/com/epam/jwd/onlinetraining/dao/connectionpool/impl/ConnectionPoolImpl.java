@@ -83,9 +83,10 @@ public final class ConnectionPoolImpl implements ConnectionPool {
 
     private void registerDrivers() {
         try {
-            DriverManager.registerDriver(DriverManager.getDriver(DB_URL));
+//            DriverManager.registerDriver(DriverManager.getDriver(DB_URL));
+            Class.forName("com.mysql.cj.jdbc.Driver");
             LOGGER.trace("drivers registered successfully");
-        } catch (SQLException e) {
+        } catch ( ClassNotFoundException e) {
             LOGGER.error("couldn't register drivers", e);
         }
     }

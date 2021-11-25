@@ -54,7 +54,7 @@ public class Main {
         );
     }
 
-    private static <T extends Entity<Integer>> List<T> executePrepared(String sql,
+    private static <T extends Entity> List<T> executePrepared(String sql,
                                                                        ResultSetExtractor<T> extractor,
                                                                        StatementPreparator statementPreparation) {
         try (final Connection connection = connectionPoll.requestConnection();
@@ -73,7 +73,7 @@ public class Main {
         return Collections.emptyList();
     }
 
-    private static <T extends Entity<Integer>> List<T> executeStatement(String sql,
+    private static <T extends Entity> List<T> executeStatement(String sql,
                                                                         ResultSetExtractor<T> extractor) {
         try (final Connection connection = connectionPoll.requestConnection();
              final Statement statement = connection.createStatement();

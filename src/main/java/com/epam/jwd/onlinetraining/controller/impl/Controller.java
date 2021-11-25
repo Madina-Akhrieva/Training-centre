@@ -4,6 +4,7 @@ import com.epam.jwd.onlinetraining.controller.api.RequestFactory;
 import com.epam.jwd.onlinetraining.controller.command.Command;
 import com.epam.jwd.onlinetraining.controller.command.CommandRequest;
 import com.epam.jwd.onlinetraining.controller.command.CommandResponse;
+import com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool;
 import com.epam.jwd.onlinetraining.dao.connectionpool.impl.ConnectionPoolImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,12 +30,12 @@ public class Controller extends HttpServlet {
     //здесь на каждую команду создаем константу
     @Override
     public void init(){
-//        ConnectionPoolImpl.getInstance().init();
+        ConnectionPoolImpl.getInstance().init();
     }
 
     @Override
     public void destroy() {
-//        ConnectionPoolImpl.getInstance().shutdown();
+        ConnectionPoolImpl.getInstance().shutdown();
     }
 
     @Override

@@ -1,15 +1,20 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
-import com.epam.jwd.onlinetraining.dao.api.Dao;
+import com.epam.jwd.onlinetraining.dao.api.EntityDao;
 import com.epam.jwd.onlinetraining.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.jwd.onlinetraining.dao.model.User;
 
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
 
-public class UserDaoImpl implements Dao<User, Integer> {
+public class UserDaoImpl implements EntityDao<User> {
     private static final String SQL_SAVE_USER = "INSERT INTO course_user(id_course_user, role_id, phone, first_name, last_name) VALUES ( ?, ?, ?, ?, ?)";
     private static final String SQL_EDIT_USER = "UPDATE course_user SET   id_course_user = ?, role_id = ?, phone = ?, first_name=?, last_name=? WHERE id_course_user = ?";
     private static final String SQL_FIND_USER_BY_ID = "SELECT role_id, phone, first_name, last_name FROM course_user WHERE id_course_user = ?";
@@ -76,12 +81,12 @@ public class UserDaoImpl implements Dao<User, Integer> {
     }
 
     @Override
-    public User findById(Integer id) {
+    public User findById(Long id) {
         return null;
     }
 
     @Override
-    public Boolean delete(Integer id) {
+    public Boolean delete(Long id) {
         return null;
     }
 
@@ -91,7 +96,7 @@ public class UserDaoImpl implements Dao<User, Integer> {
     }
 
     @Override
-    public Optional<User> read(Integer id) {
+    public Optional<User> read(Long id) {
         return Optional.empty();
     }
 

@@ -2,7 +2,7 @@ package com.epam.jwd.onlinetraining.dao.model;
 
 import java.util.Objects;
 
-public class Account extends Entity<Integer> {
+public class Account extends Entity {
     private int roleId;
     private String password;
     private String email;

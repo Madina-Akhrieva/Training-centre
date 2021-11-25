@@ -6,17 +6,17 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface Dao<T extends Entity<K>, K> {
+public interface EntityDao<T extends Entity> {
     T save(T entity);
 
     Boolean update(T entity);
 
-    T findById(K id);
+    T findById(Long id);
 
-    Boolean delete(K id);
+    Boolean delete(Long id);
 
     List<T> read();
 
-    Optional<T> read(K id);
+    Optional<T> read(Long id);
 
 }

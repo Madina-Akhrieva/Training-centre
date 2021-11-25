@@ -8,11 +8,15 @@ import com.epam.jwd.onlinetraining.dao.model.Course;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
-public class CourseDaoImpl extends Entity<Integer> implements CourseDao<CourseDaoImpl, Integer>{
+public class CourseDaoImpl extends Entity implements CourseDao<CourseDaoImpl>{
     private static final Logger LOGGER = LogManager.getLogger(CourseDaoImpl.class);
     private static final String SQL_SAVE_COURSE = "INSERT INTO course (mentor_id, title, amount_of_tasks, learning_language, description) values(?,?,?,?,?) ";
     private static final String SQL_DELETE_COURSE = "DELETE FROM course WHERE  id VALUE (?)";
@@ -43,35 +47,15 @@ public class CourseDaoImpl extends Entity<Integer> implements CourseDao<CourseDa
     }
 
     @Override
-    public Boolean delete(Integer id) {
-        try(Connection connection = pool.requestConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_COURSE)){
-
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
     public List<Course> read() {
         return null;
     }
 
     @Override
-    public Optional<Course> read(Integer id) {
+    public Optional<Course> read(Long id) {
         return Optional.empty();
     }
 
-    @Override
-    public Integer findByTitle(String title) {
-        return null;
-    }
-
-    @Override
-    public Integer findByLanguage(String language) {
-        return null;
-    }
 
     @Override
     public Boolean update(Course entity) {
@@ -79,7 +63,13 @@ public class CourseDaoImpl extends Entity<Integer> implements CourseDao<CourseDa
     }
 
     @Override
-    public Course findById(Integer id) {
+    public Course findById(Long id) {
         return null;
     }
+
+    @Override
+    public Boolean delete(Long id) {
+        return null;
+    }
+
 }

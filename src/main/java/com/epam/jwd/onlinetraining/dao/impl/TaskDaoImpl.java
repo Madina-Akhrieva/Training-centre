@@ -1,16 +1,19 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
-import com.epam.jwd.onlinetraining.dao.api.Dao;
 import com.epam.jwd.onlinetraining.dao.api.TaskDao;
 import com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool;
 import com.epam.jwd.onlinetraining.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.jwd.onlinetraining.dao.model.Task;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
-public class TaskDaoImpl implements  TaskDao<Task, Integer> {
+public class TaskDaoImpl implements  TaskDao<Task> {
     private static final String SQL_SAVE_TASK = "INSERT INTO task (course_id, description, task_number, task_answer, feedback) values (?,?,?,?,?)";
     private ConnectionPool pool = ConnectionPoolImpl.getInstance();
 
@@ -44,14 +47,15 @@ public class TaskDaoImpl implements  TaskDao<Task, Integer> {
     }
 
     @Override
-    public Task findById(Integer id) {
+    public Task findById(Long id) {
         return null;
     }
 
     @Override
-    public Boolean delete(Integer id) {
+    public Boolean delete(Long id) {
         return null;
     }
+
 
     @Override
     public List<Task> read() {
@@ -59,7 +63,8 @@ public class TaskDaoImpl implements  TaskDao<Task, Integer> {
     }
 
     @Override
-    public Optional<Task> read(Integer id) {
+    public Optional<Task> read(Long id) {
         return Optional.empty();
     }
+
 }

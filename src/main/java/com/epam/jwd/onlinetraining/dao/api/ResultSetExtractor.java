@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @FunctionalInterface
-public interface ResultSetExtractor<T extends Entity<Integer>> {
+public interface ResultSetExtractor<T extends Entity> {
 
     T extract(ResultSet resultSet) throws EntityExtractionFailedException;
 

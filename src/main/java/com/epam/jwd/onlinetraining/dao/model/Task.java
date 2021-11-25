@@ -2,7 +2,7 @@ package com.epam.jwd.onlinetraining.dao.model;
 
 import java.util.Objects;
 
-public class Task extends Entity<Integer> {
+public class Task extends Entity {
     private Integer courseId;
     private String description;
     private Integer taskNumber;

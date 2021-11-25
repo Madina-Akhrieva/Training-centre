@@ -2,7 +2,7 @@ package com.epam.jwd.onlinetraining.dao.model;
 
 import java.util.Objects;
 
-public class Mentor extends Entity<Integer> {
+public class Mentor extends Entity {
 
     private String universityTitle;
     private Integer amountOfWorkExperience;

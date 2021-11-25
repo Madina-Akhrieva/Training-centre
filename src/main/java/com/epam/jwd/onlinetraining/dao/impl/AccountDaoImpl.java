@@ -1,20 +1,24 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
-import com.epam.jwd.onlinetraining.dao.api.Dao;
+import com.epam.jwd.onlinetraining.dao.api.EntityDao;
 import com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool;
 import com.epam.jwd.onlinetraining.dao.connectionpool.impl.ConnectionPoolImpl;
 import com.epam.jwd.onlinetraining.dao.model.Account;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 
-public class AccountDaoImpl implements Dao<Account, Integer> {
+public class AccountDaoImpl implements EntityDao<Account> {
     private static final Logger LOGGER = LogManager.getLogger(AccountDaoImpl.class);
     private static final String SQL_SAVE_ACCOUNT = "INSERT INTO account(email, password) VALUES (?, ?); ";
     public static final String SQL_UPDATE_ACCOUNT = "UPDATE account SET password=? WHERE id_account=?";
@@ -66,7 +70,7 @@ public class AccountDaoImpl implements Dao<Account, Integer> {
         try (final Connection connection = pool.requestConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ACCOUNT);) {
             preparedStatement.setString(1, account.getPassword());
-            preparedStatement.setInt(2, account.getId());
+            preparedStatement.setString(2, account.getEmail());
             result = Objects.equals(preparedStatement.executeUpdate(), 1);
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -74,28 +78,35 @@ public class AccountDaoImpl implements Dao<Account, Integer> {
         return result;
     }
 
-
-    public Boolean delete(Account account) {
-        Boolean result = false;
-        try (final Connection connection = pool.requestConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_ACCOUNT);) {
-            preparedStatement.setInt(1, account.getId());
-            result = Objects.equals(preparedStatement.executeUpdate(), 1);
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        }
-        return result;
+    @Override
+    public Account findById(Long id) {
+        return null;
     }
+
+    @Override
+    public Boolean delete(Long id) {
+        return null;
+    }
+
+//
+//    public Boolean delete(Account account) {
+//        Boolean result = false;
+//        try (final Connection connection = pool.requestConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_ACCOUNT);) {
+//            preparedStatement.setInt(1, account.getId());
+//            result = Objects.equals(preparedStatement.executeUpdate(), 1);
+//        } catch (SQLException exception) {
+//            exception.printStackTrace();
+//        }
+//        return result;
+//    }
 
     public Account findById(Integer id) {
         Account account = new Account();
         return account;
     }
 
-    @Override
-    public Boolean delete(Integer id) {
-        return null;
-    }
+
 
     @Override
     public List<Account> read() {
@@ -103,7 +114,8 @@ public class AccountDaoImpl implements Dao<Account, Integer> {
     }
 
     @Override
-    public Optional<Account> read(Integer id) {
+    public Optional<Account> read(Long id) {
         return Optional.empty();
     }
+
 }

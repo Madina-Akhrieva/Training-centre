@@ -1,19 +1,19 @@
 package com.epam.jwd.onlinetraining.dao.model;
 
-public class Entity<T> {
-    protected T id;
+public class Entity{
+    protected Integer id;
 
     public Entity() {
     }
-    public Entity(T id) {
+    public Entity(Integer id) {
         this.id = id;
     }
 
-    public T getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(T id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }

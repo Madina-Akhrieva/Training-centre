@@ -1,5 +1,7 @@
 package com.epam.jwd.onlinetraining.dao.api;
 
-public interface UserDao{
+import com.epam.jwd.onlinetraining.dao.model.User;
+
+public interface UserDao extends EntityDao<User>{
 
 }

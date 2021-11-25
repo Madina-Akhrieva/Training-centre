@@ -1,11 +1,11 @@
 package com.epam.jwd.onlinetraining.service.api;
 
+import com.epam.jwd.onlinetraining.dao.model.Entity;
 import com.epam.jwd.onlinetraining.service.dto.AbstractDto;
 
-public interface Service<T extends AbstractDto<K>, K> {
-    T create(T entity);
-    T update(T entity);
-    boolean delete(T entity);
-    T getById(T entity);
-    T getAll(T entity);
+import java.util.List;
+
+public interface Service<T extends Entity> {
+
+    List<T> findAll(T entity);
 }
