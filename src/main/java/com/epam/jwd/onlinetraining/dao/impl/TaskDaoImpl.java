@@ -1,8 +1,8 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
-import com.epam.jwd.onlinetraining.dao.api.TaskDao;
-import com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool;
-import com.epam.jwd.onlinetraining.dao.connectionpool.impl.ConnectionPoolImpl;
+import com.epam.jwd.onlinetraining.dao.api.EntityDao;
+import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPool;
+import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPoolImpl;
 import com.epam.jwd.onlinetraining.dao.model.Task;
 
 import java.sql.Connection;
@@ -13,11 +13,11 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
-public class TaskDaoImpl implements  TaskDao<Task> {
+public class TaskDaoImpl implements EntityDao<Task> {
     private static final String SQL_SAVE_TASK = "INSERT INTO task (course_id, description, task_number, task_answer, feedback) values (?,?,?,?,?)";
     private ConnectionPool pool = ConnectionPoolImpl.getInstance();
 
-    @Override
+
     public Task save(Task task) {
         try (Connection connection = pool.requestConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_TASK, Statement.RETURN_GENERATED_KEYS)) {
@@ -39,6 +39,11 @@ public class TaskDaoImpl implements  TaskDao<Task> {
             exception.printStackTrace();
         }
         return task;
+    }
+
+    @Override
+    public Boolean insert(Task entity) {
+        return null;
     }
 
     @Override

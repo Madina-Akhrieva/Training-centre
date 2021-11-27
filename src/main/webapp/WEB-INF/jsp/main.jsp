@@ -49,8 +49,8 @@
         <%--        todo:to be deleted--%>
         <h4>Users:</h4>
         <ul>
-            <c:forEach var="user" items="${requestScope.users}">
-                <li>${user}</li>
+            <c:forEach var="course" items="${requestScope.courses}">
+                <li>${course}</li>
             </c:forEach>
         </ul>
         <%--        todo:to be deleted--%>

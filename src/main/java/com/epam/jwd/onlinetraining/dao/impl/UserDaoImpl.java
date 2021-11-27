@@ -1,7 +1,8 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
 import com.epam.jwd.onlinetraining.dao.api.EntityDao;
-import com.epam.jwd.onlinetraining.dao.connectionpool.impl.ConnectionPoolImpl;
+import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPool;
+import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPoolImpl;
 import com.epam.jwd.onlinetraining.dao.model.User;
 
 
@@ -19,7 +20,7 @@ public class UserDaoImpl implements EntityDao<User> {
     private static final String SQL_EDIT_USER = "UPDATE course_user SET   id_course_user = ?, role_id = ?, phone = ?, first_name=?, last_name=? WHERE id_course_user = ?";
     private static final String SQL_FIND_USER_BY_ID = "SELECT role_id, phone, first_name, last_name FROM course_user WHERE id_course_user = ?";
     private static final String SQL_FIND_ALL_USERS = "SELECT role_id, phone, first_name, last_name FROM course_user";
-    private com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool pool = ConnectionPoolImpl.getInstance();
+    private ConnectionPool pool = ConnectionPoolImpl.getInstance();
 
     //private  Account account = new Account();
 
@@ -30,7 +31,7 @@ public class UserDaoImpl implements EntityDao<User> {
 
 //    private UserServiceImpl userService = new UserServiceImpl();
 
-    @Override
+
     public User save(User user) {
         try (final Connection connection = pool.requestConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_USER, Statement.RETURN_GENERATED_KEYS)) {
@@ -52,6 +53,11 @@ public class UserDaoImpl implements EntityDao<User> {
             exception.printStackTrace();
         }
         return user;
+    }
+
+    @Override
+    public Boolean insert(User entity) {
+        return null;
     }
 
     @Override

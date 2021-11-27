@@ -1,8 +1,8 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
 import com.epam.jwd.onlinetraining.dao.api.EntityDao;
-import com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool;
-import com.epam.jwd.onlinetraining.dao.connectionpool.impl.ConnectionPoolImpl;
+import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPool;
+import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPoolImpl;
 import com.epam.jwd.onlinetraining.dao.model.Account;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,7 +37,7 @@ public class AccountDaoImpl implements EntityDao<Account> {
 
     }
 
-    @Override
+
     public Account save(Account account) {
         LOGGER.debug("save account to database");
         try (Connection connection = pool.requestConnection();
@@ -63,6 +63,11 @@ public class AccountDaoImpl implements EntityDao<Account> {
         return account;
     }
 
+
+    @Override
+    public Boolean insert(Account entity) {
+        return null;
+    }
 
     @Override
     public Boolean update(Account account) {

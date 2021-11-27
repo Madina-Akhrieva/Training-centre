@@ -2,9 +2,9 @@ package com.epam.jwd.onlinetraining.controller.command;
 
 import com.epam.jwd.onlinetraining.controller.api.RequestFactory;
 
-public enum ShowLoginPageCommand implements Command {
+public class ShowLoginPageCommand implements Command {
 
-    INSTANCE(RequestFactory.getInstance());
+    public static final ShowLoginPageCommand INSTANCE = new ShowLoginPageCommand(RequestFactory.getInstance());
 
     private static final String LOGIN_JSP_PATH = "/WEB-INF/jsp/login.jsp";
 

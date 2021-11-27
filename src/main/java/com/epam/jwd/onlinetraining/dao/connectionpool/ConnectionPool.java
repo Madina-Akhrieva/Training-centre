@@ -1,7 +1,5 @@
-package com.epam.jwd.onlinetraining.dao.connectionpool.api;
+package com.epam.jwd.onlinetraining.dao.connectionpool;
 
-
-import com.epam.jwd.onlinetraining.dao.connectionpool.exception.CouldNotInitializeConnectionPool;
 
 import java.sql.Connection;
 

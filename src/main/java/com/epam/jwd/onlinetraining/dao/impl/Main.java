@@ -2,8 +2,8 @@ package com.epam.jwd.onlinetraining.dao.impl;
 
 import com.epam.jwd.onlinetraining.dao.api.ResultSetExtractor;
 import com.epam.jwd.onlinetraining.dao.api.StatementPreparator;
-import com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool;
-import com.epam.jwd.onlinetraining.dao.connectionpool.impl.ConnectionPoolImpl;
+import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPool;
+import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPoolImpl;
 
 import com.epam.jwd.onlinetraining.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.onlinetraining.dao.model.Entity;

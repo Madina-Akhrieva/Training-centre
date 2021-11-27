@@ -4,18 +4,15 @@ import com.epam.jwd.onlinetraining.dao.impl.AccountDaoImpl;
 import com.epam.jwd.onlinetraining.dao.impl.UserDaoImpl;
 import com.epam.jwd.onlinetraining.dao.model.Account;
 import com.epam.jwd.onlinetraining.dao.model.User;
-import com.epam.jwd.onlinetraining.service.api.Service;
-import com.epam.jwd.onlinetraining.service.conveter.UserConverter;
-import com.epam.jwd.onlinetraining.service.dto.UserDto;
-import com.epam.jwd.onlinetraining.service.validator.UserValidator;
-import com.epam.jwd.onlinetraining.service.validator.Validator;
+import com.epam.jwd.onlinetraining.service.api.EntityService;
 
-public class UserService implements Service<UserDto, Integer> {
-    //todo:check
-    private UserConverter converter = new UserConverter();
-    private Validator<UserDto> validator = new UserValidator();
+
+import java.util.List;
+
+public class UserService implements EntityService<User> {
 
     private AccountDaoImpl accountDaoImpl = new AccountDaoImpl();
+
     private UserDaoImpl userDaoImpl = new UserDaoImpl();
 
 
@@ -46,31 +43,10 @@ public class UserService implements Service<UserDto, Integer> {
 
 
     @Override
-    public UserDto create(UserDto user) {
-        validator.validate(user);
-        return converter.convert(userDaoImpl.save(converter.convert(user)));
+    public List<User> findAll() {
 
-    }
-
-
-    @Override
-    public UserDto update(UserDto entity) {
         return null;
     }
 
-    @Override
-    public boolean delete(UserDto entity) {
-        return false;
-    }
-
-    @Override
-    public UserDto getById(UserDto entity) {
-        return null;
-    }
-
-    @Override
-    public UserDto getAll(UserDto entity) {
-        return null;
-    }
 
 }

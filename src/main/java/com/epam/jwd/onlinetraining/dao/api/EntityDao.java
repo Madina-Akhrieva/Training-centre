@@ -7,7 +7,7 @@ import java.util.Optional;
 
 
 public interface EntityDao<T extends Entity> {
-    T save(T entity);
+    Boolean insert(T entity);
 
     Boolean update(T entity);
 

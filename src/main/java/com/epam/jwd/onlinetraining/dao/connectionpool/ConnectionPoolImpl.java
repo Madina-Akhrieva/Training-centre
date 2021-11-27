@@ -1,6 +1,5 @@
-package com.epam.jwd.onlinetraining.dao.connectionpool.impl;
+package com.epam.jwd.onlinetraining.dao.connectionpool;
 
-import com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool;
 import com.epam.jwd.onlinetraining.dao.exception.ConnectionPoolException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -11,6 +11,6 @@ public interface RequestFactory {
     CommandResponse createForwardResponse(String path);
 
     static RequestFactory getInstance(){
-        return RequestFactoryImpl.INSTANCE;
+        return RequestFactory.getInstance();
     }
 }

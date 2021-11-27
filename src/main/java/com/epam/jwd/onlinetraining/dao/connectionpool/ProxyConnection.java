@@ -1,6 +1,6 @@
-package com.epam.jwd.onlinetraining.dao.connectionpool.impl;
+package com.epam.jwd.onlinetraining.dao.connectionpool;
 
-import com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool;
+import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPool;
 
 import java.sql.Array;
 import java.sql.Blob;
@@ -301,7 +301,7 @@ public class ProxyConnection implements Connection {
         return isWrapperFor(iface);
     }
 
-    void realClose() throws SQLException {
+    public void realClose() throws SQLException {
         this.connection.close();
     }
 }

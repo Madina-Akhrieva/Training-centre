@@ -3,7 +3,6 @@ package com.epam.jwd.onlinetraining.dao.model;
 import java.util.Objects;
 
 public class User extends Entity {
-
     private Integer roleId;
     private String phone;
     private String firstName;

@@ -1,10 +1,12 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
 
+import com.epam.jwd.onlinetraining.dao.api.CourseDao;
 import com.epam.jwd.onlinetraining.dao.api.EntityDao;
 import com.epam.jwd.onlinetraining.dao.api.ResultSetExtractor;
 import com.epam.jwd.onlinetraining.dao.api.StatementPreparator;
-import com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool;
+import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPool;
+import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPoolImpl;
 import com.epam.jwd.onlinetraining.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.onlinetraining.dao.model.Entity;
 
@@ -23,7 +25,7 @@ import java.util.List;
 import static java.lang.String.format;
 import static java.lang.String.join;
 
-public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
+public abstract class CommonDao<T extends Entity> implements EntityDao {
     private static final Logger LOGGER = LogManager.getLogger(CommonDao.class);
 
     private static final String INSERT_INTO = "insert into %s (%s)";
@@ -33,25 +35,26 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
     protected static final String WHERE_FIELD = "where %s = ?";
     protected static final String SPACE = " ";
 
-    protected final ConnectionPool pool;
+    protected final ConnectionPool pool = ConnectionPoolImpl.getInstance();
     private final String selectAllExpression;
     private final String selectByIdExpression;
     private final String insertSql;
 
-    protected CommonDao(ConnectionPool pool) {
-        this.pool = pool;
+    protected CommonDao() {
         this.selectAllExpression = format(SELECT_ALL_FROM, String.join(", ", getFields())) + getTableName();
         this.selectByIdExpression = selectAllExpression + SPACE + format(WHERE_FIELD, getIdFieldName());
         this.insertSql = format(INSERT_INTO, getTableName(), join(COMMA, getFields()));
     }
 
-
+    public static CourseDao getInstance(){
+        return CourseDaoImpl.getInstance();
+    }
 
     @Override
     public List<T> read() {
         try {
             return executeStatement(selectAllExpression,
-                    this::extractResultCatchingException);
+                    this::extractResult);
         } catch (InterruptedException e) {
             LOGGER.info("takeConnection interrupted", e);
             Thread.currentThread().interrupt();
@@ -194,7 +197,7 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
 
     protected abstract String getIdFieldName();
 
-    protected abstract T extractResult(ResultSet rs) throws SQLException;
+    protected abstract T extractResult(ResultSet rs) throws SQLException, EntityExtractionFailedException;
 
     protected abstract void fillEntity(PreparedStatement statement, T entity) throws SQLException;
 }

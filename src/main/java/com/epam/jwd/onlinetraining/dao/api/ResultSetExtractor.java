@@ -11,7 +11,7 @@ import java.util.List;
 @FunctionalInterface
 public interface ResultSetExtractor<T extends Entity> {
 
-    T extract(ResultSet resultSet) throws EntityExtractionFailedException;
+    T extract(ResultSet resultSet) throws EntityExtractionFailedException, SQLException;
 
     default List<T> extractAll(ResultSet resultSet) throws SQLException, EntityExtractionFailedException {
         List<T> entities = new ArrayList<>();

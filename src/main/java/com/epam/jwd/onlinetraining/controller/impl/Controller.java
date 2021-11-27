@@ -4,8 +4,7 @@ import com.epam.jwd.onlinetraining.controller.api.RequestFactory;
 import com.epam.jwd.onlinetraining.controller.command.Command;
 import com.epam.jwd.onlinetraining.controller.command.CommandRequest;
 import com.epam.jwd.onlinetraining.controller.command.CommandResponse;
-import com.epam.jwd.onlinetraining.dao.connectionpool.api.ConnectionPool;
-import com.epam.jwd.onlinetraining.dao.connectionpool.impl.ConnectionPoolImpl;
+import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPoolImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,7 +42,6 @@ public class Controller extends HttpServlet {
         LOGGER.debug("caught req and resp in doGet method");
 
         //todo:to be deleted
-        httpRequest.setAttribute("users", Arrays.asList("Bob", "Alice", "Masha"));
 
         final String commandName = httpRequest.getParameter(COMMAND_PARAM_NAME);
         final Command command = Command.of(commandName);

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Course extends Entity{
-    private Integer courseId;
     private Integer mentorId;
     private String title;
     private Integer amountOfTasks;
@@ -16,11 +15,17 @@ public class Course extends Entity{
     public Course() {
     }
 
-    public Course(Integer id, Integer courseId, Integer mentorId, String title,
+    public Course(String title, Integer amountOfTasks, String learningLanguage, String description) {
+        this.title = title;
+        this.amountOfTasks = amountOfTasks;
+        this.learningLanguage = learningLanguage;
+        this.description = description;
+    }
+
+    public Course(Integer id, Integer mentorId, String title,
                   Integer amountOfTasks, String learningLanguage, String description,
                   List<Task> tasksList) {
         super(id);
-        this.courseId = courseId;
         this.mentorId = mentorId;
         this.title = title;
         this.amountOfTasks = amountOfTasks;
@@ -88,14 +93,6 @@ public class Course extends Entity{
         return tasksList;
     }
 
-    public Integer getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
-    }
-
     public void setMentorId(Integer mentorId) {
         this.mentorId = mentorId;
     }
@@ -112,8 +109,7 @@ public class Course extends Entity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return Objects.equals(courseId, course.courseId)
-                && Objects.equals(mentorId, course.mentorId)
+        return  Objects.equals(mentorId, course.mentorId)
                 && Objects.equals(title, course.title)
                 && Objects.equals(amountOfTasks, course.amountOfTasks)
                 && Objects.equals(learningLanguage, course.learningLanguage)
@@ -123,7 +119,7 @@ public class Course extends Entity{
 
     @Override
     public int hashCode() {
-        return Objects.hash(courseId, mentorId, title, amountOfTasks,
+        return Objects.hash( mentorId, title, amountOfTasks,
                 learningLanguage, description, tasksList);
     }
 }
