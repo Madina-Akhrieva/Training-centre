@@ -1,6 +1,7 @@
 package com.epam.jwd.onlinetraining.service.impl;
 
 import com.epam.jwd.onlinetraining.dao.api.CourseDao;
+import com.epam.jwd.onlinetraining.dao.impl.CommonDao;
 import com.epam.jwd.onlinetraining.dao.model.Entity;
 import com.epam.jwd.onlinetraining.service.api.EntityService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;

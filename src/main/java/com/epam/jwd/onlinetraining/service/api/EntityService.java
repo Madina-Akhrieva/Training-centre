@@ -8,7 +8,4 @@ public interface EntityService<T extends Entity> {
 
     List<T> findAll();
 
-
-
-
 }

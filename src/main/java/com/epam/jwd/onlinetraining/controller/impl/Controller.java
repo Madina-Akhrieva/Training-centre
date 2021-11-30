@@ -11,8 +11,10 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/controller")
@@ -33,23 +35,29 @@ public class Controller extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest httpRequest, HttpServletResponse httpResponse){
-        LOGGER.debug("caught req and resp in doGet method");
+    protected void doGet(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+        LOGGER.trace("caught req and resp in doGet method");
+        processRequest(httpRequest, httpResponse);
+    }
 
-        //todo:to be deleted
+    @Override
+    protected void doPost(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+        LOGGER.trace("caught req and resp in doPost method");
+        processRequest(httpRequest, httpResponse);
+    }
 
+    private void processRequest(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
         final String commandName = httpRequest.getParameter(COMMAND_PARAM_NAME);
         final Command command = Command.of(commandName);
         final CommandRequest commandRequest = requestFactory.createRequest(httpRequest);
         final CommandResponse commandResponse = command.execute(commandRequest);
         proceedWithResponse(httpRequest, httpResponse, commandResponse);
-        LOGGER.debug("doGet method is finished");
     }
 
     private void proceedWithResponse(HttpServletRequest request, HttpServletResponse response,
                                      CommandResponse commandResponse) {
         try {
-            LOGGER.debug("We entered to proceedWithResponse method ");
+            LOGGER.debug("Entered to proceedWithResponse method ");
             forwardOrRedirectToResponseLocation(request, response, commandResponse);
         } catch (ServletException e) {
             LOGGER.error("ServletException exception occurred", e);

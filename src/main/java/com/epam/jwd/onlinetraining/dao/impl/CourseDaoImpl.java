@@ -1,5 +1,6 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
+import com.epam.jwd.onlinetraining.dao.api.CourseDao;
 import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPool;
 import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPoolImpl;
 import com.epam.jwd.onlinetraining.dao.exception.EntityExtractionFailedException;
@@ -17,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class CourseDaoImpl extends CommonDao<Course>{
+public class CourseDaoImpl extends CommonDao<Course> implements CourseDao{
     private static final Logger LOGGER = LogManager.getLogger(CourseDaoImpl.class);
     private static final String SQL_SAVE_COURSE = "INSERT INTO course (mentor_id, title, amount_of_tasks, learning_language, description) values(?,?,?,?,?) ";
     private static final String SQL_DELETE_COURSE = "DELETE FROM course WHERE  id VALUE (?)";
@@ -92,12 +93,7 @@ public class CourseDaoImpl extends CommonDao<Course>{
 
 
     @Override
-    public Boolean insert(Entity entity) {
-        return null;
-    }
-
-    @Override
-    public Boolean update(Entity entity) {
+    public Boolean insert(Course entity) {
         return null;
     }
 
@@ -117,5 +113,12 @@ public class CourseDaoImpl extends CommonDao<Course>{
     }
 
 
+    public static CourseDao getInstance() {
+        return Holder.INSTANCE;
+    }
+
+    private static class Holder {
+        public static final CourseDao INSTANCE =  new CourseDaoImpl();
+    }
 
 }

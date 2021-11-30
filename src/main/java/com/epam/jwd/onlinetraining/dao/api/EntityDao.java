@@ -9,8 +9,6 @@ import java.util.Optional;
 public interface EntityDao<T extends Entity> {
     Boolean insert(T entity);
 
-    Boolean update(T entity);
-
     T findById(Long id);
 
     Boolean delete(Long id);

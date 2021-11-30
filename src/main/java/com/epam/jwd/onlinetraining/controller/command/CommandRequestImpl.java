@@ -11,10 +11,10 @@ public class CommandRequestImpl implements CommandRequest {
         this.request = request;
     }
 
-
     @Override
     public void addAttributeToJsp(String name, Object attribute) {
         request.setAttribute(name, attribute);
+
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.epam.jwd.onlinetraining.controller.command;
 
-public class SignUpPageCommand implements Command {
-    public static SignUpPageCommand INSTANCE = new SignUpPageCommand();
+public enum SignUpPageCommand implements Command {
+    INSTANCE;
     public static final CommandResponse FORWARD_TO_SIGN_IN_PAGE_RESPONSE = new CommandResponse() {
         @Override
         public boolean isRedirect() {

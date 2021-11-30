@@ -3,11 +3,16 @@ package com.epam.jwd.onlinetraining.controller.command;
 import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.service.api.EntityService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.util.Arrays;
 import java.util.List;
 
-public class ShowMainPageCommand implements Command {
-    public static final ShowMainPageCommand INSTANCE  = new ShowMainPageCommand(ServiceFactory.simple().serviceFor(Course.class));
+public enum ShowMainPageCommand implements Command {
+    INSTANCE(ServiceFactory.simple().serviceFor(Course.class));
+
+    private static final Logger LOGGER = LogManager.getLogger(ShowMainPageCommand.class);
 
     private static final CommandResponse FORWARD_TO_MAIN_PAGE_RESPONSE = new CommandResponse() {
         @Override
@@ -24,17 +29,16 @@ public class ShowMainPageCommand implements Command {
 
     private final EntityService<Course> service;
 
-    public ShowMainPageCommand(EntityService<Course> service) {
+    ShowMainPageCommand(EntityService<Course> service) {
         this.service = service;
     }
 
-
     @Override
     public CommandResponse execute(CommandRequest request) {
-        List<Course> courses = service.findAll();
+        final List<Course> courses = service.findAll();
+//        String courses = "kdfjvndkjfvn";
+        LOGGER.warn("--we--");
         request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, courses);
         return FORWARD_TO_MAIN_PAGE_RESPONSE;
     }
-
-
 }

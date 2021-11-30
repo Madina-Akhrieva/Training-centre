@@ -1,6 +1,6 @@
 package com.epam.jwd.onlinetraining.controller.command;
 
-public interface Command {
+public interface  Command {
     CommandResponse execute (CommandRequest request);
 
     static Command of(String name){

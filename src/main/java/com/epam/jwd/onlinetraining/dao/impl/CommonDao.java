@@ -25,7 +25,7 @@ import java.util.List;
 import static java.lang.String.format;
 import static java.lang.String.join;
 
-public abstract class CommonDao<T extends Entity> implements EntityDao {
+public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
     private static final Logger LOGGER = LogManager.getLogger(CommonDao.class);
 
     private static final String INSERT_INTO = "insert into %s (%s)";
@@ -46,11 +46,9 @@ public abstract class CommonDao<T extends Entity> implements EntityDao {
         this.insertSql = format(INSERT_INTO, getTableName(), join(COMMA, getFields()));
     }
 
-    public static CourseDao getInstance(){
-        return CourseDaoImpl.getInstance();
-    }
 
-    @Override
+
+//todo : check override
     public List<T> read() {
         try {
             return executeStatement(selectAllExpression,

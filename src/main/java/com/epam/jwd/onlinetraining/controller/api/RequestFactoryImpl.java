@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class RequestFactoryImpl implements RequestFactory {
+public enum RequestFactoryImpl implements RequestFactory {
+    INSTANCE;
 
     private final Map<String, CommandResponse> forwardResponseCache = new ConcurrentHashMap<>();
     private final Map<String, CommandResponse> redirectResponseCache = new ConcurrentHashMap<>();
@@ -24,8 +25,8 @@ public class RequestFactoryImpl implements RequestFactory {
         return forwardResponseCache.computeIfAbsent(path, CommandResponseImpl::new);
     }
 
-//    @Override
-//    public CommandResponse createRedirectResponse(String path) {
-//        return redirectResponseCache.computeIfAbsent(path, p -> new PlainCommandResponse(true, p));
-//    }
+    @Override
+    public CommandResponse createRedirectResponse(String path) {
+        return redirectResponseCache.computeIfAbsent(path, p -> new CommandResponseImpl(true, p));
+    }
 }

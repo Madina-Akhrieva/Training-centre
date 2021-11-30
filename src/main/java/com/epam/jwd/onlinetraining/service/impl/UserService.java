@@ -26,19 +26,19 @@ public class UserService implements EntityService<User> {
         return userDaoImpl.save(user);
     }
 
-    public Boolean update(User user) {
-        Boolean isUpdated = false;
-        try {
-            isUpdated = accountDaoImpl.update(user.getAccount());
-            if (isUpdated == true) {
-                isUpdated = userDaoImpl.update(user);
-                userDaoImpl.update(user);
-            }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-        return isUpdated;
-    }
+//    public Boolean update(User user) {
+//        Boolean isUpdated = false;
+//        try {
+//            isUpdated = accountDaoImpl.update(user.getAccount());
+//            if (isUpdated == true) {
+//                isUpdated = userDaoImpl.update(user);
+//                userDaoImpl.update(user);
+//            }
+//        } catch (Exception exception) {
+//            exception.printStackTrace();
+//        }
+//        return isUpdated;
+//    }
 
 
 

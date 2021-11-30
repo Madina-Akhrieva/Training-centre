@@ -1,8 +1,11 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
+import com.epam.jwd.onlinetraining.dao.api.CourseDao;
 import com.epam.jwd.onlinetraining.dao.api.EntityDao;
 import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPool;
 import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPoolImpl;
+import com.epam.jwd.onlinetraining.dao.exception.EntityExtractionFailedException;
+import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.User;
 
 
@@ -15,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class UserDaoImpl implements EntityDao<User> {
+public class UserDaoImpl extends CommonDao<User>{
     private static final String SQL_SAVE_USER = "INSERT INTO course_user(id_course_user, role_id, phone, first_name, last_name) VALUES ( ?, ?, ?, ?, ?)";
     private static final String SQL_EDIT_USER = "UPDATE course_user SET   id_course_user = ?, role_id = ?, phone = ?, first_name=?, last_name=? WHERE id_course_user = ?";
     private static final String SQL_FIND_USER_BY_ID = "SELECT role_id, phone, first_name, last_name FROM course_user WHERE id_course_user = ?";
@@ -59,32 +62,32 @@ public class UserDaoImpl implements EntityDao<User> {
     public Boolean insert(User entity) {
         return null;
     }
-
-    @Override
-    public Boolean update(User user) {
-        Boolean result = false;
-        try (Connection connection = pool.requestConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_EDIT_USER);) {
-            preparedStatement.setInt(1,user.getId());
-            preparedStatement.setInt(2, user.getRoleId());
-            preparedStatement.setString(3, user.getPhone());
-            preparedStatement.setString(4, user.getFirstName());
-            preparedStatement.setString(5, user.getLastName());
-            preparedStatement.setInt(6,user.getId());
-            preparedStatement.executeUpdate();
-
-            int rowsUpdated = preparedStatement.executeUpdate();
-            if (rowsUpdated > 0) {
-                result = true;
-            }
-
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-            //todo:add logger
-        }
-        return result;
-
-    }
+//
+//    @Override
+//    public Boolean update(User user) {
+//        Boolean result = false;
+//        try (Connection connection = pool.requestConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement(SQL_EDIT_USER);) {
+//            preparedStatement.setInt(1,user.getId());
+//            preparedStatement.setInt(2, user.getRoleId());
+//            preparedStatement.setString(3, user.getPhone());
+//            preparedStatement.setString(4, user.getFirstName());
+//            preparedStatement.setString(5, user.getLastName());
+//            preparedStatement.setInt(6,user.getId());
+//            preparedStatement.executeUpdate();
+//
+//            int rowsUpdated = preparedStatement.executeUpdate();
+//            if (rowsUpdated > 0) {
+//                result = true;
+//            }
+//
+//        } catch (SQLException exception) {
+//            exception.printStackTrace();
+//            //todo:add logger
+//        }
+//        return result;
+//
+//    }
 
     @Override
     public User findById(Long id) {
@@ -106,6 +109,30 @@ public class UserDaoImpl implements EntityDao<User> {
         return Optional.empty();
     }
 
+    @Override
+    protected String getTableName() {
+        return null;
+    }
+
+    @Override
+    protected List<String> getFields() {
+        return null;
+    }
+
+    @Override
+    protected String getIdFieldName() {
+        return null;
+    }
+
+    @Override
+    protected User extractResult(ResultSet rs) throws SQLException, EntityExtractionFailedException {
+        return null;
+    }
+
+    @Override
+    protected void fillEntity(PreparedStatement statement, User entity) throws SQLException {
+
+    }
 
     public List<User> findAll() {
         try(Connection connection = pool.requestConnection();

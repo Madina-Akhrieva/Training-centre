@@ -69,19 +69,19 @@ public class AccountDaoImpl implements EntityDao<Account> {
         return null;
     }
 
-    @Override
-    public Boolean update(Account account) {
-        Boolean result = false;
-        try (final Connection connection = pool.requestConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ACCOUNT);) {
-            preparedStatement.setString(1, account.getPassword());
-            preparedStatement.setString(2, account.getEmail());
-            result = Objects.equals(preparedStatement.executeUpdate(), 1);
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        }
-        return result;
-    }
+//    @Override
+//    public Boolean update(Account account) {
+//        Boolean result = false;
+//        try (final Connection connection = pool.requestConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ACCOUNT);) {
+//            preparedStatement.setString(1, account.getPassword());
+//            preparedStatement.setString(2, account.getEmail());
+//            result = Objects.equals(preparedStatement.executeUpdate(), 1);
+//        } catch (SQLException exception) {
+//            exception.printStackTrace();
+//        }
+//        return result;
+//    }
 
     @Override
     public Account findById(Long id) {
@@ -91,6 +91,16 @@ public class AccountDaoImpl implements EntityDao<Account> {
     @Override
     public Boolean delete(Long id) {
         return null;
+    }
+
+    @Override
+    public List<Account> read() {
+        return null;
+    }
+
+    @Override
+    public Optional<Account> read(Long id) {
+        return Optional.empty();
     }
 
 //
@@ -112,15 +122,5 @@ public class AccountDaoImpl implements EntityDao<Account> {
     }
 
 
-
-    @Override
-    public List<Account> read() {
-        return null;
-    }
-
-    @Override
-    public Optional<Account> read(Long id) {
-        return Optional.empty();
-    }
 
 }

@@ -1,8 +1,12 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
+import com.epam.jwd.onlinetraining.dao.api.CourseDao;
 import com.epam.jwd.onlinetraining.dao.api.EntityDao;
+import com.epam.jwd.onlinetraining.dao.api.TaskDao;
 import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPool;
 import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPoolImpl;
+import com.epam.jwd.onlinetraining.dao.exception.EntityExtractionFailedException;
+import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.Task;
 
 import java.sql.Connection;
@@ -13,7 +17,7 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
-public class TaskDaoImpl implements EntityDao<Task> {
+public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
     private static final String SQL_SAVE_TASK = "INSERT INTO task (course_id, description, task_number, task_answer, feedback) values (?,?,?,?,?)";
     private ConnectionPool pool = ConnectionPoolImpl.getInstance();
 
@@ -46,10 +50,7 @@ public class TaskDaoImpl implements EntityDao<Task> {
         return null;
     }
 
-    @Override
-    public Boolean update(Task entity) {
-        return null;
-    }
+
 
     @Override
     public Task findById(Long id) {
@@ -70,6 +71,31 @@ public class TaskDaoImpl implements EntityDao<Task> {
     @Override
     public Optional<Task> read(Long id) {
         return Optional.empty();
+    }
+
+    @Override
+    protected String getTableName() {
+        return null;
+    }
+
+    @Override
+    protected List<String> getFields() {
+        return null;
+    }
+
+    @Override
+    protected String getIdFieldName() {
+        return null;
+    }
+
+    @Override
+    protected Task extractResult(ResultSet rs) throws SQLException, EntityExtractionFailedException {
+        return null;
+    }
+
+    @Override
+    protected void fillEntity(PreparedStatement statement, Task entity) throws SQLException {
+
     }
 
 }
