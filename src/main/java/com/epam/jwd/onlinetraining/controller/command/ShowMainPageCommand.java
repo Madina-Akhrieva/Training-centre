@@ -35,8 +35,8 @@ public enum ShowMainPageCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        final List<Course> courses = service.findAll();
-//        String courses = "kdfjvndkjfvn";
+//        final List<Course> courses = service.findAll();
+        String courses = "kdfjvndkjfvn";
         LOGGER.warn("--we--");
         request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, courses);
         return FORWARD_TO_MAIN_PAGE_RESPONSE;
