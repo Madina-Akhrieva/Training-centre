@@ -1,3 +1,8 @@
+
+
+$(".dropdown-trigger").dropdown();
+
+
 // Smooth Scrolling for internal links
 $('a[href^="#"]').on("click",function (e) {
     e.preventDefault();

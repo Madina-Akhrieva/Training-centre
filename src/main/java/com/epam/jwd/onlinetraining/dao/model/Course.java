@@ -1,16 +1,16 @@
 package com.epam.jwd.onlinetraining.dao.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Course extends Entity{
+public class Course extends Entity {
     private Integer mentorId;
     private String title;
     private Integer amountOfTasks;
     private String learningLanguage;
     private String description;
-    private List<Task> tasksList = new ArrayList<>();
 
     public Course() {
     }
@@ -31,24 +31,18 @@ public class Course extends Entity{
         this.amountOfTasks = amountOfTasks;
         this.learningLanguage = learningLanguage;
         this.description = description;
-        this.tasksList = tasksList;
     }
 
     public Course(Integer mentorId, String title, Integer amountOfTasks,
-                  String learningLanguage, String description, List<Task> tasksList) {
+                  String learningLanguage, String description) {
 
         this.mentorId = mentorId;
         this.title = title;
         this.amountOfTasks = amountOfTasks;
         this.learningLanguage = learningLanguage;
         this.description = description;
-        this.tasksList = tasksList;
     }
 
-    public Course(Integer mentorId, String title, Integer amountOfTasks,
-                  String learningLanguage, String description) {
-        this(mentorId,title,amountOfTasks,learningLanguage,description,null);
-    }
 
     public int getMentorId() {
         return mentorId;
@@ -89,20 +83,12 @@ public class Course extends Entity{
         this.description = description;
     }
 
-    public List<Task> getTasksList() {
-        return tasksList;
-    }
+
 
     public void setMentorId(Integer mentorId) {
         this.mentorId = mentorId;
     }
 
-    public void setTasksList(List<Task> tasksList) {
-        this.tasksList = tasksList;
-        for (Task task : tasksList) {
-            task.setCourse(this);
-        }
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -113,13 +99,24 @@ public class Course extends Entity{
                 && Objects.equals(title, course.title)
                 && Objects.equals(amountOfTasks, course.amountOfTasks)
                 && Objects.equals(learningLanguage, course.learningLanguage)
-                && Objects.equals(description, course.description)
-                && Objects.equals(tasksList, course.tasksList);
+                && Objects.equals(description, course.description);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash( mentorId, title, amountOfTasks,
-                learningLanguage, description, tasksList);
+                learningLanguage, description);
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "mentorId=" + mentorId +
+                ", title='" + title + '\'' +
+                ", amountOfTasks=" + amountOfTasks +
+                ", learningLanguage='" + learningLanguage + '\'' +
+                ", description='" + description + '\'' +
+                ", id=" + id +
+                '}';
     }
 }

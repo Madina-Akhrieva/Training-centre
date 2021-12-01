@@ -62,8 +62,8 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
 
     protected <T extends Entity>List<T> executeStatement(String sql, ResultSetExtractor<T> extractor) throws InterruptedException {
         try (final Connection connection = pool.requestConnection();
-             final Statement statement = connection.createStatement();
-             final ResultSet resultSet = statement.executeQuery(sql)) {
+             final Statement statement = connection.createStatement()) {
+            final ResultSet resultSet = statement.executeQuery(sql);
             return extractor.extractAll(resultSet);
         } catch (SQLException e) {
             LOGGER.error("sql exception occurred", e);

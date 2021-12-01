@@ -36,8 +36,8 @@ public class Main {
         final List<User> users = fetchUsersFromDb();
         users.forEach(user -> LOGGER.trace("found user {}", user));
         CourseDaoImpl courseDao = new CourseDaoImpl();
-        Course course = new Course(1, "new title", 6, "java", "description", null);
-        Course course1 = courseDao.save(course);
+//        Course course = new Course(1, "new title", 6, "java", "description");
+//        Course course1 = courseDao.save(course);
         connectionPoll.shutdown();
         LOGGER.debug("end program");
     }

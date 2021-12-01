@@ -36,18 +36,15 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     public ConnectionPoolImpl() {
     }
 
-    public static ConnectionPool getInstance() {
-        getInstanceLock.lock();
+    public static synchronized ConnectionPool getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new ConnectionPoolImpl();
         }
-        getInstanceLock.unlock();
         return INSTANCE;
     }
 
     @Override
-    public boolean init() {
-        getInstanceLock.lock();
+    public synchronized boolean init() {
         if (!initialized) {
             try {
                 registerDrivers();
@@ -55,8 +52,6 @@ public final class ConnectionPoolImpl implements ConnectionPool {
                 initialized = true;
             } catch (ConnectionPoolException e) {
                 LOGGER.error("occurred by ConnectionPoolException", e);
-            } finally {
-                getInstanceLock.unlock();
             }
         }
         return initialized;
@@ -92,8 +87,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
 
     //todo : add throw interrupted exception
     @Override
-    public  Connection requestConnection() {
-        getInstanceLock.lock();
+    public synchronized   Connection requestConnection() {
         if (!initialized) {
             init();
         }
@@ -103,8 +97,6 @@ public final class ConnectionPoolImpl implements ConnectionPool {
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 LOGGER.error("occurred by InterruptedException", e);
-            } finally {
-                getInstanceLock.unlock();
             }
         }
         ProxyConnection connection = availableConnections.poll();
@@ -114,30 +106,25 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     }
 
     @Override
-    public void returnConnection(Connection connection) {
+    public synchronized void  returnConnection(Connection connection) {
 
-        getInstanceLock.lock();
         if (usedConnections.remove(connection)) {
             availableConnections.add((ProxyConnection) connection);
-            condition.signalAll();
 //            this.notifyAll();
         }else{
             LOGGER.warn("attempt to return unknown connection to connection pool. Connection: {}",connection);
         }
         LOGGER.info("return connection {}", connection);
-        getInstanceLock.unlock();
     }
 
     @Override
-    public boolean shutdown() {
-        getInstanceLock.lock();
+    public  boolean shutdown() {
         if(initialized) {
             closeConnections();
             deregisterDrivers();
             initialized = false;
             return true;
         }
-        getInstanceLock.unlock();
         return false;
     }
 
@@ -154,7 +141,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
 
     }
 
-    private void closeConnection(ProxyConnection connection) {
+    private synchronized void closeConnection(ProxyConnection connection) {
         try {
             connection.realClose();
             LOGGER.info("closed connection {}",connection);

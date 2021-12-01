@@ -68,6 +68,34 @@ public class Task extends Entity {
                 && Objects.equals(course, task.course);
     }
 
+
+//    @Override
+//    public String toString() {
+//        return "{" +
+//                "\"id\":\"" + id + "\""+
+//                ", \"courseId\":\"" + courseId +"\""+
+//                ", \"description\":\"'" + description + "\"" +
+//                ", \"taskNumber\":\"" + taskNumber +"\""+
+//                ", \"taskAnswer\":\"" + taskAnswer + "\"" +
+//                ", \"feedback\":\"" + feedback + "\"" +
+//                ", \"course\":\"" + course +"\""+
+//                '}';
+//    }
+
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", courseId=" + courseId +
+                ", description='" + description + '\'' +
+                ", taskNumber=" + taskNumber +
+                ", taskAnswer='" + taskAnswer + '\'' +
+                ", feedback='" + feedback + '\'' +
+                ", course=" + course +
+                '}';
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(courseId, description, taskNumber, taskAnswer, feedback, course);
