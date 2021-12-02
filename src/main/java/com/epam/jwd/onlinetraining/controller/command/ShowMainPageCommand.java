@@ -37,28 +37,6 @@ public enum ShowMainPageCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final List<Course> courses = service.findAll();
-
-//        List<String> courses = new ArrayList<>();
-//        for (Course course: list) {
-//            courses.add(course.getTitle());
-//        }
-//        final List<String> courses = Arrays.asList()
-
-//        List<String> courses = Arrays.asList("as", "as");
-//        List<Course> courses = Arrays.asList(
-//                new Course("title", 12, "language", "description"),
-//                new Course("title", 12, "language", "description"),
-//                new Course("title", 12, "language", "description"),
-//                new Course("title", 12, "language", "description"),
-//                new Course("title", 12, "language", "description"),
-//                new Course("title", 12, "language", "description"),
-//                new Course("title", 12, "language", "description"),
-//                new Course("title", 12, "language", "description")
-//
-//
-//                );
-//        List<String> courses = new ArrayList<>();
-
         request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, courses);
         return FORWARD_TO_MAIN_PAGE_RESPONSE;
     }

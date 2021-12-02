@@ -10,7 +10,7 @@ public enum SignUpPageCommand implements Command {
 
         @Override
         public String getPath() {
-            return "WEB-INF/jsp/signup.jsp";
+            return "WEB-INF/jsp/login_signup.jsp";
         }
     };
     @Override

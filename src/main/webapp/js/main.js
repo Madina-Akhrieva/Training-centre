@@ -47,3 +47,4 @@ function openProject( event ) {
 function closeWindow( event ) {
     $(event.target).parents(".full-screen").fadeOut();
 }
+

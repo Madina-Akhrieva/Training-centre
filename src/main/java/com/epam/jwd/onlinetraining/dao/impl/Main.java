@@ -28,16 +28,12 @@ public class Main {
     private static final String SELECT_ALL_SQL = "select * from course_user";
     private static final String FIND_USERS_OLDER_THAN_SQL = "select * from course_user where age > 30";
 
-//    private static final String ROLE_ID_COLUMN_NAME = ;
-
     public static void main(String[] args) {
         LOGGER.debug("start program");
         connectionPoll.init();
         final List<User> users = fetchUsersFromDb();
         users.forEach(user -> LOGGER.trace("found user {}", user));
         CourseDaoImpl courseDao = new CourseDaoImpl();
-//        Course course = new Course(1, "new title", 6, "java", "description");
-//        Course course1 = courseDao.save(course);
         connectionPoll.shutdown();
         LOGGER.debug("end program");
     }
