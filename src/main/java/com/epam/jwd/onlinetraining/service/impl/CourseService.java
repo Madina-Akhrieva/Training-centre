@@ -28,7 +28,7 @@ public class CourseService implements EntityService<Course> {
                 .map(course -> {
                     final Long courseMentorId = courseDao.findMentorIdByCourseID(course.getId()).orElse(null);
                     final Optional<Mentor> courseMentor = mentorDao.read(courseMentorId);
-                    return  course.withMentor(courseMentor.orElse(null));
+                    return course.withMentor(courseMentor.orElse(null));
                 })
                 .collect(Collectors.toList());
     }

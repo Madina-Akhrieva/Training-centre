@@ -7,6 +7,7 @@ import java.util.Optional;
 
 
 public interface EntityDao<T extends Entity> {
+
     Boolean delete(Long id);
 
     List<T> read();

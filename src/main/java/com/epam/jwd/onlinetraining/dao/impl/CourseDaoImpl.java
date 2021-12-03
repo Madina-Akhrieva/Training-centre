@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao {
+
     private static final Logger LOGGER = LogManager.getLogger(CourseDaoImpl.class);
 
     private static final String SQL_SAVE_COURSE = "INSERT INTO course (mentor_id, title, amount_of_tasks, learning_language, description) values(?,?,?,?,?) ";

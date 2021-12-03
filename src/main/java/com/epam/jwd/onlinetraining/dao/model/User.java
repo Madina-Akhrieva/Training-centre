@@ -1,6 +1,7 @@
 package com.epam.jwd.onlinetraining.dao.model;
 
 public class User implements Entity {
+
     private Long id;
     private String phone;
     private String firstName;

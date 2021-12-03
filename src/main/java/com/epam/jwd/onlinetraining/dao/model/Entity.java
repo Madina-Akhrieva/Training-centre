@@ -1,6 +1,7 @@
 package com.epam.jwd.onlinetraining.dao.model;
 
-public interface Entity{
+public interface Entity {
+
     Long getId();
 
 }

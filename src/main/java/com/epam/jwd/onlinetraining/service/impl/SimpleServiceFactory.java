@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 public class SimpleServiceFactory implements ServiceFactory {
+
     public static final SimpleServiceFactory INSTANCE = new SimpleServiceFactory();
 
     private static final String SERVICE_NOT_FOUND = "Couldn't create service %s";
@@ -27,10 +28,10 @@ public class SimpleServiceFactory implements ServiceFactory {
     }
 
     //if server wasn't found and will create servicese
-     private Function<Class<?>, EntityService<?>> createServiceFromClass(){
+    private Function<Class<?>, EntityService<?>> createServiceFromClass() {
         return clazz -> {
             final String className = clazz.getSimpleName();
-            switch(className){
+            switch (className) {
                 case "Course":
                     return new CourseService(CourseDao.instance(), MentorDao.instance());
                 default:
@@ -38,6 +39,6 @@ public class SimpleServiceFactory implements ServiceFactory {
 
             }
         };
-     }
+    }
 
 }

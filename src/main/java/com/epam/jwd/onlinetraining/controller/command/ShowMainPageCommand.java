@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum ShowMainPageCommand implements Command {
+
     INSTANCE(ServiceFactory.simple().serviceFor(Course.class));
 
     private static final Logger LOGGER = LogManager.getLogger(ShowMainPageCommand.class);

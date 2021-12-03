@@ -1,5 +1,6 @@
-package com.epam.jwd.onlinetraining.controller.api;
+package com.epam.jwd.onlinetraining.controller.impl;
 
+import com.epam.jwd.onlinetraining.controller.api.RequestFactory;
 import com.epam.jwd.onlinetraining.controller.command.CommandRequest;
 import com.epam.jwd.onlinetraining.controller.command.CommandResponse;
 import com.epam.jwd.onlinetraining.controller.command.CommandRequestImpl;
@@ -10,6 +11,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public enum RequestFactoryImpl implements RequestFactory {
+
     INSTANCE;
 
     private final Map<String, CommandResponse> forwardResponseCache = new ConcurrentHashMap<>();

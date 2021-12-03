@@ -1,4 +1,4 @@
-package com.epam.jwd.onlinetraining.controller.impl;
+package com.epam.jwd.onlinetraining.controller.servlet;
 
 import com.epam.jwd.onlinetraining.controller.api.RequestFactory;
 import com.epam.jwd.onlinetraining.controller.command.Command;
@@ -19,13 +19,16 @@ import java.io.IOException;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
-    public static final String COMMAND_PARAM_NAME = "command";
+
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
+
+    public static final String COMMAND_PARAM_NAME = "command";
+
 
     private final RequestFactory requestFactory = RequestFactory.getInstance();
 
     @Override
-    public void init(){
+    public void init() {
         ConnectionPoolImpl.getInstance().init();
     }
 

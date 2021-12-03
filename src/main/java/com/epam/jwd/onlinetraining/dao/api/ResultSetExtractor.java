@@ -14,8 +14,11 @@ public interface ResultSetExtractor<T> {
     T extract(ResultSet resultSet) throws EntityExtractionFailedException, SQLException;
 
     default List<T> extractAll(ResultSet resultSet) throws SQLException, EntityExtractionFailedException {
+
         List<T> entities = new ArrayList<>();
+
         while (resultSet.next()) {
+
             final T entity = this.extract(resultSet);
             entities.add(entity);
         }

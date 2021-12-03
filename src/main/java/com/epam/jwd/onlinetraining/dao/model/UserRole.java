@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public enum UserRole {
+
     ADMIN("admin", 1),
     STUDENT("student", 2),
     CLIENT("client", 3);

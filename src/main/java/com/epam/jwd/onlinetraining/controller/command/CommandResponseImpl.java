@@ -3,6 +3,7 @@ package com.epam.jwd.onlinetraining.controller.command;
 import java.util.Objects;
 
 public class CommandResponseImpl implements CommandResponse {
+
     private final boolean redirect;
     private final String path;
 

@@ -4,10 +4,10 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 
 public class NoConnectionInUsedConnections extends RuntimeException{
+
     public NoConnectionInUsedConnections() {
         super();
     }
-
 
     public NoConnectionInUsedConnections(String message) {
         super(message);

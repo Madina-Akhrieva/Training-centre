@@ -2,14 +2,10 @@ package com.epam.jwd.onlinetraining.dao.impl;
 
 import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPool;
 import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPoolImpl;
-import com.epam.jwd.onlinetraining.dao.exception.EntityExtractionFailedException;
 import com.epam.jwd.onlinetraining.dao.model.Task;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,10 +45,12 @@ public class TaskDaoImpl extends CommonDao<Task> {
     }
 
     @Override
-    protected Task extractResult(ResultSet rs){ return null; }
+    protected Task extractResult(ResultSet rs) {
+        return null;
+    }
 
     @Override
-    protected void fillEntity(PreparedStatement statement, Task entity){
+    protected void fillEntity(PreparedStatement statement, Task entity) {
 
     }
 

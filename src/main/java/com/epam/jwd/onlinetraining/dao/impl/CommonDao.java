@@ -36,6 +36,7 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
     protected static final String SPACE = " ";
 
     protected final ConnectionPool pool = ConnectionPoolImpl.getInstance();
+
     private final String selectAllExpression;
     private final String selectByIdExpression;
     private final String insertSql;

@@ -1,8 +1,8 @@
 package com.epam.jwd.onlinetraining.dao.model;
 
 public class Course implements Entity {
-    private Long id;
 
+    private Long id;
     private final String title;
     private final Integer amountOfTasks;
     private final String learningLanguage;
@@ -51,8 +51,8 @@ public class Course implements Entity {
         return mentor;
     }
 
-    public Course withMentor(Mentor mentor){
-        return  new Course(id, title, amountOfTasks, learningLanguage, description, mentor);
+    public Course withMentor(Mentor mentor) {
+        return new Course(id, title, amountOfTasks, learningLanguage, description, mentor);
     }
 
 }

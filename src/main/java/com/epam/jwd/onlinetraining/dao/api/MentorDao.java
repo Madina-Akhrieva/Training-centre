@@ -5,7 +5,7 @@ import com.epam.jwd.onlinetraining.dao.model.Mentor;
 
 public interface MentorDao extends EntityDao<Mentor> {
 
-    static MentorDao instance(){
+    static MentorDao instance() {
         return MentorDaoImpl.getInstance();
     }
 

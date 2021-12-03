@@ -32,7 +32,7 @@ public final class MentorDaoImpl extends CommonDao<Mentor> implements MentorDao 
     }
 
     @Override
-    protected Mentor extractResult(ResultSet rs) throws SQLException{
+    protected Mentor extractResult(ResultSet rs) throws SQLException {
         return new Mentor(
                 rs.getLong("id_mentor"),
                 rs.getString("phone"),

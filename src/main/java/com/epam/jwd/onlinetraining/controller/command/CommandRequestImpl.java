@@ -5,6 +5,7 @@ import com.epam.jwd.onlinetraining.controller.command.CommandRequest;
 import javax.servlet.http.HttpServletRequest;
 
 public class CommandRequestImpl implements CommandRequest {
+
     private final HttpServletRequest request;
 
     public CommandRequestImpl(HttpServletRequest request) {
@@ -21,7 +22,6 @@ public class CommandRequestImpl implements CommandRequest {
     public String getParameter(String name) {
         return request.getParameter(name);
     }
-
 
 
 }

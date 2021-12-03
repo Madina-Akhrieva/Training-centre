@@ -1,12 +1,8 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
-import com.epam.jwd.onlinetraining.dao.api.CourseDao;
-import com.epam.jwd.onlinetraining.dao.api.EntityDao;
 import com.epam.jwd.onlinetraining.dao.api.UserDao;
 import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPool;
 import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPoolImpl;
-import com.epam.jwd.onlinetraining.dao.exception.EntityExtractionFailedException;
-import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.User;
 
 
@@ -14,9 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
-import java.util.Optional;
 
 
 public class UserDaoImpl extends CommonDao<User> implements UserDao {

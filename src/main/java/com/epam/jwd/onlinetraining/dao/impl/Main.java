@@ -22,6 +22,7 @@ import java.util.List;
 
 
 public class Main {
+
     private static final Logger LOGGER = LogManager.getLogger(Main.class);
 
     private static final ConnectionPool connectionPoll = ConnectionPoolImpl.getInstance();
@@ -51,8 +52,8 @@ public class Main {
     }
 
     private static <T extends Entity> List<T> executePrepared(String sql,
-                                                                       ResultSetExtractor<T> extractor,
-                                                                       StatementPreparator statementPreparation) {
+                                                              ResultSetExtractor<T> extractor,
+                                                              StatementPreparator statementPreparation) {
         try (final Connection connection = connectionPoll.requestConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
             if (statementPreparation != null) {
@@ -70,7 +71,7 @@ public class Main {
     }
 
     private static <T extends Entity> List<T> executeStatement(String sql,
-                                                                        ResultSetExtractor<T> extractor) {
+                                                               ResultSetExtractor<T> extractor) {
         try (final Connection connection = connectionPoll.requestConnection();
              final Statement statement = connection.createStatement();
              final ResultSet resultSet = statement.executeQuery(sql)) {

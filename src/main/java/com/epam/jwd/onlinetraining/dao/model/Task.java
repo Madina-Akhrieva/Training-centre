@@ -3,6 +3,7 @@ package com.epam.jwd.onlinetraining.dao.model;
 import java.util.Objects;
 
 public class Task implements Entity {
+
     private Long id;
     private Integer courseId;
     private String description;
@@ -49,7 +50,9 @@ public class Task implements Entity {
         return feedback;
     }
 
-    public Integer getCourseId() { return  courseId; }
+    public Integer getCourseId() {
+        return courseId;
+    }
 
     public void setCourse(Course course) {
         this.course = course;

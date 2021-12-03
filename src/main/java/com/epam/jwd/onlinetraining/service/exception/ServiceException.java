@@ -1,6 +1,7 @@
 package com.epam.jwd.onlinetraining.service.exception;
 
-public class ServiceException extends Exception{
+public class ServiceException extends Exception {
+
     public ServiceException() {
     }
 

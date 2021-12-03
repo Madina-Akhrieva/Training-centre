@@ -1,6 +1,7 @@
 package com.epam.jwd.onlinetraining.dao.model;
 
 public class Account implements Entity {
+
     private Long id;
     private int roleId;
     private String password;

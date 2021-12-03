@@ -66,7 +66,7 @@ public class AccountDaoImpl extends CommonDao<Account> implements EntityDao<Acco
     }
 
     @Override
-    protected Account extractResult(ResultSet rs) throws SQLException{
+    protected Account extractResult(ResultSet rs) throws SQLException {
         return null;
     }
 
