@@ -1,7 +1,5 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
-
-import com.epam.jwd.onlinetraining.dao.api.CourseDao;
 import com.epam.jwd.onlinetraining.dao.api.EntityDao;
 import com.epam.jwd.onlinetraining.dao.api.ResultSetExtractor;
 import com.epam.jwd.onlinetraining.dao.api.StatementPreparator;
@@ -20,12 +18,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 
 import static java.lang.String.format;
 import static java.lang.String.join;
 
 public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
+
     private static final Logger LOGGER = LogManager.getLogger(CommonDao.class);
 
     private static final String INSERT_INTO = "insert into %s (%s)";
@@ -46,18 +46,39 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
         this.insertSql = format(INSERT_INTO, getTableName(), join(COMMA, getFields()));
     }
 
+    @Override
+    public T create(T entity) {
+        return null;
+    }
 
-
-//todo : check override
+    @Override
     public List<T> read() {
         try {
             return executeStatement(selectAllExpression,
-                    this::extractResult);
+                    this::extractResultCatchingException);
         } catch (InterruptedException e) {
             LOGGER.info("takeConnection interrupted", e);
             Thread.currentThread().interrupt();
             return Collections.emptyList();
         }
+    }
+
+    @Override
+    public Optional<T> read(Long id) {
+        //todo : impl
+        return Optional.empty();
+    }
+
+    @Override
+    public T update(T entity) {
+        //todo : impl
+        return null;
+    }
+
+    @Override
+    public Boolean delete(Long id) {
+        //todo : impl
+        return null;
     }
 
     protected <T extends Entity>List<T> executeStatement(String sql, ResultSetExtractor<T> extractor) throws InterruptedException {
@@ -74,9 +95,28 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
         return Collections.emptyList();
     }
 
-    protected  <T extends Entity> List<T> executePrepared(String sql,
-                                                              ResultSetExtractor<T> extractor,
+    protected <G> Optional<G> executePreparedForGenericEntity(String sql,
+                                                              ResultSetExtractor<G> extractor,
                                                               StatementPreparator statementPreparation) {
+        try (final Connection connection = pool.requestConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
+            if (statementPreparation != null) {
+                statementPreparation.accept(statement);
+            }
+            final ResultSet resultSet = statement.executeQuery();
+            return Optional.ofNullable(extractor.extract(resultSet));
+        } catch (SQLException e) {
+            LOGGER.error("sql exception occurred", e);
+            LOGGER.debug("sql: {}", sql);
+        } catch (EntityExtractionFailedException e) {
+            LOGGER.error("could not extract entity", e);
+        }
+        return Optional.empty();
+    }
+
+    protected  <T extends Entity> List<T> executePreparedForEntities(String sql,
+                                                                   ResultSetExtractor<T> extractor,
+                                                                   StatementPreparator statementPreparation) {
         try (final Connection connection = pool.requestConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
             if (statementPreparation != null) {
@@ -93,6 +133,39 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
         return Collections.emptyList();
     }
 
+
+    protected int executePreparedUpdate(String sql, StatementPreparator statementPreparation) {
+        try (final Connection connection = pool.requestConnection();
+             final PreparedStatement statement = connection.prepareStatement(sql)) {
+            if (statementPreparation != null) {
+                statementPreparation.accept(statement);
+            }
+            return statement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("sql exception occurred", e);
+            LOGGER.debug("sql: {}", sql);
+        }
+        return 0;
+    }
+
+    protected T extractResultCatchingException(ResultSet rs) throws EntityExtractionFailedException {
+        try {
+            return extractResult(rs);
+        } catch (SQLException e) {
+            LOGGER.error("sql exception occurred extracting entity from ResultSet", e);
+            throw new EntityExtractionFailedException("could not extract entity", e);
+        }
+    }
+
+    protected abstract String getTableName();
+
+    protected abstract List<String> getFields();
+
+    protected abstract String getIdFieldName();
+
+    protected abstract T extractResult(ResultSet rs) throws SQLException;
+
+    protected abstract void fillEntity(PreparedStatement statement, T entity) throws SQLException;
 
 
 
@@ -166,37 +239,6 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
 //    }
 
 
-    protected int executePreparedUpdate(String sql, StatementPreparator statementPreparation) {
-        try (final Connection connection = pool.requestConnection();
-             final PreparedStatement statement = connection.prepareStatement(sql)) {
-            if (statementPreparation != null) {
-                statementPreparation.accept(statement);
-            }
-            return statement.executeUpdate();
-        } catch (SQLException e) {
-            LOGGER.error("sql exception occurred", e);
-            LOGGER.debug("sql: {}", sql);
-        }
-        return 0;
-    }
 
-    protected T extractResultCatchingException(ResultSet rs) throws EntityExtractionFailedException {
-        try {
-            return extractResult(rs);
-        } catch (SQLException e) {
-            LOGGER.error("sql exception occurred extracting entity from ResultSet", e);
-            throw new EntityExtractionFailedException("could not extract entity", e);
-        }
-    }
-
-    protected abstract String getTableName();
-
-    protected abstract List<String> getFields();
-
-    protected abstract String getIdFieldName();
-
-    protected abstract T extractResult(ResultSet rs) throws SQLException, EntityExtractionFailedException;
-
-    protected abstract void fillEntity(PreparedStatement statement, T entity) throws SQLException;
 }
 

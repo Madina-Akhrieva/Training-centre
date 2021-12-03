@@ -1,7 +1,7 @@
 package com.epam.jwd.onlinetraining.service.impl;
 
 import com.epam.jwd.onlinetraining.dao.api.CourseDao;
-import com.epam.jwd.onlinetraining.dao.impl.CommonDao;
+import com.epam.jwd.onlinetraining.dao.api.MentorDao;
 import com.epam.jwd.onlinetraining.dao.model.Entity;
 import com.epam.jwd.onlinetraining.service.api.EntityService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
@@ -32,7 +32,7 @@ public class SimpleServiceFactory implements ServiceFactory {
             final String className = clazz.getSimpleName();
             switch(className){
                 case "Course":
-                    return new CourseService(CourseDao.instance());
+                    return new CourseService(CourseDao.instance(), MentorDao.instance());
                 default:
                     throw new IllegalArgumentException(String.format(SERVICE_NOT_FOUND, className));
 

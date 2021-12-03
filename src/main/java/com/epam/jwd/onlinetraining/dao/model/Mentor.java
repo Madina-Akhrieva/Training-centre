@@ -2,75 +2,38 @@ package com.epam.jwd.onlinetraining.dao.model;
 
 import java.util.Objects;
 
-public class Mentor extends Entity {
+public class Mentor extends User {
 
-    private String universityTitle;
-    private Integer amountOfWorkExperience;
-    private Integer universityDegreeAvailability;
+    private int experience;
+    private String position;
 
-    public Mentor() {
+
+    public Mentor(Long id, String phone, String firstName, String lastName, int experience, String position) {
+        super(id, phone, firstName, lastName);
+        this.experience = experience;
+        this.position = position;
     }
 
-    public Mentor(Integer id, String universityTitle,
-                  Integer amountOfWorkExperience, Integer universityDegreeAvailability) {
-        super(id);
-        this.universityTitle = universityTitle;
-        this.amountOfWorkExperience = amountOfWorkExperience;
-        this.universityDegreeAvailability = universityDegreeAvailability;
+    public Mentor(String phone, String firstName, String lastName, String email, int experience, String position) {
+        super(phone, firstName, lastName, email);
+        this.experience = experience;
+        this.position = position;
     }
 
-    public Mentor(String universityTitle, Integer amountOfWorkExperience, Integer universityDegreeAvailability) {
-        this.universityTitle = universityTitle;
-        this.amountOfWorkExperience = amountOfWorkExperience;
-        this.universityDegreeAvailability = universityDegreeAvailability;
+    public int getExperience() {
+        return experience;
     }
 
-    public String getUniversityTitle() {
-        return universityTitle;
+    public void setExperience(int experience) {
+        this.experience = experience;
     }
 
-    public void setUniversityTitle(String universityTitle) {
-        this.universityTitle = universityTitle;
+    public String getPosition() {
+        return position;
     }
 
-    public Integer getAmountOfWorkingExperience() {
-        return amountOfWorkExperience;
+    public void setPosition(String position) {
+        this.position = position;
     }
 
-    public void setAmountOfWorkingExperience(Integer amountOfWorkingExperience) {
-        this.amountOfWorkExperience = amountOfWorkingExperience;
-    }
-
-    public Integer getUniversityDegreeAvailability() {
-        return universityDegreeAvailability;
-    }
-
-    public void setUniversityDegreeAvailability(Integer universityDegreeAvailability) {
-        this.universityDegreeAvailability = universityDegreeAvailability;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Mentor mentor = (Mentor) o;
-        return Objects.equals(universityTitle, mentor.universityTitle)
-                && Objects.equals(amountOfWorkExperience, mentor.amountOfWorkExperience)
-                && Objects.equals(universityDegreeAvailability, mentor.universityDegreeAvailability);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(universityTitle, amountOfWorkExperience, universityDegreeAvailability);
-    }
-
-    @Override
-    public String toString() {
-        return "Mentor{" +
-                "id=" + id +
-                ", universityTitle='" + universityTitle + '\'' +
-                ", amountOfWorkExperience=" + amountOfWorkExperience +
-                ", universityDegreeAvailability=" + universityDegreeAvailability +
-                '}';
-    }
 }

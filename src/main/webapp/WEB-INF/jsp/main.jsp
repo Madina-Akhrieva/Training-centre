@@ -4,7 +4,7 @@
 <head>
     <title>Title</title>
     <!-- CSS only -->
-    <link rel="stylesheet" href="/WEB-INF/css/styles.css">
+    <link rel="stylesheet" href="../css/main.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
@@ -22,28 +22,26 @@
         </div>
     </nav>
 
+    <div class="card-wrapper">
+        <c:forEach var="course" items="${requestScope.courses}">
+            <div class="row">
+                <div class="col s12 m6">
+                    <div class="card black darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">${course.title}</span>
+                            <p>${course.description}</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">Register</a>
+                            <a href="#">Execute</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
 
 
- <div class="wrapper-1">
-     <c:forEach var="course" items="${requestScope.courses}">
-         <div class="row">
-
-             <div class="col s12 m6" >
-                 <div class="card black darken-1">
-
-                     <div class="card-content white-text">
-                         <span class="card-title">${course.title}</span>
-                         <p>${course.description}</p>
-                     </div>
-                     <div class="card-action">
-                         <a href="#">Register</a>
-                         <a href="#">Execute</a>
-                     </div>
-                 </div>
-             </div>
-         </div>
-     </c:forEach>
- </div>
 
 
 
@@ -92,8 +90,7 @@
         <li class="waves-effect"><a href="#!"><i class="material-icons">></i></a></li>
     </ul>
 
-
-    <footer class="page-footer">
+    <footer class="page-footer black">
         <div class="container">
             <div class="row">
                 <div class="col l6 s12">
@@ -114,11 +111,7 @@
         <div class="footer-copyright">
             <div class="container">
                 © 2014 Copyright Text
-                <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-            </div>
-        </div>
-    </footer>
-
+                <a class="grey-text text-lighten-4 right" href="#!">More Lin
 
 
     <%--        <header class="p-3 bg-dark text-white">--%>

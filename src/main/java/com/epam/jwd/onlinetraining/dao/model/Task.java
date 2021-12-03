@@ -2,7 +2,8 @@ package com.epam.jwd.onlinetraining.dao.model;
 
 import java.util.Objects;
 
-public class Task extends Entity {
+public class Task implements Entity {
+    private Long id;
     private Integer courseId;
     private String description;
     private Integer taskNumber;
@@ -24,7 +25,6 @@ public class Task extends Entity {
 
     public Task(Integer id, Integer courseId, String description, Integer taskNumber,
                 String taskAnswer, String feedback) {
-        super(id);
         this.courseId = courseId;
         this.description = description;
         this.taskNumber = taskNumber;
@@ -56,48 +56,7 @@ public class Task extends Entity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
-        return Objects.equals(courseId, task.courseId)
-                && Objects.equals(description, task.description)
-                && Objects.equals(taskNumber, task.taskNumber)
-                && Objects.equals(taskAnswer, task.taskAnswer)
-                && Objects.equals(feedback, task.feedback)
-                && Objects.equals(course, task.course);
-    }
-
-
-//    @Override
-//    public String toString() {
-//        return "{" +
-//                "\"id\":\"" + id + "\""+
-//                ", \"courseId\":\"" + courseId +"\""+
-//                ", \"description\":\"'" + description + "\"" +
-//                ", \"taskNumber\":\"" + taskNumber +"\""+
-//                ", \"taskAnswer\":\"" + taskAnswer + "\"" +
-//                ", \"feedback\":\"" + feedback + "\"" +
-//                ", \"course\":\"" + course +"\""+
-//                '}';
-//    }
-
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", courseId=" + courseId +
-                ", description='" + description + '\'' +
-                ", taskNumber=" + taskNumber +
-                ", taskAnswer='" + taskAnswer + '\'' +
-                ", feedback='" + feedback + '\'' +
-                ", course=" + course +
-                '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(courseId, description, taskNumber, taskAnswer, feedback, course);
+    public Long getId() {
+        return null;
     }
 }

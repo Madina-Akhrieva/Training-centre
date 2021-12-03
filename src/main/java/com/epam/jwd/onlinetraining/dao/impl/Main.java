@@ -88,16 +88,10 @@ public class Main {
     private static User extractUser(ResultSet resultSet) throws EntityExtractionFailedException {
         try {
             return new User(
-                    resultSet.getInt("role_id"),
                     resultSet.getString("phone"),
                     resultSet.getString("first_name"),
-                    resultSet.getString("last_name")
-//                    new  Account(
-//                            resultSet.getInt(""),
-//                            resultSet.getString(""),
-//                            resultSet.getString("")
-//                    ),
-//                    UserRole.getRoleById()
+                    resultSet.getString("last_name"),
+                    resultSet.getString("email")
             );
         } catch (SQLException e) {
             LOGGER.error("could not extract value from result set", e);

@@ -7,14 +7,14 @@ import java.util.Optional;
 
 
 public interface EntityDao<T extends Entity> {
-    Boolean insert(T entity);
-
-    T findById(Long id);
-
     Boolean delete(Long id);
 
     List<T> read();
 
     Optional<T> read(Long id);
+
+    T create(T entity);
+
+    T update(T entity);
 
 }
