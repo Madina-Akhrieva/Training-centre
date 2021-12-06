@@ -1,9 +1,8 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
 import com.epam.jwd.onlinetraining.dao.api.EntityDao;
-import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPool;
-import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPoolImpl;
-import com.epam.jwd.onlinetraining.dao.exception.EntityExtractionFailedException;
+import com.epam.jwd.onlinetraining.dao.db.ConnectionPool;
+import com.epam.jwd.onlinetraining.dao.db.LockingConnectionPool;
 import com.epam.jwd.onlinetraining.dao.model.Account;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,11 +17,10 @@ public class AccountDaoImpl extends CommonDao<Account> implements EntityDao<Acco
 
     private static final Logger LOGGER = LogManager.getLogger(AccountDaoImpl.class);
 
-    private ConnectionPool pool = ConnectionPoolImpl.getInstance();
-
-    public AccountDaoImpl() {
-
+    protected AccountDaoImpl(ConnectionPool pool) {
+        super(pool);
     }
+
 
     @Override
     public Account create(Account entity) {

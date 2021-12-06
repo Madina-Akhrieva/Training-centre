@@ -1,8 +1,8 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
 import com.epam.jwd.onlinetraining.dao.api.UserDao;
-import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPool;
-import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPoolImpl;
+import com.epam.jwd.onlinetraining.dao.db.ConnectionPool;
+import com.epam.jwd.onlinetraining.dao.db.LockingConnectionPool;
 import com.epam.jwd.onlinetraining.dao.model.User;
 
 
@@ -12,13 +12,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-
 public class UserDaoImpl extends CommonDao<User> implements UserDao {
     private static final String SQL_SAVE_USER = "INSERT INTO course_user(id_course_user, role_id, phone, first_name, last_name) VALUES ( ?, ?, ?, ?, ?)";
     private static final String SQL_EDIT_USER = "UPDATE course_user SET   id_course_user = ?, role_id = ?, phone = ?, first_name=?, last_name=? WHERE id_course_user = ?";
     private static final String SQL_FIND_USER_BY_ID = "SELECT role_id, phone, first_name, last_name FROM course_user WHERE id_course_user = ?";
     private static final String SQL_FIND_ALL_USERS = "SELECT role_id, phone, first_name, last_name FROM course_user";
-    private ConnectionPool pool = ConnectionPoolImpl.getInstance();
+
+    protected UserDaoImpl(ConnectionPool pool) {
+        super(pool);
+    }
 
 
     @Override
@@ -46,8 +48,8 @@ public class UserDaoImpl extends CommonDao<User> implements UserDao {
 
     }
 
-    public List<User> findAll() {
-        try(Connection connection = pool.requestConnection();
+    public List<User> findAll() throws InterruptedException {
+        try(Connection connection = pool.takeConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_USERS)){
 
         } catch (SQLException exception) {

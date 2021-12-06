@@ -67,7 +67,7 @@ button:focus {
 
 button.ghost {
     background-color: transparent;
-    border-color: #ffffff;
+    border-color: #ffb507;
 }
 
 form {
@@ -166,7 +166,7 @@ input {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 0;
-    color: #ffffff;
+    color: #ffb507;
     position: relative;
     left: -100%;
     height: 100%;
@@ -216,7 +216,7 @@ input {
 }
 
 .social-container a {
-    border: 1px solid #DDDDDD;
+    border: 1px solid #ffb507;
     border-radius: 50%;
     display: inline-flex;
     justify-content: center;

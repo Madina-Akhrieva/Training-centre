@@ -4,7 +4,7 @@ import com.epam.jwd.onlinetraining.controller.api.RequestFactory;
 import com.epam.jwd.onlinetraining.controller.command.Command;
 import com.epam.jwd.onlinetraining.controller.command.CommandRequest;
 import com.epam.jwd.onlinetraining.controller.command.CommandResponse;
-import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPoolImpl;
+import com.epam.jwd.onlinetraining.dao.db.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,12 +29,12 @@ public class Controller extends HttpServlet {
 
     @Override
     public void init() {
-        ConnectionPoolImpl.getInstance().init();
+        ConnectionPool.instance().init();
     }
 
     @Override
     public void destroy() {
-        ConnectionPoolImpl.getInstance().shutdown();
+        ConnectionPool.instance().shutDown();
     }
 
     @Override

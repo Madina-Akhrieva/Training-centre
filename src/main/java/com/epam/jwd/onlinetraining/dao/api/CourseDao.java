@@ -15,7 +15,6 @@ public interface CourseDao extends EntityDao<Course> {
     Optional<Long> findMentorIdByCourseID(Long id);
 
     static CourseDao instance() {
-
         return CourseDaoImpl.getInstance();
     }
 

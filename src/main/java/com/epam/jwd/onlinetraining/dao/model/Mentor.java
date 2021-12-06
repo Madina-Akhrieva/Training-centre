@@ -20,6 +20,13 @@ public class Mentor extends User {
         this.position = position;
     }
 
+
+    public Mentor(Long id, int experience, String position) {
+        super(id, null, null, null);
+        this.experience = experience;
+        this.position = position;
+    }
+
     public int getExperience() {
         return experience;
     }

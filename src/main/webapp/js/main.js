@@ -48,3 +48,13 @@ function closeWindow( event ) {
     $(event.target).parents(".full-screen").fadeOut();
 }
 
+
+$(document).ready(() => {
+    let typingElement = $('.typing');
+
+    typingElement.on('click', (e) => {
+        typingElement.removeClass('animate');
+        setTimeout(() => typingElement.addClass('animate'), 1);
+    })
+});
+

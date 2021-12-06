@@ -1,5 +1,7 @@
 package com.epam.jwd.onlinetraining.dao.model;
 
+import java.util.Objects;
+
 public class Course implements Entity {
 
     private Long id;
@@ -19,13 +21,13 @@ public class Course implements Entity {
         this.mentor = mentor;
     }
 
-    public Course(String title, Integer amountOfTasks, String learningLanguage, String description) {
-        this(null, title, amountOfTasks, learningLanguage, description, null);
+    public Course(Long id, String title, Integer amountOfTasks, String learningLanguage, String description) {
+        this(id,  title, amountOfTasks, learningLanguage, description, null);
     }
 
     @Override
     public Long getId() {
-        return null;
+        return id;
     }
 
 
@@ -55,4 +57,21 @@ public class Course implements Entity {
         return new Course(id, title, amountOfTasks, learningLanguage, description, mentor);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return Objects.equals(id, course.id)
+                && Objects.equals(title, course.title)
+                && Objects.equals(amountOfTasks, course.amountOfTasks) &&
+                Objects.equals(learningLanguage, course.learningLanguage)
+                && Objects.equals(description, course.description)
+                && Objects.equals(mentor, course.mentor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, amountOfTasks, learningLanguage, description, mentor);
+    }
 }

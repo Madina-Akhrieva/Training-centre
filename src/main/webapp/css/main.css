@@ -1,7 +1,89 @@
-.card-wrapper{
+.centre{
 
-    display: grid;
-    grid-template-columns: repeat(2, 0.5fr);
-    grid-template-rows: repeat(2, 400px);
+    /*display: grid;*/
+    /*grid-template-columns: repeat(2, 0.5fr);*/
+    /*grid-template-rows: repeat(2, 400px);*/
 
+    margin-left: auto;
+    margin-right: auto;
+
+}
+.after_nav{
+    height: 20%;
+    color: #ffb507;
+    background: #000000;
+    margin-left: auto;
+    margin-right: auto;
+
+
+}
+
+
+/*body {*/
+
+/*    height: 500px;*/
+/*    color: #ffb507;*/
+/*    background: #000000;*/
+/*}*/
+
+.typing.animate {
+    width: 21ch;
+    border-right: 0.1em solid black;
+    font-family: monospace;
+    font-size: 2em;
+    animation: type 2.5s steps(20), writer 1s infinite alternate, delete 0.5s steps(5) 2.5s, type2 1s steps(4) 3s forwards, type3 3s steps(22, end) 6s forwards;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.typing.animate::before {
+    content: "Hello, I'm Bunny";
+    animation: type2 1s steps(4) 3s forwards, type3 3s steps(22, end) 6s forwards;
+}
+
+@keyframes type {
+    from {
+        width: 0;
+    }
+    to {
+        width: 21ch;
+    }
+}
+
+@keyframes type2 {
+    from {
+        width: 16ch;
+        content: "Hello! "
+    }
+    to {
+        width: 20ch;
+        content: "Hello! "
+    }
+}
+
+@keyframes type3 {
+    from {
+        width: 20ch;
+        content: "Hello! Open the future together with us ♥"
+    }
+    to {
+        width: 42ch;
+        content: "Hello! Open the future together with us ♥"
+    }
+}
+
+@keyframes writer {
+    50% {
+        border-color: transparent;
+    }
+}
+
+@keyframes delete {
+    from {
+        width: 21ch;
+    }
+    to {
+        width: 16ch;
+    }
 }

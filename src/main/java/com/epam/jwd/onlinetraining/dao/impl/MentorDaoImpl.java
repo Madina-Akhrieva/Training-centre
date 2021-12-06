@@ -1,20 +1,29 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
-import com.epam.jwd.onlinetraining.dao.api.CourseDao;
-import com.epam.jwd.onlinetraining.dao.api.EntityDao;
 import com.epam.jwd.onlinetraining.dao.api.MentorDao;
-import com.epam.jwd.onlinetraining.dao.exception.EntityExtractionFailedException;
-import com.epam.jwd.onlinetraining.dao.model.Course;
+import com.epam.jwd.onlinetraining.dao.db.ConnectionPool;
 import com.epam.jwd.onlinetraining.dao.model.Mentor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 public final class MentorDaoImpl extends CommonDao<Mentor> implements MentorDao {
+    private static final Logger LOGGER = LogManager.getLogger(MentorDaoImpl.class);
+
+    private static final List<String> FIELDS = Arrays.asList(
+            "id","experience", "position"
+    );
 
     public static final String MENTOR_TABLE_NAME = "mentor";
+
+    protected MentorDaoImpl(ConnectionPool pool) {
+        super(pool);
+    }
 
     @Override
     protected String getTableName() {
@@ -23,7 +32,7 @@ public final class MentorDaoImpl extends CommonDao<Mentor> implements MentorDao 
 
     @Override
     protected List<String> getFields() {
-        return null;
+        return FIELDS;
     }
 
     @Override
@@ -34,27 +43,27 @@ public final class MentorDaoImpl extends CommonDao<Mentor> implements MentorDao 
     @Override
     protected Mentor extractResult(ResultSet rs) throws SQLException {
         return new Mentor(
-                rs.getLong("id_mentor"),
-                rs.getString("phone"),
-                rs.getString("first_name"),
-                rs.getString("last_name"),
+                rs.getLong("id"),
+//                rs.getString("phone"),
+//                rs.getString("first_name"),
+//                rs.getString("last_name"),
                 rs.getInt("experience"),
                 rs.getString("position")
         );
     }
 
     @Override
-    protected void fillEntity(PreparedStatement statement, Mentor entity) throws SQLException {
+    protected void fillEntity(PreparedStatement statement, Mentor entity) {
 
     }
 
 
     public static MentorDao getInstance() {
-        return MentorDaoImpl.Holder.INSTANCE;
+        return Holder.INSTANCE;
     }
 
     private static class Holder {
-        public static final MentorDao INSTANCE = new MentorDaoImpl();
+        public static final MentorDao INSTANCE = new MentorDaoImpl(ConnectionPool.instance());
     }
 
 }

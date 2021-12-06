@@ -1,7 +1,7 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
-import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPool;
-import com.epam.jwd.onlinetraining.dao.connectionpool.ConnectionPoolImpl;
+import com.epam.jwd.onlinetraining.dao.db.ConnectionPool;
+import com.epam.jwd.onlinetraining.dao.db.LockingConnectionPool;
 import com.epam.jwd.onlinetraining.dao.model.Task;
 
 import java.sql.PreparedStatement;
@@ -11,7 +11,10 @@ import java.util.Optional;
 
 public class TaskDaoImpl extends CommonDao<Task> {
 
-    private ConnectionPool pool = ConnectionPoolImpl.getInstance();
+
+    protected TaskDaoImpl(ConnectionPool pool) {
+        super(pool);
+    }
 
     @Override
     public Boolean delete(Long id) {
