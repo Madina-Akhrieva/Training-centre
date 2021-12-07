@@ -27,7 +27,7 @@ public class CourseService implements EntityService<Course> {
 
     @Override
     public List<Course> findAll() {
-        transactionManager.initTransaction();
+//        transactionManager.initTransaction();
         List<Course> courses = courseDao.read()
                 .stream()
                 .map(course -> {
@@ -36,7 +36,7 @@ public class CourseService implements EntityService<Course> {
                     return course.withMentor(courseMentor.orElse(null));
                 })
                 .collect(Collectors.toList());
-        transactionManager.commitTransaction();
+//        transactionManager.commitTransaction();
         return courses;
     }
 

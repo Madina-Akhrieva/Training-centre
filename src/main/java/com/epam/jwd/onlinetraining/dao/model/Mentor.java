@@ -6,25 +6,29 @@ public class Mentor extends User {
 
     private int experience;
     private String position;
+    private String pen_name;
 
 
-    public Mentor(Long id, String phone, String firstName, String lastName, int experience, String position) {
+    public Mentor(Long id, String phone, String firstName, String lastName, int experience, String position, String pen_name) {
         super(id, phone, firstName, lastName);
         this.experience = experience;
         this.position = position;
+        this.pen_name = pen_name;
     }
 
-    public Mentor(String phone, String firstName, String lastName, String email, int experience, String position) {
+    public Mentor(String phone, String firstName, String lastName, String email, int experience, String position, String pen_name) {
         super(phone, firstName, lastName, email);
         this.experience = experience;
         this.position = position;
+        this.pen_name = pen_name;
     }
 
 
-    public Mentor(Long id, int experience, String position) {
+    public Mentor(Long id, int experience, String position, String pen_name) {
         super(id, null, null, null);
         this.experience = experience;
         this.position = position;
+        this.pen_name = pen_name;
     }
 
     public int getExperience() {
@@ -43,4 +47,32 @@ public class Mentor extends User {
         this.position = position;
     }
 
+    public String getPen_name() {
+        return pen_name;
+    }
+
+    public void setPen_name(String pen_name) {
+        this.pen_name = pen_name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Mentor mentor = (Mentor) o;
+        return experience == mentor.experience && Objects.equals(position, mentor.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(experience, position);
+    }
+
+    @Override
+    public String toString() {
+        return "Mentor{" +
+                "experience=" + experience +
+                ", position='" + position + '\'' +
+                '}';
+    }
 }

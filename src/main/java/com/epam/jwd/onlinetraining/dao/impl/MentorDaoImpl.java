@@ -16,7 +16,7 @@ public final class MentorDaoImpl extends CommonDao<Mentor> implements MentorDao 
     private static final Logger LOGGER = LogManager.getLogger(MentorDaoImpl.class);
 
     private static final List<String> FIELDS = Arrays.asList(
-            "id","experience", "position"
+            "id","experience", "position", "pen_name"
     );
 
     public static final String MENTOR_TABLE_NAME = "mentor";
@@ -48,7 +48,8 @@ public final class MentorDaoImpl extends CommonDao<Mentor> implements MentorDao 
 //                rs.getString("first_name"),
 //                rs.getString("last_name"),
                 rs.getInt("experience"),
-                rs.getString("position")
+                rs.getString("position"),
+                rs.getString("pen_name")
         );
     }
 

@@ -5,6 +5,7 @@ public enum CommandRegistry {
     MAIN_PAGE(ShowMainPageCommand.INSTANCE, "main_page"),
     SIGN_UP_PAGE(SignUpPageCommand.INSTANCE, "sign_up"),
     LOGIN_PAGE(ShowLoginPageCommand.INSTANCE, "show_login"),
+    PROFILE_PAGE(ShowProfilePageCommand.INSTANCE, "show_profile"),
     DEFAULT(ShowMainPageCommand.INSTANCE, "");
 
     private final Command command;

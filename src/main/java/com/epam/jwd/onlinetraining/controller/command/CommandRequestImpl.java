@@ -1,7 +1,5 @@
 package com.epam.jwd.onlinetraining.controller.command;
 
-import com.epam.jwd.onlinetraining.controller.command.CommandRequest;
-
 import javax.servlet.http.HttpServletRequest;
 
 public class CommandRequestImpl implements CommandRequest {

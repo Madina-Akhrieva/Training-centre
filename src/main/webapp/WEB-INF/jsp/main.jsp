@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="../css/main.css">
 
 </head>
-    <body>
+    <body >
 
     <nav class="black">
         <div class="nav-wrapper">
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="/controller?command=show_login">Sign in</a></li>
                 <li><a href="/controller?command=sign_up">Sign up</a></li>
-                <li><a href="collapsible.html">Watch profile</a></li>
+                <li><a href="/controller?command=show_profile">Watch profile</a></li>
             </ul>
         </div>
     </nav>
@@ -34,7 +34,15 @@
                             <div class="card-content white-text">
                                 <span class="card-title">${course.title}</span>
                                 <p>${course.description}</p>
-                                <p>${course.mentor}</p>
+
+                                <br>
+                                <hr>
+                                <br>
+                                <p><span>Курсы ведет ментор: </span>${course.mentor.pen_name}</p>
+                                <p><span>Позиция ментора:</span>${course.mentor.position}</p>
+                                <p>Опыт работы:  <span>${course.mentor.experience}</span>
+                                    <span>года</span></p>
+
                             </div>
                             <div class="card-action">
                                 <a href="#">Register</a>
