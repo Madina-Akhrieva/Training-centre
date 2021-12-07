@@ -14,6 +14,10 @@
 	</div>
 	<div class="leftbox">
 		<nav>
+			<div class="tell_us">
+				Tell us about you ♥
+			</div>
+
 			<a id="profile" class="active"><i class="fa fa-user"></i></a>
 			<a id="payment"><i class="fa fa-credit-card"></i></a>
 			<a id="subscription"><i class="fa fa-tv"></i></a>

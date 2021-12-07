@@ -4,18 +4,21 @@ import com.epam.jwd.onlinetraining.controller.api.RequestFactory;
 
 public enum ShowLoginPageCommand implements Command {
 
-    INSTANCE(RequestFactory.getInstance());
+    INSTANCE(PropertyContext.instance(), RequestFactory.getInstance());
 
-    private static final String LOGIN_JSP_PATH = "/WEB-INF/jsp/login_signup.jsp";
+    private  final PropertyContext propertyContext;
+
+    private static final String LOGIN_PAGE = "login";
 
     private final RequestFactory requestFactory;
 
-    ShowLoginPageCommand(RequestFactory requestFactory) {
+    ShowLoginPageCommand(PropertyContext propertyContext, RequestFactory requestFactory) {
+        this.propertyContext = propertyContext;
         this.requestFactory = requestFactory;
     }
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        return requestFactory.createForwardResponse(LOGIN_JSP_PATH);
+        return requestFactory.createForwardResponse(propertyContext.get(LOGIN_PAGE));
     }
 }
