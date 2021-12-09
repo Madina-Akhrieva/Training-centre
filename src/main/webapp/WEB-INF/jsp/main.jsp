@@ -10,11 +10,14 @@
 
 </head>
     <body >
+    <c:if test="${not empty sessionScope.account}">
+        <p>Hello user</p>
+    </c:if>
 
     <nav class="black">
         <div class="nav-wrapper">
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="/controller?command=show_login">Sign in</a></li>
+                <li><a href="/controller?command=show_login ">Sign in</a></li>
                 <li><a href="/controller?command=sign_up">Sign up</a></li>
                 <li><a href="/controller?command=show_profile">Watch profile</a></li>
             </ul>

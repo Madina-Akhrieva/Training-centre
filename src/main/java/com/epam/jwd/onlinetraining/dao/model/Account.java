@@ -25,6 +25,12 @@ public class Account implements Entity {
         this.email = email;
     }
 
+
+    public Account(String password, String email) {
+        this.password = password;
+        this.email = email;
+    }
+
     public int getRoleId() {
         return roleId;
     }

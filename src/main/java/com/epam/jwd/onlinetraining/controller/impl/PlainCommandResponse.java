@@ -1,17 +1,19 @@
-package com.epam.jwd.onlinetraining.controller.command;
+package com.epam.jwd.onlinetraining.controller.impl;
+
+import com.epam.jwd.onlinetraining.controller.command.CommandResponse;
 
 import java.util.Objects;
 
-public class CommandResponseImpl implements CommandResponse {
+public class PlainCommandResponse implements CommandResponse {
 
     private final boolean redirect;
     private final String path;
 
-    public CommandResponseImpl(String path) {
+    public PlainCommandResponse(String path) {
         this(false, path);
     }
 
-    public CommandResponseImpl(boolean redirect, String path) {
+    public PlainCommandResponse(boolean redirect, String path) {
         this.redirect = redirect;
         this.path = path;
     }
@@ -30,7 +32,7 @@ public class CommandResponseImpl implements CommandResponse {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CommandResponseImpl that = (CommandResponseImpl) o;
+        PlainCommandResponse that = (PlainCommandResponse) o;
         return redirect == that.redirect && Objects.equals(path, that.path);
     }
 

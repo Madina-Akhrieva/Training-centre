@@ -41,7 +41,7 @@ public class Controller extends HttpServlet {
     protected void doGet(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
         LOGGER.trace("caught req and resp in doGet method");
         processRequest(httpRequest, httpResponse);
-    }
+     }
 
     @Override
     protected void doPost(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {

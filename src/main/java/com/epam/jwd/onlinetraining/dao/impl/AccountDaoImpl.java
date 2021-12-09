@@ -1,6 +1,8 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
+import com.epam.jwd.onlinetraining.dao.api.AccountDao;
 import com.epam.jwd.onlinetraining.dao.api.EntityDao;
+import com.epam.jwd.onlinetraining.dao.api.UserDao;
 import com.epam.jwd.onlinetraining.dao.db.ConnectionPool;
 import com.epam.jwd.onlinetraining.dao.db.LockingConnectionPool;
 import com.epam.jwd.onlinetraining.dao.model.Account;
@@ -13,12 +15,20 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class AccountDaoImpl extends CommonDao<Account> implements EntityDao<Account> {
+import static java.lang.String.format;
+
+public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
 
     private static final Logger LOGGER = LogManager.getLogger(AccountDaoImpl.class);
+    public static final String EMAIL_FIELD_NAME = "email";
+    public static final String PASSWORD_FIELD_NAME = "account_password";
+    public static final String ACCOUNT_TABLE_NAME = "account";
+
+    private final String selectByEmailExpression;
 
     protected AccountDaoImpl(ConnectionPool pool) {
         super(pool);
+        this.selectByEmailExpression = CommonDao.SELECT_ALL_FROM + CommonDao.WHERE_FIELD + format (WHERE_FIELD, EMAIL_FIELD_NAME);
     }
 
 
@@ -50,7 +60,7 @@ public class AccountDaoImpl extends CommonDao<Account> implements EntityDao<Acco
 
     @Override
     protected String getTableName() {
-        return null;
+        return ACCOUNT_TABLE_NAME;
     }
 
     @Override
@@ -65,12 +75,37 @@ public class AccountDaoImpl extends CommonDao<Account> implements EntityDao<Acco
 
     @Override
     protected Account extractResult(ResultSet rs) throws SQLException {
-        return null;
+        return new Account(
+                rs.getString(PASSWORD_FIELD_NAME),
+                rs.getString(EMAIL_FIELD_NAME)
+        );
     }
 
     @Override
     protected void fillEntity(PreparedStatement statement, Account entity) throws SQLException {
 
+    }
+
+
+
+    @Override
+    public Optional<Account> readAccountByEmail(String email) {
+        try {
+            return executePreparedForGenericEntity(selectByEmailExpression,
+                    this::extractResultCatchingException,
+                    st -> st.setString(1, email));
+        } catch (InterruptedException e) {
+            LOGGER.info("take connection interrupted", e);
+            return Optional.empty();
+        }
+    }
+
+    public static AccountDao getInstance() {
+        return Holder.INSTANCE;
+    }
+
+    private static class Holder {
+        public static final AccountDao INSTANCE = new AccountDaoImpl(ConnectionPool.instance());
     }
 
 

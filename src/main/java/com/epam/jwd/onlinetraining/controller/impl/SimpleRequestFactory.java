@@ -3,14 +3,12 @@ package com.epam.jwd.onlinetraining.controller.impl;
 import com.epam.jwd.onlinetraining.controller.api.RequestFactory;
 import com.epam.jwd.onlinetraining.controller.command.CommandRequest;
 import com.epam.jwd.onlinetraining.controller.command.CommandResponse;
-import com.epam.jwd.onlinetraining.controller.command.CommandRequestImpl;
-import com.epam.jwd.onlinetraining.controller.command.CommandResponseImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public enum RequestFactoryImpl implements RequestFactory {
+public enum SimpleRequestFactory implements RequestFactory {
 
     INSTANCE;
 
@@ -19,16 +17,16 @@ public enum RequestFactoryImpl implements RequestFactory {
 
     @Override
     public CommandRequest createRequest(HttpServletRequest request) {
-        return new CommandRequestImpl(request);
+        return new WrappingCommandRequest(request);
     }
 
     @Override
     public CommandResponse createForwardResponse(String path) {
-        return forwardResponseCache.computeIfAbsent(path, CommandResponseImpl::new);
+        return forwardResponseCache.computeIfAbsent(path, PlainCommandResponse::new);
     }
 
     @Override
     public CommandResponse createRedirectResponse(String path) {
-        return redirectResponseCache.computeIfAbsent(path, p -> new CommandResponseImpl(true, p));
+        return redirectResponseCache.computeIfAbsent(path, p -> new PlainCommandResponse(true, p));
     }
 }

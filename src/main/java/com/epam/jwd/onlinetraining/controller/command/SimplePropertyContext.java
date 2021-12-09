@@ -1,9 +1,15 @@
 package com.epam.jwd.onlinetraining.controller.command;
 
+import com.epam.jwd.onlinetraining.controller.impl.PagePaths;
+
 public class SimplePropertyContext implements PropertyContext{
+
     @Override
     public String get(String name) {
-        return PagePaths.of(name).getPath();
+        if (name.startsWith("page.")) {
+            return PagePaths.of(name.substring(5)).getPath();
+        }
+        return null; //todo: exception
     }
 
     static SimplePropertyContext getInstance(){

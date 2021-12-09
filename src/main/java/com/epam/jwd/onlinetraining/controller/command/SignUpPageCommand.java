@@ -22,3 +22,4 @@ public enum SignUpPageCommand implements Command {
         return FORWARD_TO_SIGN_IN_PAGE_RESPONSE;
     }
 }
+

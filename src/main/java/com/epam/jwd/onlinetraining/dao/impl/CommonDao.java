@@ -28,14 +28,16 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
     private static final Logger LOGGER = LogManager.getLogger(CommonDao.class);
 
     private static final String INSERT_INTO = "insert into %s (%s)";
+    private static final String ID_FIELD_NAME = "id";
     private static final String COMMA = ", ";
+    private static final String SPACE = " ";
+
 
     protected static final String SELECT_ALL_FROM = "select * from ";
-    protected static final String WHERE_ID = "where id = ?";
-    protected static final String SPACE = " ";
+    protected static final String WHERE_FIELD = "where %s = ?";
+//    protected static final String WHERE_ID = "where id = ?";
 
     protected final ConnectionPool pool;
-
     private final String selectAllExpression;
     private final String selectByIdExpression;
 //    private final String insertSql;
@@ -43,7 +45,7 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
     protected CommonDao(ConnectionPool pool) {
         this.pool = pool;
         this.selectAllExpression = SELECT_ALL_FROM + getTableName();
-        this.selectByIdExpression = selectAllExpression + SPACE + WHERE_ID;
+        this.selectByIdExpression = selectAllExpression + SPACE + format(WHERE_FIELD, ID_FIELD_NAME);
 //        this.insertSql = format(INSERT_INTO, getTableName(), join(COMMA, getFields()));
     }
 

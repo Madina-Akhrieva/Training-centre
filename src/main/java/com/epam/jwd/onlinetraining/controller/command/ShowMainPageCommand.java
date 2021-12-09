@@ -40,3 +40,30 @@ public enum ShowMainPageCommand implements Command {
         return FORWARD_TO_MAIN_PAGE_RESPONSE;
     }
 }
+
+//
+//public enum ShowMainPageCommand implements Command {
+//    INSTANCE(ServiceFactory.simple().serviceFor(Course.class),
+//            RequestFactory.getInstance(), PropertyContext.instance());
+//
+//    private static final String COURSES_ATTRIBUTE_NAME = "courses";
+//    private static final String MAIN_PAGE = "page.main";
+//
+//    private final EntityService<Course> service;
+//    private final RequestFactory requestFactory;
+//    private final PropertyContext propertyContext;
+//
+//    ShowMainPageCommand(EntityService<Course> service, RequestFactory requestFactory, PropertyContext propertyContext) {
+//        this.service = service;
+//        this.requestFactory = requestFactory;
+//        this.propertyContext = propertyContext;
+//    }
+//
+//    @Override
+//    public CommandResponse execute(CommandRequest request) {
+//        final List<Course> bikes = service.findAll();
+//        request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, bikes);
+//        return requestFactory.createForwardResponse(propertyContext.get(MAIN_PAGE));
+//    }
+//
+//}

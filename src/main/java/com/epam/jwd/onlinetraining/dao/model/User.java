@@ -8,6 +8,7 @@ public class User implements Entity {
     private String lastName;
     private String email;
 
+
     public User() {
     }
 

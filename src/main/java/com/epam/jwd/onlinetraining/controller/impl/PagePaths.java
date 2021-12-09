@@ -1,9 +1,11 @@
-package com.epam.jwd.onlinetraining.controller.command;
+package com.epam.jwd.onlinetraining.controller.impl;
 
 public enum PagePaths {
-    MAIN("WEB_INF/jsp/main.jsp"),
-    LOGIN("WEB_INF/jsp/login_signup.jsp"),
-    PROFILE("WEB_INF/jsp/profile.jsp");
+    INDEX("/"),
+    MAIN("/WEB-INF/jsp/main.jsp"),
+    LOGIN("/WEB-INF/jsp/login_signup.jsp"),
+    PROFILE("/WEB-INF/jsp/profile.jsp"),
+    ERROR("/WEB-INF/jsp/error.jsp");
 
     private final String path;
 

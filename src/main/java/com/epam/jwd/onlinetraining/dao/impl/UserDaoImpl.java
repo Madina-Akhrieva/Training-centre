@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class UserDaoImpl extends CommonDao<User> implements UserDao {
     private static final String SQL_SAVE_USER = "INSERT INTO course_user(id_course_user, role_id, phone, first_name, last_name) VALUES ( ?, ?, ?, ?, ?)";
@@ -21,7 +22,6 @@ public class UserDaoImpl extends CommonDao<User> implements UserDao {
     protected UserDaoImpl(ConnectionPool pool) {
         super(pool);
     }
-
 
     @Override
     protected String getTableName() {
@@ -60,9 +60,15 @@ public class UserDaoImpl extends CommonDao<User> implements UserDao {
         return null;
     }
 
-    @Override
-    public List<User> findByLastName(String lastName) {
-        return null;
+
+    public static UserDao getInstance() {
+        return Holder.INSTANCE;
+    }
+
+
+
+    private static class Holder {
+        public static final UserDao INSTANCE = new UserDaoImpl(ConnectionPool.instance());
     }
 
 }

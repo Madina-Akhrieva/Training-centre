@@ -90,7 +90,8 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
 
         try {
             return executePreparedForGenericEntity("select id from course c where c.id = ?",
-                    this::extractMentorId, st -> st.setLong(1, id));
+                    this::extractMentorId,
+                    st -> st.setLong(1, id));
         } catch (InterruptedException e) {
             e.printStackTrace();
             return null;
