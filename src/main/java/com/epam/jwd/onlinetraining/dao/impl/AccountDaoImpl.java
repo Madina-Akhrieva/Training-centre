@@ -20,15 +20,15 @@ import static java.lang.String.format;
 public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
 
     private static final Logger LOGGER = LogManager.getLogger(AccountDaoImpl.class);
-    public static final String EMAIL_FIELD_NAME = "email";
-    public static final String PASSWORD_FIELD_NAME = "account_password";
-    public static final String ACCOUNT_TABLE_NAME = "account";
+    private static final String EMAIL_FIELD_NAME = "email";
+    private static final String PASSWORD_FIELD_NAME = "account_password";
+    private static final String ACCOUNT_TABLE_NAME = "account";
 
     private final String selectByEmailExpression;
 
     protected AccountDaoImpl(ConnectionPool pool) {
         super(pool);
-        this.selectByEmailExpression = CommonDao.SELECT_ALL_FROM + CommonDao.WHERE_FIELD + format (WHERE_FIELD, EMAIL_FIELD_NAME);
+        this.selectByEmailExpression = CommonDao.SELECT_ALL_FROM + getTableName() + SPACE  + format(WHERE_FIELD, EMAIL_FIELD_NAME);
     }
 
 
@@ -85,7 +85,6 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
     protected void fillEntity(PreparedStatement statement, Account entity) throws SQLException {
 
     }
-
 
 
     @Override

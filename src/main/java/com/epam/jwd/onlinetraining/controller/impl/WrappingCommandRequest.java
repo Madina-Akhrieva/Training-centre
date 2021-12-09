@@ -48,6 +48,14 @@ public class WrappingCommandRequest implements CommandRequest {
     }
 
     @Override
+    public void clareSession() {
+        final HttpSession session = request.getSession(false);
+        if (session!=null) {
+            session.invalidate();
+        }
+    }
+
+    @Override
     public void createSession() {
         request.getSession(true);
     }

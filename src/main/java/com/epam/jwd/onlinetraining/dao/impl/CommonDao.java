@@ -29,8 +29,8 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
 
     private static final String INSERT_INTO = "insert into %s (%s)";
     private static final String ID_FIELD_NAME = "id";
-    private static final String COMMA = ", ";
-    private static final String SPACE = " ";
+    protected static final String COMMA = ", ";
+    protected static final String SPACE = " ";
 
 
     protected static final String SELECT_ALL_FROM = "select * from ";

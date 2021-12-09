@@ -10,13 +10,13 @@ import java.util.Optional;
 public enum LoginCommand implements Command {
     INSTANCE(ServiceFactory.simple().accountService(), RequestFactory.getInstance());
 
-    public static final String MAIN_JSP_PATH = "/WEB-INF/jsp/main.jsp";
+    public static final String INDEX_JSP_PATH = "/";
     public static final String LOGIN_JSP_PATH= "/WEB-INF/jsp/login_signup.jsp";
 
     private static final String ERROR_LOGIN_PASS_ATTRIBUTE = "errorLoginPassMessage";
     private static final String INVALID_LOGIN_PASS_MESSAGE = "Invalid login or password";
     private static final String ACCOUNT_SESSION_ATTRIBUTE_NAME = "account";
-    public static final String LOGIN_REQUEST_PARAM_NAME = "login";
+    public static final String LOGIN_REQUEST_PARAM_NAME = "email";
     public static final String PASSWORD_REQUEST_PARAM_NAME = "password";
 
     private final AccountService accountService;
@@ -33,7 +33,7 @@ public enum LoginCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        if (request.sessionExists()) {
+        if (request.sessionExists() && request.retrieveFromSession(ACCOUNT_SESSION_ATTRIBUTE_NAME).isPresent()) {
             //error : user already logged in
             return null;
         }
@@ -44,9 +44,10 @@ public enum LoginCommand implements Command {
             request.addAttributeToJsp(ERROR_LOGIN_PASS_ATTRIBUTE, INVALID_LOGIN_PASS_MESSAGE);
             requestFactory.createForwardResponse(LOGIN_JSP_PATH);
         }
+        request.clareSession();
         request.createSession();
         request.addToSession(ACCOUNT_SESSION_ATTRIBUTE_NAME, account.get());
-        return requestFactory.createRedirectResponse(MAIN_JSP_PATH);
+        return requestFactory.createRedirectResponse(INDEX_JSP_PATH);
 
     }
 }

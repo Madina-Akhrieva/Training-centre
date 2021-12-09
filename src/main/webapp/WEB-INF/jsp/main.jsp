@@ -9,16 +9,21 @@
     <link rel="stylesheet" href="../css/main.css">
 
 </head>
-    <body >
-    <c:if test="${not empty sessionScope.account}">
-        <p>Hello user</p>
-    </c:if>
+    <body>
+
 
     <nav class="black">
         <div class="nav-wrapper">
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="/controller?command=show_login ">Sign in</a></li>
-                <li><a href="/controller?command=sign_up">Sign up</a></li>
+                <c:choose>
+                    <c:when test="${not empty sessionScope.account}">
+                        <li><a href="/controller?command= logout ">Logout</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="/controller?command=show_login ">Sign in</a></li>
+                        <li><a href="/controller?command=sign_up">Sign up</a></li>
+                    </c:otherwise>
+                </c:choose>
                 <li><a href="/controller?command=show_profile">Watch profile</a></li>
             </ul>
         </div>
@@ -26,6 +31,9 @@
 
     <div class="after_nav">
         <div class="typing animate"></div>
+        <c:if  test="${not empty sessionScope.account}">
+            <p><span>Start learning, </span> ${sessionScope.account.email} <span>!</span></p>
+        </c:if>
     </div>
 
     <div>
