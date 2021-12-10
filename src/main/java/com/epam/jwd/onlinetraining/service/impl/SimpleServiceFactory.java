@@ -31,7 +31,6 @@ public class SimpleServiceFactory implements ServiceFactory {
                 .computeIfAbsent(modelClass, createServiceFromClass());
     }
 
-    //if server wasn't found and will create services
     private Function<Class<?>, EntityService<?>> createServiceFromClass() {
         return clazz -> {
             final String className = clazz.getSimpleName();

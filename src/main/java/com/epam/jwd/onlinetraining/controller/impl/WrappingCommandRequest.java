@@ -22,7 +22,6 @@ public class WrappingCommandRequest implements CommandRequest {
 
     @Override
     public String getParameter(String name) {
-//        final HttpSession session = request.getSession(false);
         return request.getParameter(name);
     }
 
@@ -48,7 +47,7 @@ public class WrappingCommandRequest implements CommandRequest {
     }
 
     @Override
-    public void clareSession() {
+    public void cleareSession() {
         final HttpSession session = request.getSession(false);
         if (session!=null) {
             session.invalidate();

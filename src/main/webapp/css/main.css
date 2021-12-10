@@ -24,7 +24,12 @@
 /*    height: 500px;*/
 /*    color: #ffb507;*/
 /*    background: #000000;*/
+
 /*}*/
+
+body{
+    background: #c7c7c7;
+}
 
 .typing.animate {
     width: 21ch;

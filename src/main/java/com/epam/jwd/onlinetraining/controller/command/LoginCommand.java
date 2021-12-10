@@ -35,7 +35,6 @@ public enum LoginCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         if (request.sessionExists() && request.retrieveFromSession(ACCOUNT_SESSION_ATTRIBUTE_NAME).isPresent()) {
             //error : user already logged in
-            return null;
         }
         final String login = request.getParameter(LOGIN_REQUEST_PARAM_NAME);
         final String password = request.getParameter( PASSWORD_REQUEST_PARAM_NAME);
@@ -44,7 +43,7 @@ public enum LoginCommand implements Command {
             request.addAttributeToJsp(ERROR_LOGIN_PASS_ATTRIBUTE, INVALID_LOGIN_PASS_MESSAGE);
             requestFactory.createForwardResponse(LOGIN_JSP_PATH);
         }
-        request.clareSession();
+        request.cleareSession();
         request.createSession();
         request.addToSession(ACCOUNT_SESSION_ATTRIBUTE_NAME, account.get());
         return requestFactory.createRedirectResponse(INDEX_JSP_PATH);

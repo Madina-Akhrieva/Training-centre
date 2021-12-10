@@ -27,7 +27,14 @@
                 <h1>Sign in</h1>
                 <input type="email" placeholder="Email" name="email"/>
                 <input type="password" placeholder="Password" name="password" />
-                <br>${requestScope.errorLoginPassMessage}<br>
+                <c:if test="${not empty requestScope.errorLoginPassMessage}">
+
+                        <p style="color:red">
+                          ${requestScope.errorLoginPassMessage}
+                        </p>
+
+                </c:if>
+
                 <button type="submit">Sign In</button>
             </form>
         </div>

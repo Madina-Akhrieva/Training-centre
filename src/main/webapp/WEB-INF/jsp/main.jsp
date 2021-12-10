@@ -17,7 +17,7 @@
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <c:choose>
                     <c:when test="${not empty sessionScope.account}">
-                        <li><a href="/controller?command= logout ">Logout</a></li>
+                        <li><a href="/controller?command=logout ">Logout</a></li>
                     </c:when>
                     <c:otherwise>
                         <li><a href="/controller?command=show_login ">Sign in</a></li>
