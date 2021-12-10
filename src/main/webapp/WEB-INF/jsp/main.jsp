@@ -41,7 +41,7 @@
             <div class="valign-wrapper">
                 <div class="row">
                     <div>
-                        <div class="card black darken-1">
+                        <div class="card black darken-1 crad-size">
                             <div class="card-content white-text">
                                 <span class="card-title">${course.title}</span>
                                 <p>${course.description}</p>
