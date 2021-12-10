@@ -20,3 +20,4 @@ public enum ShowLoginPageCommand implements Command {
         return requestFactory.createForwardResponse(propertyContext.get(LOGIN_PAGE));
     }
 }
+

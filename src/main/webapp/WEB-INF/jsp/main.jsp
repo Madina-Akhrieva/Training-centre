@@ -21,7 +21,7 @@
                     </c:when>
                     <c:otherwise>
                         <li><a href="/controller?command=show_login ">Sign in</a></li>
-                        <li><a href="/controller?command=sign_up">Sign up</a></li>
+                        <li><a href="/controller?command=show_signup">Sign up</a></li>
                     </c:otherwise>
                 </c:choose>
                 <li><a href="/controller?command=show_profile">Watch profile</a></li>

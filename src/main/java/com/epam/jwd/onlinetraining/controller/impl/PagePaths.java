@@ -3,7 +3,7 @@ package com.epam.jwd.onlinetraining.controller.impl;
 public enum PagePaths {
     INDEX("/"),
     MAIN("/WEB-INF/jsp/main.jsp"),
-    LOGIN("/WEB-INF/jsp/login_signup.jsp"),
+    LOGIN("/WEB-INF/jsp/login.jsp"),
     PROFILE("/WEB-INF/jsp/profile.jsp"),
     ERROR("/WEB-INF/jsp/error.jsp");
 

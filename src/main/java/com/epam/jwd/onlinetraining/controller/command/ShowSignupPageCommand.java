@@ -2,24 +2,21 @@ package com.epam.jwd.onlinetraining.controller.command;
 
 import com.epam.jwd.onlinetraining.controller.api.RequestFactory;
 
-
-public enum ShowProfilePageCommand implements Command {
-
+public enum ShowSignupPageCommand implements Command {
     INSTANCE(RequestFactory.getInstance(), PropertyContext.instance());
 
-    private static final String PROFILE_PAGE = "page.profile";
+    private static final String LOGIN_PAGE = "page.login";
 
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowProfilePageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowSignupPageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
         this.requestFactory = requestFactory;
         this.propertyContext = propertyContext;
     }
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        return requestFactory.createForwardResponse(propertyContext.get(PROFILE_PAGE));
+        return requestFactory.createForwardResponse(propertyContext.get(LOGIN_PAGE));
     }
 }
-

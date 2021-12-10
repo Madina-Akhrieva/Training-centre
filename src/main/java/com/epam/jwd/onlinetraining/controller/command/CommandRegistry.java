@@ -3,8 +3,8 @@ package com.epam.jwd.onlinetraining.controller.command;
 public enum CommandRegistry {
 
     MAIN_PAGE(ShowMainPageCommand.INSTANCE, "main_page"),
-    SIGN_UP_PAGE(SignUpPageCommand.INSTANCE, "sign_up"),
     LOGIN_PAGE(ShowLoginPageCommand.INSTANCE, "show_login"),
+    SIGN_PAGE(ShowSignupPageCommand.INSTANCE, "show_signup"),
     LOGIN(LoginCommand.INSTANCE, "login"),
     LOGOUT(LogoutCommand.INSTANCE, "logout"),
     PROFILE_PAGE(ShowProfilePageCommand.INSTANCE, "show_profile"),
