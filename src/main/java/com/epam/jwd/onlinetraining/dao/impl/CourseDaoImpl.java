@@ -65,17 +65,6 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
     }
 
     @Override
-    public Boolean delete(Long id) {
-        return null;
-    }
-
-    @Override
-    public Optional<Course> read(Long id) {
-        return Optional.empty();
-    }
-
-
-    @Override
     public List<Course> findByTitle(String title) {
         return null;
     }

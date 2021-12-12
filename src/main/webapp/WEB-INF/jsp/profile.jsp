@@ -2,102 +2,64 @@
 <html>
 <head>
 	<title>Profile</title>
-<%--	<link rel="stylesheet" href="../css/profilee.scss">--%>
-	<link rel="stylesheet" href="../css/profile.css">
-
+	<link rel="stylesheet" href="../css/profil.css">
 </head>
 <body>
 
-<div class="container">
-	<div id="logo"><h1 class="logo">Training Centre ♥</h1>
+<form id="msform">
+	<!-- progressbar -->
+	<ul id="progressbar">
+		<li class="active">Account Setup</li>
+		<li>Social Profiles</li>
+		<li>Personal Details</li>
+	</ul>
+	<!-- fieldsets -->
+	<fieldset>
+		<h2 class="fs-title">Create your account</h2>
+		<h3 class="fs-subtitle">This is step 1</h3>
+		<input type="text" name="email" placeholder="Email" />
+		<input type="password" name="pass" placeholder="Password" />
+		<input type="password" name="cpass" placeholder="Confirm Password" />
+		<input type="button" name="next" class="next action-button" value="Next" />
+	</fieldset>
+	<fieldset>
+		<h2 class="fs-title">Social Profiles</h2>
+		<h3 class="fs-subtitle">Your presence on the social network</h3>
+		<input type="text" name="twitter" placeholder="Twitter" />
+		<input type="text" name="facebook" placeholder="Facebook" />
+		<input type="text" name="gplus" placeholder="Google Plus" />
+		<input type="button" name="previous" class="previous action-button" value="Previous" />
+		<input type="button" name="next" class="next action-button" value="Next" />
+	</fieldset>
+	<fieldset>
+		<h2 class="fs-title">Personal Details</h2>
+		<h3 class="fs-subtitle">We will never sell it</h3>
+		<input type="text" name="fname" placeholder="First Name" />
+		<input type="text" name="lname" placeholder="Last Name" />
+		<input type="text" name="phone" placeholder="Phone" />
+		<textarea name="address" placeholder="Address"></textarea>
+		<input type="button" name="previous" class="previous action-button" value="Previous" />
+		<input type="submit" name="submit" class="submit action-button" value="Submit" />
+	</fieldset>
+</form>
+<%--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>--%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsquery/2.1.3/jquery.min.js"></script>
+<%--<script src = "../js/jquery-3.4.1.js"></script>--%>
+<script src = "../js/profil.js"></script>
 
-	</div>
-	<div class="leftbox">
-		<nav>
-			<div class="tell_us">
-				Tell us about you ♥
-			</div>
+<%--<script src="jquery-3.5.1.min.js"></script>--%>
 
-			<a id="profile" class="active"><i class="fa fa-user"></i></a>
-			<a id="payment"><i class="fa fa-credit-card"></i></a>
-			<a id="subscription"><i class="fa fa-tv"></i></a>
-			<a id="privacy"><i class="fa fa-tasks"></i></a>
-			<a id="settings"><i class="fa fa-cog"></i></a>
-		</nav>
-	</div>
-	<div class="rightbox">
-		<div class="profile">
-			<h1>Personal Info</h1>
-			<h2>Full Name</h2>
-			<p>Julie Park <button class="btn">update</button></p>
-			<h2>Birthday</h2>
-			<p>July 21</p>
-			<h2>Gender</h2>
-			<p>Female</p>
-			<h2>Email</h2>
-			<p>example@example.com <button class="btn">update</button></p>
-			<h2>Password </h2>
-			<p>••••••• <button class="btn">Change</button></p>
-		</div>
-
-<%--		<div class="payment noshow">--%>
-<%--			<h1>Payment Info</h1>--%>
-<%--			<h2>Payment Method</h2>--%>
-<%--			<p>Mastercard •••• •••• •••• 0000 <button class="btn">update</button></p>--%>
-<%--			<h2>Billing Address</h2>--%>
-<%--			<p>1234 Example Ave | Seattle, WA <button class="btn">change</button></p>--%>
-<%--			<h2>Zipcode</h2>--%>
-<%--			<p>999000</p>--%>
-<%--			<h2>Billing History</h2>--%>
-<%--			<p>2018<button class="btn">view</button></p>--%>
-<%--			<h2>Redeem Gift Subscription </h2>--%>
-<%--			<p><input type="text" placeholder="Enter Gift Code"></input> <button class="btn">Redeem</button></p>--%>
-<%--		</div>--%>
-
-<%--		<div class="subscription noshow">--%>
-<%--			<h1>Your Subscription</h1>--%>
-<%--			<h2>Payment Date</h2>--%>
-<%--			<p>05-15-2018 <button class="btn">pay now</button></p>--%>
-<%--			<h2>Your Next Charge</h2>--%>
-<%--			<p>$8.48<span> includes tax</span></p>--%>
-<%--			<h2>Hulu Base Plan</h2>--%>
-<%--			<p>Limited Commercials <button class="btn">change plan</button></p>--%>
-<%--			<h2>Add-ons</h2>--%>
-<%--			<p>None <button class="btn">manage</button></p>--%>
-<%--			<h2>Monthly Recurring Total </h2>--%>
-<%--			<p>$7.99/month</p>--%>
-<%--		</div>--%>
-
-<%--		<div class="privacy noshow">--%>
-<%--			<h1>Privacy Settings</h1>--%>
-<%--			<h2>Manage Email Notifications<button class="btn">manage</button></h2>--%>
-<%--			<p></p>--%>
-<%--			<h2>Manage Privacy Settings<button class="btn">manage</button></h2>--%>
-<%--			<p></p>--%>
-<%--			<h2>View Terms of Use <button class="btn">view</button></h2>--%>
-<%--			<p></p>--%>
-<%--			<h2>Personalize Ad Experience <button class="btn">update</button></h2>--%>
-<%--			<p></p>--%>
-<%--			<h2>Protect Your Account <button class="btn">protect</button></h2>--%>
-<%--			<p></p>--%>
-<%--		</div>--%>
-<%--		<div class="settings noshow">--%>
-<%--			<h1>Account Settings</h1>--%>
-<%--			<h2>Sync Watchlist to My Stuff<button class="btn">sync</button></h2>--%>
-<%--			<p></p>--%>
-<%--			<h2>Hold Your Subscription<button class="btn">hold</button></h2>--%>
-<%--			<p></p>--%>
-<%--			<h2>Cancel Your Subscription <button class="btn">cancel</button></h2>--%>
-<%--			<p></p>--%>
-<%--			<h2>Your Devices <button class="btn">Manage Devices</button></h2>--%>
-<%--			<p></p>--%>
-<%--			<h2>Referrals <button class="btn">get $10</button></h2>--%>
-<%--			<p></p>--%>
-<%--		</div>--%>
-
-	</div>
-</div>
-
-<script src = "../js/profile.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,38 +1,29 @@
 package com.epam.jwd.onlinetraining.dao.model;
 
+import static com.epam.jwd.onlinetraining.dao.model.Role.STUDENT;
+
 public class Account implements Entity {
 
-    private Long id;
-    private int roleId;
-    private String password;
-    private String email;
+    private final Long id;
+    private final String password;
+    private final String email;
+    private final Role role;
 
-    public Account() {
-
-    }
-
-    public Account(int roleId, String password, String email) {
-        this.roleId = roleId;
-        this.password = password;
-        this.email = email;
+    public Account(Long id, String password, String email) {
+        this(id, password, email, STUDENT);
     }
 
 
-    public Account(Long id, int roleId, String password, String email) {
+
+    public Account(Long id, String password, String email, Role role) {
         this.id = id;
-        this.roleId = roleId;
         this.password = password;
         this.email = email;
+        this.role = role;
     }
 
-
-    public Account(String password, String email) {
-        this.password = password;
-        this.email = email;
-    }
-
-    public int getRoleId() {
-        return roleId;
+    public Role getRole() {
+        return role;
     }
 
     public String getPassword() {
