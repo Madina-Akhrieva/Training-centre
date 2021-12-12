@@ -25,6 +25,12 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
     private static final List<String> FIELDS = Arrays.asList(
             "id", "title", "amount_of_tasks", "learning_language", "description"
     );
+    public static final String ID_FIELD_NAME = "id";
+    public static final String TITLE_FIELD_NAME = "title";
+    public static final String AMOUNT_OF_TASKS_FIELD_NAME = "amount_of_tasks";
+    public static final String LEARNING_LANGUAGE_TITLE_FIELD_NAME = "learning_language";
+    public static final String DESCRIPTION_FIELD_NAME = "description";
+    public static final String SELECT_MENTOR_ID_FROM_COURSE = "select id from course c where c.id = ?";
 
     protected CourseDaoImpl(ConnectionPool pool) {
         super(pool);
@@ -43,18 +49,18 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
 
     @Override
     protected String getIdFieldName() {
-        return null;
+        return ID_FIELD_NAME;
     }
 
 
     @Override
     protected Course extractResult(ResultSet rs) throws SQLException {
         return new Course(
-                rs.getLong("id"),
-                rs.getString("title"),
-                rs.getInt("amount_of_tasks"),
-                rs.getString("learning_language"),
-                rs.getString("description")
+                rs.getLong(ID_FIELD_NAME),
+                rs.getString(TITLE_FIELD_NAME),
+                rs.getInt(AMOUNT_OF_TASKS_FIELD_NAME),
+                rs.getString(LEARNING_LANGUAGE_TITLE_FIELD_NAME),
+                rs.getString(DESCRIPTION_FIELD_NAME)
         );
     }
 
@@ -78,7 +84,7 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
     public Optional<Long> findMentorIdByCourseID(Long id) {
 
         try {
-            return executePreparedForGenericEntity("select id from course c where c.id = ?",
+            return executePreparedForGenericEntity(SELECT_MENTOR_ID_FROM_COURSE,
                     this::extractMentorId,
                     st -> st.setLong(1, id));
         } catch (InterruptedException e) {

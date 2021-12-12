@@ -16,13 +16,14 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static java.lang.String.format;
 
 public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
 
     private static final Logger LOGGER = LogManager.getLogger(AccountDaoImpl.class);
-    private static final String ACCOUNT_TABLE_NAME = "account j join role r on r.id_role=j.id";
+    private static final String ACCOUNT_TABLE_NAME = "account j join role r on r.id_role = j.id";
     public static final String ID_FIELD_NAME = "j.id";
     private static final String EMAIL_FIELD_NAME = "j.email";
     private static final String PASSWORD_FIELD_NAME = "j.account_password";
@@ -38,7 +39,8 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
 
     protected AccountDaoImpl(ConnectionPool pool) {
         super(pool);
-        this.selectByEmailExpression = CommonDao.SELECT_ALL_FROM + getTableName() + SPACE + format(WHERE_FIELD, EMAIL_FIELD_NAME);
+        this.selectByEmailExpression = format(SELECT_ALL_FROM, String.join(", ", getFields())) + getTableName() + SPACE + format(WHERE_FIELD, EMAIL_FIELD_NAME);
+
     }
 
 
@@ -54,7 +56,7 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
 
     @Override
     protected String getIdFieldName() {
-        return null;
+        return ID_FIELD_NAME;
     }
 
     @Override

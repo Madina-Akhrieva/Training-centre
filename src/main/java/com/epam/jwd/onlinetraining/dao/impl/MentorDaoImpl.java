@@ -20,6 +20,10 @@ public final class MentorDaoImpl extends CommonDao<Mentor> implements MentorDao 
     );
 
     public static final String MENTOR_TABLE_NAME = "mentor";
+    public static final String ID_FIELD_NAME = "id";
+    public static final String EXPERIENCE_FIELD_NAME = "experience";
+    public static final String POSITION_FIELD_NAME = "position";
+    public static final String PEN_NAME_FIELD_NAME = "pen_name";
 
     protected MentorDaoImpl(ConnectionPool pool) {
         super(pool);
@@ -37,19 +41,19 @@ public final class MentorDaoImpl extends CommonDao<Mentor> implements MentorDao 
 
     @Override
     protected String getIdFieldName() {
-        return null;
+        return ID_FIELD_NAME;
     }
 
     @Override
     protected Mentor extractResult(ResultSet rs) throws SQLException {
         return new Mentor(
-                rs.getLong("id"),
+                rs.getLong(ID_FIELD_NAME),
 //                rs.getString("phone"),
 //                rs.getString("first_name"),
 //                rs.getString("last_name"),
-                rs.getInt("experience"),
-                rs.getString("position"),
-                rs.getString("pen_name")
+                rs.getInt(EXPERIENCE_FIELD_NAME),
+                rs.getString(POSITION_FIELD_NAME),
+                rs.getString(PEN_NAME_FIELD_NAME)
         );
     }
 
