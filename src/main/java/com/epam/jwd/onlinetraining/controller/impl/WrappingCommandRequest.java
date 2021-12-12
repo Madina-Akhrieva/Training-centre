@@ -27,13 +27,13 @@ public class WrappingCommandRequest implements CommandRequest {
 
     @Override
     public boolean sessionExists() {
-        return request.getSession(false)!=null;
+        return request.getSession(false) != null;
     }
 
     @Override
     public boolean addToSession(String name, Object value) {
         final HttpSession session = request.getSession(false);
-        if (session!=null) {
+        if (session != null) {
             session.setAttribute(name, value);
             return true;
         }
@@ -43,13 +43,13 @@ public class WrappingCommandRequest implements CommandRequest {
     @Override
     public Optional<Object> retrieveFromSession(String name) {
         return Optional.ofNullable(request.getSession(false))
-                .map(session  -> session.getAttribute(name));
+                .map(session -> session.getAttribute(name));
     }
 
     @Override
     public void cleareSession() {
         final HttpSession session = request.getSession(false);
-        if (session!=null) {
+        if (session != null) {
             session.invalidate();
         }
     }

@@ -23,7 +23,7 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
     private static final String SQL_DELETE_COURSE = "DELETE FROM course WHERE  id VALUE (?)";
     public static final String COURSE = "course";
     private static final List<String> FIELDS = Arrays.asList(
-            "id","title", "amount_of_tasks", "learning_language", "description"
+            "id", "title", "amount_of_tasks", "learning_language", "description"
     );
 
     protected CourseDaoImpl(ConnectionPool pool) {

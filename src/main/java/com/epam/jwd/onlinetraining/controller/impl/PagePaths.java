@@ -19,9 +19,9 @@ public enum PagePaths {
         return path;
     }
 
-    public static PagePaths of (String name){
-        for (PagePaths page: values()) {
-            if(page.name().equalsIgnoreCase(name)){
+    public static PagePaths of(String name) {
+        for (PagePaths page : values()) {
+            if (page.name().equalsIgnoreCase(name)) {
                 return page;
             }
         }

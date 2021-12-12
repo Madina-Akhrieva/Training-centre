@@ -52,9 +52,9 @@ public class RoleFilter implements Filter {
         final HttpServletRequest request = (HttpServletRequest) servletRequest;
         String commandName = request.getParameter(COMMAND_PARAM_NAME);
         LOGGER.trace("Checking permission for command/ commandName : {}", commandName);
-        if(currentUserHasPermissionForCommand(commandName, request)){
+        if (currentUserHasPermissionForCommand(commandName, request)) {
             filterChain.doFilter(servletRequest, servletResponse);
-        }else {
+        } else {
             ((HttpServletResponse) servletResponse).sendRedirect(ERROR_PAGE_URL);
         }
     }
@@ -67,10 +67,10 @@ public class RoleFilter implements Filter {
     }
 
     private Role retrieveCurrentUserRole(HttpServletRequest httpServletRequest) {
-         return Optional.ofNullable(httpServletRequest.getSession(false))
+        return Optional.ofNullable(httpServletRequest.getSession(false))
                 .map(s -> (Account) s.getAttribute("account"))
-                 .map(Account::getRole)
-                 .orElse(Role.UNAUTHORIZED);
+                .map(Account::getRole)
+                .orElse(Role.UNAUTHORIZED);
 
     }
 }

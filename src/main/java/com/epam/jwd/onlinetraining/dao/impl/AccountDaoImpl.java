@@ -29,7 +29,7 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
     private static final String ROLE_FIELD_NAME = "r.name";
 
     private static final List<String> FIELDS = Arrays.asList(
-            ID_FIELD_NAME,EMAIL_FIELD_NAME,
+            ID_FIELD_NAME, EMAIL_FIELD_NAME,
             PASSWORD_FIELD_NAME, ROLE_FIELD_NAME
     );
 
@@ -38,7 +38,7 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
 
     protected AccountDaoImpl(ConnectionPool pool) {
         super(pool);
-        this.selectByEmailExpression = CommonDao.SELECT_ALL_FROM + getTableName() + SPACE  + format(WHERE_FIELD, EMAIL_FIELD_NAME);
+        this.selectByEmailExpression = CommonDao.SELECT_ALL_FROM + getTableName() + SPACE + format(WHERE_FIELD, EMAIL_FIELD_NAME);
     }
 
 
@@ -60,7 +60,7 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
     @Override
     protected Account extractResult(ResultSet rs) throws SQLException {
         return new Account(
-                rs.getLong( ID_FIELD_NAME),
+                rs.getLong(ID_FIELD_NAME),
                 rs.getString(PASSWORD_FIELD_NAME),
                 rs.getString(EMAIL_FIELD_NAME),
                 Role.of(rs.getString(ROLE_FIELD_NAME))
