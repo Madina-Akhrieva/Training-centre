@@ -13,13 +13,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 
-public class CourseService implements EntityService<Course> {
+public class SimpleCourseService implements EntityService<Course> {
 
     private final CourseDao courseDao;
     private final MentorDao mentorDao;
     private final TransactionManager transactionManager;
 
-    public CourseService(CourseDao courseDao, MentorDao mentorDao, TransactionManager transactionManager) {
+    public SimpleCourseService(CourseDao courseDao, MentorDao mentorDao, TransactionManager transactionManager) {
         this.courseDao = courseDao;
         this.mentorDao = mentorDao;
         this.transactionManager = transactionManager;
@@ -39,5 +39,16 @@ public class CourseService implements EntityService<Course> {
 //        transactionManager.commitTransaction();
         return courses;
     }
+
+    @Override
+    public Optional<Course> create(Course entity) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Course add(Course account) {
+        return null;
+    }
+
 
 }

@@ -5,10 +5,20 @@ import java.util.List;
 
 public enum Role {
 
-    ADMIN,
-    STUDENT,
-    UNAUTHORIZED,
-    MENTOR;
+    UNAUTHORIZED(0),
+    STUDENT(1),
+    ADMIN(2),
+    MENTOR(3);
+
+    private int id;
+
+    Role(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     private static final List<Role> ALL_AVAILABLE_ROLES = Arrays.asList(values());
 

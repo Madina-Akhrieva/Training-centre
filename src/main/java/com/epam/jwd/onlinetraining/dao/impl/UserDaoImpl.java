@@ -65,6 +65,20 @@ public class UserDaoImpl extends CommonDao<User> implements UserDao {
         return Holder.INSTANCE;
     }
 
+    @Override
+    public Boolean delete(Long id) {
+        return null;
+    }
+
+    @Override
+    public User create(User entity) {
+        return null;
+    }
+
+    @Override
+    public User update(User entity) {
+        return null;
+    }
 
 
     private static class Holder {

@@ -1,7 +1,7 @@
 package com.epam.jwd.onlinetraining.controller.filter;
 
-import com.epam.jwd.onlinetraining.controller.command.Command;
-import com.epam.jwd.onlinetraining.controller.command.CommandRegistry;
+import com.epam.jwd.onlinetraining.controller.command.common.Command;
+import com.epam.jwd.onlinetraining.controller.command.common.CommandRegistry;
 import com.epam.jwd.onlinetraining.dao.model.Account;
 import com.epam.jwd.onlinetraining.dao.model.Role;
 import org.apache.logging.log4j.LogManager;

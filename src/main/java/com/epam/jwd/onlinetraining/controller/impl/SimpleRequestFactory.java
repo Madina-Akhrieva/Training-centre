@@ -1,8 +1,8 @@
 package com.epam.jwd.onlinetraining.controller.impl;
 
 import com.epam.jwd.onlinetraining.controller.api.RequestFactory;
-import com.epam.jwd.onlinetraining.controller.command.CommandRequest;
-import com.epam.jwd.onlinetraining.controller.command.CommandResponse;
+import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
+import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;

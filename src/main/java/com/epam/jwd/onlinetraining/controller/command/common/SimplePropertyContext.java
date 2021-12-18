@@ -1,8 +1,8 @@
-package com.epam.jwd.onlinetraining.controller.command;
+package com.epam.jwd.onlinetraining.controller.command.common;
 
 import com.epam.jwd.onlinetraining.controller.impl.PagePaths;
 
-public class SimplePropertyContext implements PropertyContext{
+public class SimplePropertyContext implements PropertyContext {
 
     @Override
     public String get(String name) {

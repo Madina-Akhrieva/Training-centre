@@ -47,11 +47,11 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
         this.selectByIdExpression = selectAllExpression + SPACE + format(WHERE_FIELD, getIdFieldName());
 //        this.insertSql = format(INSERT_INTO, getTableName(), join(COMMA, getFields()));
     }
-
-    @Override
-    public T create(T entity) {
-        return null;
-    }
+//
+//    @Override
+//    public T create(T entity) {
+//        return null;
+//    }
 
     @Override
     public List<T> read() {
@@ -78,17 +78,17 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
         }
     }
 
-    @Override
-    public T update(T entity) {
-        //todo : impl
-        return null;
-    }
-
-    @Override
-    public Boolean delete(Long id) {
-        //todo : impl
-        return null;
-    }
+//    @Override
+//    public T update(T entity) {
+//        //todo : impl
+//        return null;
+//    }
+//
+//    @Override
+//    public Boolean delete(Long id) {
+//        //todo : impl
+//        return null;
+//    }
 
     //extractor.extractAll(pool.takeConnection().createStatement().executeQuery("select id_course, title, amount_of_tasks, learning_language, description from course"))
     //to evaluate 90

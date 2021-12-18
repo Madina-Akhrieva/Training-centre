@@ -67,6 +67,21 @@ public final class MentorDaoImpl extends CommonDao<Mentor> implements MentorDao 
         return Holder.INSTANCE;
     }
 
+    @Override
+    public Boolean delete(Long id) {
+        return null;
+    }
+
+    @Override
+    public Mentor create(Mentor entity) {
+        return null;
+    }
+
+    @Override
+    public Mentor update(Mentor entity) {
+        return null;
+    }
+
     private static class Holder {
         public static final MentorDao INSTANCE = new MentorDaoImpl(ConnectionPool.instance());
     }

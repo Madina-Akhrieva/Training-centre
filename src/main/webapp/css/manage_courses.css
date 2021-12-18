@@ -1,0 +1,27 @@
+/*button {*/
+/*    width: 1200px;*/
+/*    height: 40px;*/
+/*    border: 1px solid #000000;*/
+/*    background-color: #000000;*/
+/*    color: #ffffff;*/
+/*    font-size: 12px;*/
+/*    font-weight: bold;*/
+/*    padding: 12px 45px;*/
+/*    letter-spacing: 1px;*/
+/*    text-transform: uppercase;*/
+/*    transition: transform 80ms ease-in;*/
+/*}*/
+/*a{*/
+/*    text-decoration: none;*/
+/*    color: black;*/
+/*}*/
+/*button:active {*/
+/*    background-color: black;*/
+/*    color: #ffb507;*/
+/*}*/
+.bun{
+    background-color: black;
+    color: #FFFFFF;
+    width: 1000px;
+    height: 40px;
+}

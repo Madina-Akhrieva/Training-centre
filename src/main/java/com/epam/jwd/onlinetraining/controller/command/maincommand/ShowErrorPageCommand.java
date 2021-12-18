@@ -1,6 +1,10 @@
-package com.epam.jwd.onlinetraining.controller.command;
+package com.epam.jwd.onlinetraining.controller.command.maincommand;
 
 import com.epam.jwd.onlinetraining.controller.api.RequestFactory;
+import com.epam.jwd.onlinetraining.controller.command.common.Command;
+import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
+import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
+import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
 
 public enum ShowErrorPageCommand implements Command {
     INSTANCE(RequestFactory.getInstance(), PropertyContext.instance());

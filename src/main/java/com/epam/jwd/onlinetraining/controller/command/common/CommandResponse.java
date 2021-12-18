@@ -1,4 +1,4 @@
-package com.epam.jwd.onlinetraining.controller.command;
+package com.epam.jwd.onlinetraining.controller.command.common;
 
 public interface CommandResponse {
 

@@ -1,6 +1,10 @@
-package com.epam.jwd.onlinetraining.controller.command;
+package com.epam.jwd.onlinetraining.controller.command.coursecomamnd;
 
 import com.epam.jwd.onlinetraining.controller.api.RequestFactory;
+import com.epam.jwd.onlinetraining.controller.command.common.Command;
+import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
+import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
+import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
 
 
 public enum ShowProfilePageCommand implements Command {

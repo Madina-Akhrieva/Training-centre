@@ -1,8 +1,12 @@
-package com.epam.jwd.onlinetraining.controller.command;
+package com.epam.jwd.onlinetraining.controller.command.logincommand;
 
 import com.epam.jwd.onlinetraining.controller.api.RequestFactory;
+import com.epam.jwd.onlinetraining.controller.command.common.Command;
+import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
+import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
+import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
 
-public enum ShowLoginPageCommand implements Command {
+public enum ShowSignupPageCommand implements Command {
     INSTANCE(RequestFactory.getInstance(), PropertyContext.instance());
 
     private static final String LOGIN_PAGE = "page.login";
@@ -10,7 +14,7 @@ public enum ShowLoginPageCommand implements Command {
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    ShowLoginPageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    ShowSignupPageCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
         this.requestFactory = requestFactory;
         this.propertyContext = propertyContext;
     }
@@ -20,4 +24,3 @@ public enum ShowLoginPageCommand implements Command {
         return requestFactory.createForwardResponse(propertyContext.get(LOGIN_PAGE));
     }
 }
-

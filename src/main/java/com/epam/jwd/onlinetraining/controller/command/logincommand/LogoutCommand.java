@@ -1,8 +1,11 @@
-package com.epam.jwd.onlinetraining.controller.command;
+package com.epam.jwd.onlinetraining.controller.command.logincommand;
 
 import com.epam.jwd.onlinetraining.controller.api.RequestFactory;
+import com.epam.jwd.onlinetraining.controller.command.common.Command;
+import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
+import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
 
-public enum LogoutCommand  implements Command{
+public enum LogoutCommand  implements Command {
     INSTANCE(RequestFactory.getInstance());
     public static final String ACCOUNT_SESSION_ATTRIBUTE_NAME = "account";
     public static final String INDEX_PATH = "/";

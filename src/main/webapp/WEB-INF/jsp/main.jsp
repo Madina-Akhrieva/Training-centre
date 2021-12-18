@@ -20,6 +20,7 @@
                     <c:when test="${not empty sessionScope.account}">
                         <c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
                             <li><a href="/controller?command=show_accounts">Show users</a></li>
+                            <li><a href="/controller?command=manage_courses">Manage courses</a></li>
                         </c:if>
                         <li><a href="/controller?command=logout ">Logout</a></li>
                         <li><a href="/controller?command=show_profile">Watch profile</a></li>
@@ -37,9 +38,19 @@
 
     <div class="after_nav">
         <div class="typing animate"></div>
-        <c:if  test="${not empty sessionScope.account}">
-            <p><span>Start learning, </span> ${sessionScope.account.email} <span>!</span></p>
-        </c:if>
+
+        <c:choose>
+            <c:when test="${not empty sessionScope.account}">
+                <c:if  test="${not empty sessionScope.account}">
+                    <p><span>Start learning, </span> ${sessionScope.account.email} <span>!</span></p>
+
+                </c:if>
+            </c:when>
+            <c:otherwise>
+                <em style="color: darkgrey">Для прохождения курсов необходимо зарегистрироваться ♥</em>
+            </c:otherwise>
+        </c:choose>
+
     </div>
 
     <div>
@@ -51,7 +62,6 @@
                             <div class="card-content white-text">
                                 <span class="card-title">${course.title}</span>
                                 <p>${course.description}</p>
-
                                 <br>
                                 <hr>
                                 <br>
@@ -61,9 +71,23 @@
                                     <span>года</span></p>
 
                             </div>
+
                             <div class="card-action">
-                                <a href="#">Register</a>
-                                <a href="#">Execute</a>
+                                <c:choose>
+                                    <c:when test="${not empty sessionScope.account}">
+                                        <c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
+                                            <a href="/controller?command=add_task">Download task</a>
+                                            <a href="/controller?command=check_task">Check task</a>
+                                        </c:if>
+                                        <c:if test="${not empty sessionScope.account && sessionScope.account.role eq
+                                        Role.STUDENT}">
+                                            <a href="/controller?command=complete_task">Complete task</a>
+                                        </c:if>
+                                    </c:when>
+
+                                </c:choose>
+<%--                                todo:add watch_tasks_command--%>
+                                <a href="/controller?command=watch_tasks">Watch task</a>
                             </div>
                         </div>
                     </div>

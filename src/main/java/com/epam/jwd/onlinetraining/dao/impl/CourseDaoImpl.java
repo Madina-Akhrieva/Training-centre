@@ -107,6 +107,21 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
         return Holder.INSTANCE;
     }
 
+    @Override
+    public Boolean delete(Long id) {
+        return null;
+    }
+
+    @Override
+    public Course create(Course entity) {
+        return null;
+    }
+
+    @Override
+    public Course update(Course entity) {
+        return null;
+    }
+
     private static class Holder {
         public static final CourseDao INSTANCE = new CourseDaoImpl(ConnectionPool.instance());
     }

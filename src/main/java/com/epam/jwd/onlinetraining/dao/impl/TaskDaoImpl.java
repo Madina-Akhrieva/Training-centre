@@ -33,6 +33,16 @@ public class TaskDaoImpl extends CommonDao<Task> {
     }
 
     @Override
+    public Task create(Task entity) {
+        return null;
+    }
+
+    @Override
+    public Task update(Task entity) {
+        return null;
+    }
+
+    @Override
     protected String getTableName() {
         return null;
     }

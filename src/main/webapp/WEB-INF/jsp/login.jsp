@@ -14,8 +14,8 @@
         <div class="form-container sign-up-container">
             <form name="signup-form" action="/controller?command=signup" method="post">
                 <h1>Create Account</h1>
-                <input id="signup-input" type="email" placeholder="Email"  name="signup"  value="" />
-                <input id="password-input" type="password" placeholder="Password" name="password" vaue=""/>
+                <input id="signup-input" type="email" placeholder="Email"  name="email"  value="" required=""/>
+                <input id="password-input" type="password" placeholder="Password" name="password" vaue="" required=""/>
                 <button type="submit">Sign Up</button>
             </form>
         </div>
@@ -25,8 +25,8 @@
         <div class="form-container sign-in-container">
             <form name="login-form" action="/controller?command=login" method="post">
                 <h1>Sign in</h1>
-                <input type="email" placeholder="Email" name="email"/>
-                <input type="password" placeholder="Password" name="password" />
+                <input type="email" placeholder="Email" name="email" required=""/>
+                <input type="password" placeholder="Password" name="password" required="" />
                 <c:if test="${not empty requestScope.errorLoginPassMessage}">
 
                         <p style="color:red">

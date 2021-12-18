@@ -1,10 +1,9 @@
 package com.epam.jwd.onlinetraining.controller.servlet;
 
 import com.epam.jwd.onlinetraining.controller.api.RequestFactory;
-import com.epam.jwd.onlinetraining.controller.command.Command;
-import com.epam.jwd.onlinetraining.controller.command.CommandRequest;
-import com.epam.jwd.onlinetraining.controller.command.CommandResponse;
-import com.epam.jwd.onlinetraining.dao.db.ConnectionPool;
+import com.epam.jwd.onlinetraining.controller.command.common.Command;
+import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
+import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,16 +25,6 @@ public class Controller extends HttpServlet {
 
 
     private final RequestFactory requestFactory = RequestFactory.getInstance();
-//
-//    @Override
-//    public void init() {
-//        ConnectionPool.instance().init();
-//    }
-//
-//    @Override
-//    public void destroy() {
-//        ConnectionPool.instance().shutDown();
-//    }
 
     @Override
     protected void doGet(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {

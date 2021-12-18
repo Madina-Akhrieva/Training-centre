@@ -10,15 +10,18 @@ import com.epam.jwd.onlinetraining.dao.model.Role;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 import static java.lang.String.format;
+import static java.lang.String.join;
 
 public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
 
@@ -28,18 +31,31 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
     private static final String EMAIL_FIELD_NAME = "j.email";
     private static final String PASSWORD_FIELD_NAME = "j.account_password";
     private static final String ROLE_FIELD_NAME = "r.name";
+    public static final String SET_FOREIGN_KEYS_0 = "SET foreign_key_checks = 0";
+    public static final String SET_FOREIGN_KEYS_1 = "SET foreign_key_checks = 1";
 
     private static final List<String> FIELDS = Arrays.asList(
             ID_FIELD_NAME, EMAIL_FIELD_NAME,
             PASSWORD_FIELD_NAME, ROLE_FIELD_NAME
     );
 
+    private static final List<String> INSERT_FIELDS = Arrays.asList(
+             EMAIL_FIELD_NAME,
+            PASSWORD_FIELD_NAME
+    );
 
+    private static final String INSERT_INTO = "insert into %s (%s)";
+    private static final String COMMA = ", ";
+    private static final String INSERT_ACCOUNT = "insert into account  ( account_password, email) values(?, ?)";
+
+
+    private final String insertSql;
     private final String selectByEmailExpression;
 
     protected AccountDaoImpl(ConnectionPool pool) {
         super(pool);
-        this.selectByEmailExpression = format(SELECT_ALL_FROM, String.join(", ", getFields())) + getTableName() + SPACE + format(WHERE_FIELD, EMAIL_FIELD_NAME);
+        this.selectByEmailExpression = format(SELECT_ALL_FROM, join(", ", getFields())) + getTableName() + SPACE + format(WHERE_FIELD, EMAIL_FIELD_NAME);
+        this.insertSql = "insert into account  ( account_password, email) values(?, ?)";
 
     }
 
@@ -53,6 +69,11 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
     protected List<String> getFields() {
         return FIELDS;
     }
+
+    protected List<String> getInsertFields() {
+        return INSERT_FIELDS;
+    }
+
 
     @Override
     protected String getIdFieldName() {
@@ -89,6 +110,39 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
 
     public static AccountDao getInstance() {
         return Holder.INSTANCE;
+    }
+
+    @Override
+    public Boolean delete(Long id) {
+        return null;
+    }
+
+    @Override
+    public Account create(Account account) {
+        Connection connection;
+        PreparedStatement statement;
+        ResultSet resultSet;
+        try {
+            connection = pool.takeConnection();
+            statement = connection.prepareStatement(INSERT_ACCOUNT, PreparedStatement.RETURN_GENERATED_KEYS);
+            statement.setString(1, account.getPassword());
+            statement.setString(2, account.getEmail());
+            statement.executeUpdate();
+            resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                account.setId(resultSet.getLong(1));
+            }
+        } catch (InterruptedException | SQLException e) {
+            LOGGER.warn("exception", e);
+            e.printStackTrace();
+        }
+
+        return account;
+    }
+
+    @Override
+    public Account update(Account entity) {
+        return null;
     }
 
     private static class Holder {

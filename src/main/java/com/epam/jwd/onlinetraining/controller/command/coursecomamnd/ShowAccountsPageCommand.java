@@ -1,13 +1,17 @@
-package com.epam.jwd.onlinetraining.controller.command;
+package com.epam.jwd.onlinetraining.controller.command.coursecomamnd;
 
 import com.epam.jwd.onlinetraining.controller.api.RequestFactory;
+import com.epam.jwd.onlinetraining.controller.command.common.Command;
+import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
+import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
+import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
 import com.epam.jwd.onlinetraining.dao.model.Account;
 import com.epam.jwd.onlinetraining.service.api.AccountService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
 
 import java.util.List;
 
-public enum ShowAccountsPageCommand implements Command{
+public enum ShowAccountsPageCommand implements Command {
     INSTANCE(ServiceFactory.simple().accountService(), RequestFactory.getInstance(), PropertyContext.instance());
 
     private static final String JSP_ACCOUNTS_ATTRIBUTE_NAME = "accounts";

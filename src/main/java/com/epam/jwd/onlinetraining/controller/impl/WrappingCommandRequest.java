@@ -1,6 +1,6 @@
 package com.epam.jwd.onlinetraining.controller.impl;
 
-import com.epam.jwd.onlinetraining.controller.command.CommandRequest;
+import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

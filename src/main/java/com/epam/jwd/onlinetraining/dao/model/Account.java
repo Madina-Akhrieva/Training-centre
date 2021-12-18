@@ -1,13 +1,14 @@
 package com.epam.jwd.onlinetraining.dao.model;
 
 import static com.epam.jwd.onlinetraining.dao.model.Role.STUDENT;
+import static com.epam.jwd.onlinetraining.dao.model.Role.valueOf;
 
 public class Account implements Entity {
 
-    private final Long id;
+    private  Long id;
     private final String password;
     private final String email;
-    private final Role role;
+    private  Role role;
 
     public Account(Long id, String password, String email) {
         this(id, password, email, STUDENT);
@@ -21,6 +22,8 @@ public class Account implements Entity {
         this.email = email;
         this.role = role;
     }
+
+
 
     public Role getRole() {
         return role;
@@ -37,6 +40,14 @@ public class Account implements Entity {
     @Override
     public Long getId() {
         return null;
+    }
+
+    public Account withPassword(String password){
+        return new Account(id, email, password);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
 
