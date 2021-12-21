@@ -11,12 +11,16 @@ import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
+
 public enum DeleteCourseCommand implements Command {
     INSTANCE(ServiceFactory.simple().courseService(), RequestFactory.getInstance(), PropertyContext.instance());
 
     private static final Logger LOGGER = LogManager.getLogger(EditCourseCommand.class);
-    private static final String COURSE_ATTRIBUTE_NAME = "course";
-    private static final String EDIT_COURSE_PAGE = "page.edit_course";
+    private static final String MANAGE_COURSES_PAGE = "page.manage_courses";
+    private static final String COURSES_ATTRIBUTE_NAME = "courses";
+    private static final String ID_REQUEST_PARAM_NAME = "id";
+
 
     private final CourseService courseService;
     private final RequestFactory requestFactory;
@@ -28,20 +32,15 @@ public enum DeleteCourseCommand implements Command {
         this.propertyContext = propertyContext;
     }
 
-    private static final String ID_REQUEST_PARAM_NAME = "id";
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-
+        LOGGER.trace("deleteCourseCommand ");
         long id = Long.parseLong(request.getParameter(ID_REQUEST_PARAM_NAME));
-
-        Course course = courseService.findById(id);
-
-
-        LOGGER.info("Id which came is: {}", id);
-
-        request.addAttributeToJsp(COURSE_ATTRIBUTE_NAME, course);
-        return requestFactory.createForwardResponse(propertyContext.get(EDIT_COURSE_PAGE));
+        boolean isDeleted = courseService.delete(id);
+        final List<Course> courses = courseService.findAll();
+        request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, courses);
+        return requestFactory.createForwardResponse(propertyContext.get(MANAGE_COURSES_PAGE));
     }
 
 }

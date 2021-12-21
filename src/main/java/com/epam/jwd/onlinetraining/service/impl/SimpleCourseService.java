@@ -58,6 +58,11 @@ public class SimpleCourseService implements CourseService {
 
     }
 
+    @Override
+    public boolean delete(Long id) {
+        return courseDao.delete(id);
+    }
+
 
     @Override
     public Optional<Course> create(Course course) {

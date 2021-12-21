@@ -4,6 +4,7 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.epam.jwd.onlinetraining.dao.api.AccountDao;
 import com.epam.jwd.onlinetraining.dao.api.CourseDao;
 import com.epam.jwd.onlinetraining.dao.api.MentorDao;
+import com.epam.jwd.onlinetraining.dao.api.TaskDao;
 import com.epam.jwd.onlinetraining.dao.db.TransactionManager;
 import com.epam.jwd.onlinetraining.dao.model.Entity;
 import com.epam.jwd.onlinetraining.service.api.EntityService;
@@ -36,6 +37,8 @@ public class SimpleServiceFactory implements ServiceFactory {
             switch (className) {
                 case "Course":
                     return new SimpleCourseService(CourseDao.instance(), MentorDao.instance(), TransactionManager.instance());
+                case "Task":
+                    return new SimpleTaskService( CourseDao.instance(),TaskDao.instance(), TransactionManager.instance());
                 case "Account":
                     return new SimpleAccountService(AccountDao.instance(), BCrypt.withDefaults(), BCrypt.verifyer());
                 default:

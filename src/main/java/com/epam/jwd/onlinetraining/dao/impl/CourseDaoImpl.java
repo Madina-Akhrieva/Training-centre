@@ -36,14 +36,21 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
     private static final List<String> FIELDS = Arrays.asList(
             "id", "title", "learning_language", "description"
     );
-    private static final String UPDATE_COURSE_WHERE_TITLE = "UPDATE course SET title = ?, learning_language = ?, description = ? WHERE title = ?";
-    public static final String COURSE_ID_COLUMN_NAME = "id";
+    private static final String UPDATE_COURSE_WHERE_TITLE = "update course set title = ?, learning_language = ?, description = ? where title = ?";
+    private static final String DELETE_COURSE_WHERE_ID = "delete from course where id=?";
 
 
     protected CourseDaoImpl(ConnectionPool pool) {
         super(pool);
     }
 
+    public static CourseDao getInstance() {
+        return Holder.INSTANCE;
+    }
+
+    private static class Holder {
+        public static final CourseDao INSTANCE = new CourseDaoImpl(ConnectionPool.instance());
+    }
 
     @Override
     protected String getTableName() {
@@ -160,13 +167,22 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
     }
 
 
-    public static CourseDao getInstance() {
-        return Holder.INSTANCE;
-    }
 
     @Override
     public Boolean delete(Long id) {
-        return null;
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     DELETE_COURSE_WHERE_ID)) {
+            preparedStatement.setLong(1, id);
+            boolean rowUpdated = preparedStatement.executeUpdate() > 0;
+            return rowUpdated;
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } catch (InterruptedException interruptedException) {
+            interruptedException.printStackTrace();
+        }
+        return false;
     }
 
 
@@ -178,7 +194,6 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
             preparedStatement.setString(1, course.getTitle());
             preparedStatement.setString(2, course.getLearningLanguage());
             preparedStatement.setString(3, course.getDescription());
-//            preparedStatement.setLong(4, course.getMentor().getId());
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -194,9 +209,5 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
         return course;
     }
 
-
-    private static class Holder {
-        public static final CourseDao INSTANCE = new CourseDaoImpl(ConnectionPool.instance());
-    }
 
 }

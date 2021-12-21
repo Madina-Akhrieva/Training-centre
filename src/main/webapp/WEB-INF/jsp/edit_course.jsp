@@ -1,11 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: HP
-  Date: 13.12.2021
-  Time: 19:58
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 
@@ -29,11 +22,12 @@
 
 				<br><br>
 
-				<select name="learning_language" id="learning_language" class="text"  value="<c:out value='${course.learningLanguage}'/>" required>
+				<select name="learning_language" id="learning_language" class="text"
+				        value="<c:out value='${course.learningLanguage}'/>" required>
 					<option value="Java">Java</option>
 					<option value="HTML">HTML</option>
 					<option value="CSS">CSS</option>
-				<option value="JS">JS</option>
+					<option value="JS">JS</option>
 					<option value="Python">Python</option>
 					<option value="C++">C++</option>
 					<option value="C">C</option>
@@ -44,7 +38,7 @@
 
 				<br><br>
 
-				<select  name="mentor" id="mentor" class="text" value="Dziana Bahdanava" required>
+				<select name="mentor" id="mentor" class="text" value="Dziana Bahdanava" required>
 					<option value="Dziana Bahdanava">Dziana Bahdanava</option>
 				</select>
 
@@ -82,6 +76,5 @@
 function hideURLbar() {
     window.scrollTo(0, 1);
 } </script>
-<!-- //main -->
 </body>
 </html>

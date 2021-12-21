@@ -64,6 +64,12 @@
 						</a>
 					</td>
 
+					<td>
+						<a class="waves-effect waves-light btn-small black"
+						   href="/controller?command=add_task&&id=${course.id}">Add task
+						</a>
+					</td>
+
 				</tr>
 			</c:forEach>
 
