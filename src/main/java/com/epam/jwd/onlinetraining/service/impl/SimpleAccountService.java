@@ -3,7 +3,6 @@ package com.epam.jwd.onlinetraining.service.impl;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.epam.jwd.onlinetraining.dao.api.AccountDao;
 import com.epam.jwd.onlinetraining.dao.model.Account;
-import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.service.api.AccountService;
 
 import java.nio.charset.StandardCharsets;
