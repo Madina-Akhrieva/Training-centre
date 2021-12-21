@@ -3,7 +3,7 @@ package com.epam.jwd.onlinetraining.service.impl;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.epam.jwd.onlinetraining.dao.api.AccountDao;
 import com.epam.jwd.onlinetraining.dao.model.Account;
-import com.epam.jwd.onlinetraining.dao.model.Role;
+import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.service.api.AccountService;
 
 import java.nio.charset.StandardCharsets;
@@ -17,35 +17,14 @@ public class SimpleAccountService implements AccountService {
     public static final byte[] DUMMY_PASSWORD = "password".getBytes(StandardCharsets.UTF_8);
     private final AccountDao accountDao;
     private final BCrypt.Hasher hasher;
-    private final BCrypt.Verifyer verifyer;
+    private final BCrypt.Verifyer verifier;
 
-    public SimpleAccountService(AccountDao accountDao, BCrypt.Hasher hasher, BCrypt.Verifyer verifyer) {
+    public SimpleAccountService(AccountDao accountDao, BCrypt.Hasher hasher, BCrypt.Verifyer verifier) {
         this.accountDao = accountDao;
         this.hasher = hasher;
-        this.verifyer = verifyer;
+        this.verifier = verifier;
     }
 
-
-//    @Override
-//    public Optional<Account> authenticate(String email, String password) {
-//        if (email == null || password == null) {
-//            return Optional.empty();
-//        }
-//        byte[] enteredPassword = password.getBytes(StandardCharsets.UTF_8);
-//        final Optional<Account> readAccount = accountDao.readAccountByEmail(email);
-//        if (readAccount.isPresent()) {
-//            final byte[] hashedPassword = readAccount.get()
-//                    .getPassword()
-//                    .getBytes(StandardCharsets.UTF_8);
-//            return verifyer.verify(enteredPassword, hashedPassword).verified
-//                    ? readAccount
-//                    : Optional.empty();
-//        } else {
-//            protectFromTimingAttack(enteredPassword);
-//            return Optional.empty();
-//        }
-//
-//    }
 
     @Override
     public Optional<Account> register(String email, String password) {
@@ -76,7 +55,7 @@ public class SimpleAccountService implements AccountService {
             final byte[] hashedPassword = readAccount.get()
                     .getPassword()
                     .getBytes(StandardCharsets.UTF_8);
-            return verifyer.verify(enteredPassword, hashedPassword).verified
+            return verifier.verify(enteredPassword, hashedPassword).verified
                     ? readAccount
                     : Optional.empty();
         } else {
@@ -86,7 +65,7 @@ public class SimpleAccountService implements AccountService {
     }
 
     private void protectFromTimingAttack(byte[] enteredPassword) {
-        verifyer.verify(enteredPassword, DUMMY_PASSWORD);
+        verifier.verify(enteredPassword, DUMMY_PASSWORD);
     }
 
     @Override
@@ -94,18 +73,13 @@ public class SimpleAccountService implements AccountService {
         return accountDao.read();
     }
 
+
+
     @Override
     public Optional<Account> create(Account entity) {
         return Optional.empty();
     }
 
-//    @Override
-//    public Optional<Account> create(Account account) {
-//        final char[] rawPassword = account.getPassword().toCharArray();
-//        final String hashedPassword = hasher.hashToString(MIN_COST, rawPassword);
-//        Optional.ofNullable(accountDao.create(account.withPassword(hashedPassword)));
-//        return Optional.empty();
-//    }
 
     @Override
     public Account add(Account account) {

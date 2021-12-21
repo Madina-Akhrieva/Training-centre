@@ -25,6 +25,7 @@ public class WrappingCommandRequest implements CommandRequest {
         return request.getParameter(name);
     }
 
+
     @Override
     public boolean sessionExists() {
         return request.getSession(false) != null;

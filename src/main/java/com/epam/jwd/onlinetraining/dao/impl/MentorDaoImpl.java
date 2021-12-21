@@ -78,8 +78,8 @@ public final class MentorDaoImpl extends CommonDao<Mentor> implements MentorDao 
     }
 
     @Override
-    public Mentor update(Mentor entity) {
-        return null;
+    public boolean update(Mentor entity, String param) {
+        return false;
     }
 
     private static class Holder {

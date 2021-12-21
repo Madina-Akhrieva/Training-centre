@@ -6,14 +6,17 @@ import com.epam.jwd.onlinetraining.dao.db.TransactionManager;
 import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.Mentor;
 
-import com.epam.jwd.onlinetraining.service.api.EntityService;
+import com.epam.jwd.onlinetraining.service.api.CourseService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 
-public class SimpleCourseService implements EntityService<Course> {
+public class SimpleCourseService implements CourseService {
+    private static final Logger LOGGER = LogManager.getLogger(SimpleCourseService.class);
 
     private final CourseDao courseDao;
     private final MentorDao mentorDao;
@@ -39,10 +42,26 @@ public class SimpleCourseService implements EntityService<Course> {
 //        transactionManager.commitTransaction();
         return courses;
     }
+//course with id
+    @Override
+    public Course findById(Long id) {
+        final Course course= courseDao.findCourseByCourseID(id);
+        LOGGER.info("The course we got is: {}", course);
+        return course;
+
+    }
 
     @Override
-    public Optional<Course> create(Course entity) {
-        return Optional.empty();
+    public boolean update(Course course, String title) {
+        LOGGER.info("The course we got is: {}", course);
+        return courseDao.update(course, title);
+
+    }
+
+
+    @Override
+    public Optional<Course> create(Course course) {
+        return Optional.of(courseDao.create(course));
     }
 
     @Override

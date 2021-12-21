@@ -1,10 +1,7 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
 import com.epam.jwd.onlinetraining.dao.api.AccountDao;
-import com.epam.jwd.onlinetraining.dao.api.EntityDao;
-import com.epam.jwd.onlinetraining.dao.api.UserDao;
 import com.epam.jwd.onlinetraining.dao.db.ConnectionPool;
-import com.epam.jwd.onlinetraining.dao.db.LockingConnectionPool;
 import com.epam.jwd.onlinetraining.dao.model.Account;
 import com.epam.jwd.onlinetraining.dao.model.Role;
 import org.apache.logging.log4j.LogManager;
@@ -14,11 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import static java.lang.String.format;
 import static java.lang.String.join;
@@ -119,16 +114,13 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
 
     @Override
     public Account create(Account account) {
-        Connection connection;
-        PreparedStatement statement;
-        ResultSet resultSet;
-        try {
-            connection = pool.takeConnection();
-            statement = connection.prepareStatement(INSERT_ACCOUNT, PreparedStatement.RETURN_GENERATED_KEYS);
-            statement.setString(1, account.getPassword());
-            statement.setString(2, account.getEmail());
-            statement.executeUpdate();
-            resultSet = statement.getGeneratedKeys();
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement  preparedStatement = connection.prepareStatement(INSERT_ACCOUNT, PreparedStatement.RETURN_GENERATED_KEYS)){
+            ResultSet resultSet;
+            preparedStatement.setString(1, account.getPassword());
+            preparedStatement.setString(2, account.getEmail());
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
                 account.setId(resultSet.getLong(1));
             }
@@ -141,8 +133,8 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
     }
 
     @Override
-    public Account update(Account entity) {
-        return null;
+    public boolean update(Account entity, String param) {
+        return false;
     }
 
     private static class Holder {

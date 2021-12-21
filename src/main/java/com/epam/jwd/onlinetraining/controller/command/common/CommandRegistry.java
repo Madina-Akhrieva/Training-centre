@@ -1,14 +1,14 @@
 package com.epam.jwd.onlinetraining.controller.command.common;
 
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.AddCourseCommand;
+import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.DeleteCourseCommand;
+import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.EditCourseCommand;
+import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.SubmitEditCourseCommand;
 import com.epam.jwd.onlinetraining.controller.command.logincommand.LoginCommand;
 import com.epam.jwd.onlinetraining.controller.command.logincommand.LogoutCommand;
 import com.epam.jwd.onlinetraining.controller.command.logincommand.SignupCommand;
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.ShowAccountsPageCommand;
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.ShowAddCoursePageCommand;
-import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.ShowAfterAddCoursePageCommand;
-import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.ShowAfterDeletePageCommand;
-import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.ShowAfterEditPageCommand;
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.ShowEditCourseCommand;
 import com.epam.jwd.onlinetraining.controller.command.maincommand.ShowErrorPageCommand;
 import com.epam.jwd.onlinetraining.controller.command.logincommand.ShowLoginPageCommand;
@@ -18,7 +18,6 @@ import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.ShowProfileP
 import com.epam.jwd.onlinetraining.controller.command.logincommand.ShowSignupPageCommand;
 import com.epam.jwd.onlinetraining.controller.command.taskscommand.ShowTasksCommand;
 import com.epam.jwd.onlinetraining.controller.command.taskscommand.AddTaskCommand;
-import com.epam.jwd.onlinetraining.controller.command.taskscommand.AfterAddTaskCommand;
 import com.epam.jwd.onlinetraining.controller.command.taskscommand.CheckTaskCommand;
 import com.epam.jwd.onlinetraining.controller.command.taskscommand.CompleteTaskCommand;
 import com.epam.jwd.onlinetraining.dao.model.Role;
@@ -42,21 +41,19 @@ public enum CommandRegistry {
     LOGOUT(LogoutCommand.INSTANCE, "logout", STUDENT, MENTOR, ADMIN),
     PROFILE_PAGE(ShowProfilePageCommand.INSTANCE, "show_profile"),
     SHOW_ACCOUNTS(ShowAccountsPageCommand.INSTANCE, "show_accounts", ADMIN),
-    MANAGE_COURSES(ShowManageCoursesPageCommand.INSTANCE, "manage_courses", ADMIN),
-    SHOW_ADD_COURSE_PAGE(ShowAddCoursePageCommand.INSTANCE, "show_add_course",  STUDENT, ADMIN),
-    ADD_COURSES(AddCourseCommand.INSTANCE, "add_course", ADMIN),
+    MANAGE_COURSES(ShowManageCoursesPageCommand.INSTANCE, "manage_courses",  ADMIN),
+    SHOW_ADD_COURSE_PAGE(ShowAddCoursePageCommand.INSTANCE, "show_add_course", MENTOR, ADMIN),
+    ADD_COURSE(AddCourseCommand.INSTANCE, "add_course", MENTOR, ADMIN),
     WATCH_TASKS(ShowTasksCommand.INSTANCE, "watch_tasks",  STUDENT, MENTOR, ADMIN),
+    EDIT_COURSE(EditCourseCommand.INSTANCE, "edit_course",   MENTOR, ADMIN),
+    DELETE_COURSE(DeleteCourseCommand.INSTANCE, "delete_course",   MENTOR, ADMIN),
+    SUBMIT_EDIT_COURSE(SubmitEditCourseCommand.INSTANCE, "submit_edit_course",   MENTOR, ADMIN),
     DEFAULT(ShowMainPageCommand.INSTANCE, ""),
 
 
-    AFTER_ADD_COURSE(ShowAfterAddCoursePageCommand.INSTANCE, "after_add_course"),
     COMPLETE_TASK(CompleteTaskCommand.INSTANCE, "complete_task"),
-    AFTER_ADD_TASK(AfterAddTaskCommand.INSTANCE, "after_add_task"),
     CHECK_TASK(CheckTaskCommand.INSTANCE, "check_task"),
-    ADD_TASK(AddTaskCommand.INSTANCE, "add_task"),
-    AFTER_EDIT_COURSE(ShowAfterEditPageCommand.INSTANCE, "after_edit_course", ADMIN),
-    AFTER_DELETE_COURSE(ShowAfterDeletePageCommand.INSTANCE, "after_delete_course", ADMIN),
-    EDIT_COURSE(ShowEditCourseCommand.INSTANCE, "edit_course", ADMIN);
+    ADD_TASK(AddTaskCommand.INSTANCE, "add_task");
 
     private final Command command;
     private final String path;

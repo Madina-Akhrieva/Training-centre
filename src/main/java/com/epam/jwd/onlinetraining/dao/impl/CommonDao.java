@@ -47,11 +47,6 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
         this.selectByIdExpression = selectAllExpression + SPACE + format(WHERE_FIELD, getIdFieldName());
 //        this.insertSql = format(INSERT_INTO, getTableName(), join(COMMA, getFields()));
     }
-//
-//    @Override
-//    public T create(T entity) {
-//        return null;
-//    }
 
     @Override
     public List<T> read() {
@@ -78,20 +73,7 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
         }
     }
 
-//    @Override
-//    public T update(T entity) {
-//        //todo : impl
-//        return null;
-//    }
-//
-//    @Override
-//    public Boolean delete(Long id) {
-//        //todo : impl
-//        return null;
-//    }
 
-    //extractor.extractAll(pool.takeConnection().createStatement().executeQuery("select id_course, title, amount_of_tasks, learning_language, description from course"))
-    //to evaluate 90
     protected <T extends Entity> List<T> executeStatement(String sql, ResultSetExtractor<T> extractor) throws InterruptedException {
         try (final Connection connection = pool.takeConnection();
              final Statement statement = connection.createStatement()) {
@@ -200,7 +182,7 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
 //            return null;
 //        }
 //    }
-
+//
 //    @Override
 //    public Optional<T> read(Long id) {
 //        try {
@@ -208,7 +190,7 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
 //                    this::extractResultCatchingException,
 //                    st -> st.setLong(1, id));
 //        } catch (InterruptedException e) {
-//            logger.info("takeConnection interrupted", e);
+//            LOGGER.info("takeConnection interrupted", e);
 //            Thread.currentThread().interrupt();
 //            return Optional.empty();
 //        }

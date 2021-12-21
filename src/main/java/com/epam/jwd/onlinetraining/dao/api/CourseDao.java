@@ -18,4 +18,6 @@ public interface CourseDao extends EntityDao<Course> {
         return CourseDaoImpl.getInstance();
     }
 
+    Course findCourseByCourseID(Long id);
+
 }

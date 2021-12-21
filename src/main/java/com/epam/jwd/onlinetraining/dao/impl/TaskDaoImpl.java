@@ -1,7 +1,6 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
 import com.epam.jwd.onlinetraining.dao.db.ConnectionPool;
-import com.epam.jwd.onlinetraining.dao.db.LockingConnectionPool;
 import com.epam.jwd.onlinetraining.dao.model.Task;
 
 import java.sql.PreparedStatement;
@@ -38,8 +37,8 @@ public class TaskDaoImpl extends CommonDao<Task> {
     }
 
     @Override
-    public Task update(Task entity) {
-        return null;
+    public boolean update(Task entity, String param) {
+        return false;
     }
 
     @Override

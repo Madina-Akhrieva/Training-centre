@@ -16,6 +16,13 @@
                 <h1>Create Account</h1>
                 <input id="signup-input" type="email" placeholder="Email"  name="email"  value="" required=""/>
                 <input id="password-input" type="password" placeholder="Password" name="password" vaue="" required=""/>
+                <c:if test="${not empty requestScope.errorLoginPassMessage}">
+
+                    <p style="color:red">
+                            ${requestScope.errorLoginPassMessage}
+                    </p>
+
+                </c:if>
                 <button type="submit">Sign Up</button>
             </form>
         </div>

@@ -11,8 +11,14 @@
 <head>
 	<title>Add course form</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
 	<!-- Custom Theme files -->
 	<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
 	<link rel="stylesheet" href="../css/add_course.css">
@@ -28,16 +34,37 @@
 	<h1>Create Course Form</h1>
 	<div class="main-agileinfo">
 		<div class="agileits-top">
-			<form action="#" method="post">
-				<input class="text" type="text" name="Username" placeholder="Title" required="">
-				<input class="text email" type="text" name="email" placeholder="Learning language" required="">
-				<input class="text" type="text" name="password" placeholder="Mentor pen-name" required="">
-				<input class="text w3lpass" type="text" name="password" placeholder="Description" required="">
-				<div class="wthree-text">
-					<div class="clear"> </div>
-				</div>
+			<form name="course-form" action="/controller?command=add_course" method="post">
+				<input class="text" type="text" name="title" placeholder="Title" required>
+
+				<br><br>
+
+				<select name="learning_language" id="learning_language" class="text" required>
+					<option value="">Learning language</option>
+					<option value="Java">Java</option>
+					<option value="HTML">HTML</option>
+					<option value="CSS">CSS</option>
+					<option value="JS">JS</option>
+					<option value="Python">Python</option>
+					<option value="C++">C++</option>
+					<option value="C">C</option>
+					<option value="Angular">Angular</option>
+					<option value="React">React</option>
+					<option value="Ruby">Ruby</option>
+				</select>
+
+				<br><br>
+
+				<select  name="mentor" id="mentor" class="text" required>
+					<option value="">Mentor name</option>
+					<option value="Dziana Bahdanava">Dziana Bahdanava</option>
+				</select>
+
+				<input class="text w3lpass" type="text" name="description" placeholder="description" required>
+
+
 				<input type="submit" value="Add course">
-				<p> <a href="/controller?command=after_add_course"> Return to the all courses page!</a></p>
+				<p><a href="/controller?command=manage_courses"> Return to the all courses page!</a></p>
 			</form>
 		</div>
 	</div>
@@ -55,8 +82,13 @@
 		<li></li>
 		<li></li>
 		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
 	</ul>
 </div>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 <!-- //main -->
 </body>
 </html>

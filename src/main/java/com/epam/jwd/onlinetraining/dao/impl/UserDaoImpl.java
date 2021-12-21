@@ -2,7 +2,6 @@ package com.epam.jwd.onlinetraining.dao.impl;
 
 import com.epam.jwd.onlinetraining.dao.api.UserDao;
 import com.epam.jwd.onlinetraining.dao.db.ConnectionPool;
-import com.epam.jwd.onlinetraining.dao.db.LockingConnectionPool;
 import com.epam.jwd.onlinetraining.dao.model.User;
 
 
@@ -11,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 public class UserDaoImpl extends CommonDao<User> implements UserDao {
     private static final String SQL_SAVE_USER = "INSERT INTO course_user(id_course_user, role_id, phone, first_name, last_name) VALUES ( ?, ?, ?, ?, ?)";
@@ -76,8 +74,8 @@ public class UserDaoImpl extends CommonDao<User> implements UserDao {
     }
 
     @Override
-    public User update(User entity) {
-        return null;
+    public boolean update(User entity, String param) {
+        return false;
     }
 
 

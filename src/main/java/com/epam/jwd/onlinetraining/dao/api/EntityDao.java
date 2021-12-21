@@ -16,6 +16,6 @@ public interface EntityDao<T extends Entity> {
 
     T create(T entity);
 
-    T update(T entity);
+    boolean update(T entity, String title);
 
 }

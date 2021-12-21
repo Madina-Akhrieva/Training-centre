@@ -55,14 +55,15 @@
 					<td>${course.mentor.pen_name}</td>
 					<td>
 						<a class="waves-effect waves-light btn-small black"
-						   href="/controller?command=edit_course">Edit</a>
+						   href="/controller?command=edit_course&&id=${course.id}">Edit</a>
 
 					</td>
 					<td>
 						<a class="waves-effect waves-light btn-small black"
-						   href="/controller?command=after_delete_course">Delete
+						   href="/controller?command=delete_course&&id=${course.id}">Delete
 						</a>
 					</td>
+
 				</tr>
 			</c:forEach>
 
