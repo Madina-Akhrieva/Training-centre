@@ -15,7 +15,7 @@ public enum SignupCommand implements Command {
     INSTANCE(ServiceFactory.simple().accountService(), RequestFactory.getInstance(), PropertyContext.instance());
 
     public static final String INDEX_JSP_PATH = "page.index";
-    public static final String LOGIN_JSP_PATH= "page.login";
+    public static final String LOGIN_JSP_PATH = "page.login";
 
     private static final String ERROR_SIGNUP_PASS_ATTRIBUTE = "errorSignPassMessage";
     private static final String INVALID_SIGNUP_PASS_MESSAGE = "Such account already exist.";
@@ -41,7 +41,7 @@ public enum SignupCommand implements Command {
             return null;
         }
         final String login = request.getParameter(EMAIL_REQUEST_PARAM_NAME);
-        final String password = request.getParameter( PASSWORD_REQUEST_PARAM_NAME);
+        final String password = request.getParameter(PASSWORD_REQUEST_PARAM_NAME);
 
         final Optional<Account> account = accountService.register(login, password);
         if (!account.isPresent()) {

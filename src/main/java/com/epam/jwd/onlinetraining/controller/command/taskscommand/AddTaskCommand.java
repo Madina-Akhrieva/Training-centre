@@ -22,5 +22,5 @@ public enum AddTaskCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         return requestFactory.createForwardResponse(propertyContext.get(ADD_COURSE));
-}
+    }
 }

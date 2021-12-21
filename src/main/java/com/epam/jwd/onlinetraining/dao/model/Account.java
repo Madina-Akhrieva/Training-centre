@@ -5,15 +5,14 @@ import static com.epam.jwd.onlinetraining.dao.model.Role.valueOf;
 
 public class Account implements Entity {
 
-    private  Long id;
+    private Long id;
     private final String password;
     private final String email;
-    private  Role role;
+    private Role role;
 
     public Account(Long id, String password, String email) {
         this(id, password, email, STUDENT);
     }
-
 
 
     public Account(Long id, String password, String email, Role role) {
@@ -22,7 +21,6 @@ public class Account implements Entity {
         this.email = email;
         this.role = role;
     }
-
 
 
     public Role getRole() {
@@ -42,7 +40,7 @@ public class Account implements Entity {
         return null;
     }
 
-    public Account withPassword(String password){
+    public Account withPassword(String password) {
         return new Account(id, email, password);
     }
 

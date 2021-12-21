@@ -74,7 +74,6 @@ public class SimpleAccountService implements AccountService {
     }
 
 
-
     @Override
     public Optional<Account> create(Account entity) {
         return Optional.empty();

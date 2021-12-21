@@ -9,7 +9,6 @@ public class User implements Entity {
     private String email;
 
 
-
     public User() {
     }
 

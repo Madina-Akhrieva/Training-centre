@@ -37,7 +37,7 @@ public class UserDaoImpl extends CommonDao<User> implements UserDao {
     }
 
     @Override
-    protected User extractResult(ResultSet rs) throws SQLException{
+    protected User extractResult(ResultSet rs) throws SQLException {
         return null;
     }
 
@@ -47,8 +47,8 @@ public class UserDaoImpl extends CommonDao<User> implements UserDao {
     }
 
     public List<User> findAll() throws InterruptedException {
-        try(Connection connection = pool.takeConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_USERS)){
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_USERS)) {
 
         } catch (SQLException exception) {
             exception.printStackTrace();

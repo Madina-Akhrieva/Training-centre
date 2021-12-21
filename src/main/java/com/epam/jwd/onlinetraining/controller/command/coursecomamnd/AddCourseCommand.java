@@ -34,10 +34,10 @@ public enum AddCourseCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
 
         final String title = request.getParameter("title");
-        final String learning_language = request.getParameter( "learning_language");
-        final String description = request.getParameter( "description");
+        final String learning_language = request.getParameter("learning_language");
+        final String description = request.getParameter("description");
 
-        final Optional<Course> course = courseService.create(new Course(title,  learning_language, description ));
+        final Optional<Course> course = courseService.create(new Course(title, learning_language, description));
         if (course.isPresent()) {
             request.addAttributeToJsp(IF_ADDED_ATTRIBUTE, INVALID_COURSE_MESSAGE);
             return requestFactory.createForwardResponse(propertyContext.get(ADD_COURSE_JSP_PAGE));

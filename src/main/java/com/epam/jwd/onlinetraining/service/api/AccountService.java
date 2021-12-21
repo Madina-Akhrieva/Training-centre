@@ -4,7 +4,7 @@ import com.epam.jwd.onlinetraining.dao.model.Account;
 
 import java.util.Optional;
 
-public interface AccountService extends EntityService<Account>{
+public interface AccountService extends EntityService<Account> {
 
     Optional<Account> authenticate(String email, String password);
 

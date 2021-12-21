@@ -11,7 +11,7 @@ public class Course implements Entity {
     private final Mentor mentor;
 
 
-    public Course(Long id, String title,  String learningLanguage, String description, Mentor mentor) {
+    public Course(Long id, String title, String learningLanguage, String description, Mentor mentor) {
         this.id = id;
         this.title = title;
 
@@ -20,12 +20,12 @@ public class Course implements Entity {
         this.mentor = mentor;
     }
 
-    public Course(Long id, String title,  String learningLanguage, String description) {
-        this(id,  title,  learningLanguage, description, null);
+    public Course(Long id, String title, String learningLanguage, String description) {
+        this(id, title, learningLanguage, description, null);
     }
 
-    public Course( String title,  String learningLanguage, String description) {
-        this(null,  title, learningLanguage, description);
+    public Course(String title, String learningLanguage, String description) {
+        this(null, title, learningLanguage, description);
     }
 
     @Override
@@ -37,7 +37,6 @@ public class Course implements Entity {
     public String getTitle() {
         return title;
     }
-
 
 
     public String getLearningLanguage() {
@@ -70,7 +69,7 @@ public class Course implements Entity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title,  learningLanguage, description, mentor);
+        return Objects.hash(id, title, learningLanguage, description, mentor);
     }
 
     public void setId(Long id) {

@@ -15,8 +15,8 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 public enum ShowEditCourseCommand implements Command {
-    INSTANCE(ServiceFactory.simple().serviceFor(Course .class),
-                RequestFactory.getInstance(), PropertyContext.instance());
+    INSTANCE(ServiceFactory.simple().serviceFor(Course.class),
+            RequestFactory.getInstance(), PropertyContext.instance());
 
     private static final Logger LOGGER = LogManager.getLogger(ShowMainPageCommand.class);
 

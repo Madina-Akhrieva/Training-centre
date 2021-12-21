@@ -10,17 +10,15 @@ public interface ServiceFactory {
 
     <T extends Entity> EntityService<T> serviceFor(Class<T> modelClass);
 
-    static SimpleServiceFactory simple(){
+    static SimpleServiceFactory simple() {
         return SimpleServiceFactory.INSTANCE;
     }
 
-    default AccountService accountService(){
+    default AccountService accountService() {
         return (AccountService) serviceFor(Account.class);
     }
 
-    default CourseService courseService(){
+    default CourseService courseService() {
         return (CourseService) serviceFor(Course.class);
     }
 }
-
-//replace user -> account and continue adding

@@ -41,9 +41,9 @@ public enum SubmitEditCourseCommand implements Command {
         long id = Long.parseLong(request.getParameter(ID_REQUEST_PARAM_NAME));
         Course oldCourse = courseService.findById(id);
         final String title = request.getParameter("title");
-        final String learning_language = request.getParameter( "learning_language");
-        final String description = request.getParameter( "description");
-        Course course = new Course( title,  learning_language, description );
+        final String learning_language = request.getParameter("learning_language");
+        final String description = request.getParameter("description");
+        Course course = new Course(title, learning_language, description);
         final boolean isUpdated = courseService.update(course, oldCourse.getTitle());
         if (!isUpdated) {
             //todo : если курса нет, значит, обновление не удалось и нужно добавить сообщение о том, что

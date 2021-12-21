@@ -42,10 +42,10 @@ public class SimpleCourseService implements CourseService {
 //        transactionManager.commitTransaction();
         return courses;
     }
-//course with id
+
     @Override
     public Course findById(Long id) {
-        final Course course= courseDao.findCourseByCourseID(id);
+        final Course course = courseDao.findCourseByCourseID(id);
         LOGGER.info("The course we got is: {}", course);
         return course;
 

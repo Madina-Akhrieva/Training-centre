@@ -22,8 +22,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-//ролверить после лигоирования при возможности повторного входа что будет
-//посмотреть лк 28.10/29.10
 
 @WebFilter(urlPatterns = "/controller")
 public class RoleFilter implements Filter {

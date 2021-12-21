@@ -5,7 +5,7 @@ import com.epam.jwd.onlinetraining.controller.command.common.Command;
 import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
 import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
 
-public enum LogoutCommand  implements Command {
+public enum LogoutCommand implements Command {
     INSTANCE(RequestFactory.getInstance());
     public static final String ACCOUNT_SESSION_ATTRIBUTE_NAME = "account";
     public static final String INDEX_PATH = "/";
@@ -29,7 +29,7 @@ public enum LogoutCommand  implements Command {
     private boolean noLoggedInUserPresent(CommandRequest request) {
         return !request.sessionExists()
                 || (request.sessionExists()
-                        && !request.retrieveFromSession(ACCOUNT_SESSION_ATTRIBUTE_NAME)
+                && !request.retrieveFromSession(ACCOUNT_SESSION_ATTRIBUTE_NAME)
                 .isPresent()
         );
     }

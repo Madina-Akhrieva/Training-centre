@@ -15,7 +15,7 @@ public enum LoginCommand implements Command {
     INSTANCE(ServiceFactory.simple().accountService(), RequestFactory.getInstance(), PropertyContext.instance());
 
     public static final String INDEX_JSP_PATH = "page.index";
-    public static final String LOGIN_JSP_PATH= "page.login";
+    public static final String LOGIN_JSP_PATH = "page.login";
     public static final String LOGIN_REQUEST_PARAM_NAME = "email";
     public static final String PASSWORD_REQUEST_PARAM_NAME = "password";
 
@@ -40,7 +40,7 @@ public enum LoginCommand implements Command {
             return null;
         }
         final String login = request.getParameter(LOGIN_REQUEST_PARAM_NAME);
-        final String password = request.getParameter( PASSWORD_REQUEST_PARAM_NAME);
+        final String password = request.getParameter(PASSWORD_REQUEST_PARAM_NAME);
         final Optional<Account> account = accountService.authenticate(login, password);
         if (!account.isPresent()) {
             request.addAttributeToJsp(ERROR_LOGIN_PASS_ATTRIBUTE, INVALID_LOGIN_PASS_MESSAGE);

@@ -10,8 +10,6 @@ public interface EntityService<T extends Entity> {
 
     List<T> findAll();
 
-
-
     Optional<T> create(T entity);
 
     T add(T account);

@@ -35,7 +35,7 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
     );
 
     private static final List<String> INSERT_FIELDS = Arrays.asList(
-             EMAIL_FIELD_NAME,
+            EMAIL_FIELD_NAME,
             PASSWORD_FIELD_NAME
     );
 
@@ -115,7 +115,7 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
     @Override
     public Account create(Account account) {
         try (Connection connection = pool.takeConnection();
-             PreparedStatement  preparedStatement = connection.prepareStatement(INSERT_ACCOUNT, PreparedStatement.RETURN_GENERATED_KEYS)){
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ACCOUNT, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ResultSet resultSet;
             preparedStatement.setString(1, account.getPassword());
             preparedStatement.setString(2, account.getEmail());

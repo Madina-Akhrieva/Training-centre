@@ -195,8 +195,6 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
     }
 
 
-
-
     private static class Holder {
         public static final CourseDao INSTANCE = new CourseDaoImpl(ConnectionPool.instance());
     }
