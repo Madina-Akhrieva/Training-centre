@@ -16,6 +16,8 @@ import com.epam.jwd.onlinetraining.controller.command.maincommand.ShowMainPageCo
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.ShowManageCoursesPageCommand;
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.ShowProfilePageCommand;
 import com.epam.jwd.onlinetraining.controller.command.logincommand.ShowSignupPageCommand;
+import com.epam.jwd.onlinetraining.controller.command.taskscommand.ShowAddTaskPageCommand;
+import com.epam.jwd.onlinetraining.controller.command.taskscommand.ShowManageTasksPageCommand;
 import com.epam.jwd.onlinetraining.controller.command.taskscommand.ShowTasksCommand;
 import com.epam.jwd.onlinetraining.controller.command.taskscommand.AddTaskCommand;
 import com.epam.jwd.onlinetraining.controller.command.taskscommand.CheckTaskCommand;
@@ -41,19 +43,21 @@ public enum CommandRegistry {
     LOGOUT(LogoutCommand.INSTANCE, "logout", STUDENT, MENTOR, ADMIN),
     PROFILE_PAGE(ShowProfilePageCommand.INSTANCE, "show_profile"),
     SHOW_ACCOUNTS(ShowAccountsPageCommand.INSTANCE, "show_accounts", ADMIN),
-    MANAGE_COURSES(ShowManageCoursesPageCommand.INSTANCE, "manage_courses",  ADMIN),
+    MANAGE_COURSES(ShowManageCoursesPageCommand.INSTANCE, "manage_courses",  ADMIN, MENTOR),
+    MANAGE_TASKS(ShowManageTasksPageCommand.INSTANCE, "manage_tasks",  ADMIN, MENTOR),
     SHOW_ADD_COURSE_PAGE(ShowAddCoursePageCommand.INSTANCE, "show_add_course", MENTOR, ADMIN),
+    SHOW_ADD_TASK_PAGE(ShowAddTaskPageCommand.INSTANCE, "show_add_task", MENTOR, ADMIN),
     ADD_COURSE(AddCourseCommand.INSTANCE, "add_course", MENTOR, ADMIN),
     WATCH_TASKS(ShowTasksCommand.INSTANCE, "watch_tasks",  STUDENT, MENTOR, ADMIN),
     EDIT_COURSE(EditCourseCommand.INSTANCE, "edit_course",   MENTOR, ADMIN),
     DELETE_COURSE(DeleteCourseCommand.INSTANCE, "delete_course",   MENTOR, ADMIN),
+    ADD_TASK(AddTaskCommand.INSTANCE, "add_task", MENTOR, ADMIN),
     SUBMIT_EDIT_COURSE(SubmitEditCourseCommand.INSTANCE, "submit_edit_course",   MENTOR, ADMIN),
     DEFAULT(ShowMainPageCommand.INSTANCE, ""),
 
 
     COMPLETE_TASK(CompleteTaskCommand.INSTANCE, "complete_task"),
-    CHECK_TASK(CheckTaskCommand.INSTANCE, "check_task"),
-    ADD_TASK(AddTaskCommand.INSTANCE, "add_task");
+    CHECK_TASK(CheckTaskCommand.INSTANCE, "check_task");
 
     private final Command command;
     private final String path;

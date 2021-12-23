@@ -38,7 +38,7 @@ public class SimpleServiceFactory implements ServiceFactory {
                 case "Course":
                     return new SimpleCourseService(CourseDao.instance(), MentorDao.instance(), TransactionManager.instance());
                 case "Task":
-                    return new SimpleTaskService( CourseDao.instance(),TaskDao.instance(), TransactionManager.instance());
+                    return new SimpleTaskService( TaskDao.instance(),CourseDao.instance(), TransactionManager.instance());
                 case "Account":
                     return new SimpleAccountService(AccountDao.instance(), BCrypt.withDefaults(), BCrypt.verifyer());
                 default:

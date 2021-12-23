@@ -64,9 +64,15 @@
 						</a>
 					</td>
 
+<%--					<td>--%>
+<%--						<a class="waves-effect waves-light btn-small black"--%>
+<%--						   href="/controller?command=add_task&&id=${course.id}">Add task--%>
+<%--						</a>--%>
+<%--					</td>--%>
+
 					<td>
 						<a class="waves-effect waves-light btn-small black"
-						   href="/controller?command=add_task&&id=${course.id}">Add task
+						   href="/controller?command=manage_tasks&&id=${course.id}">Manage tasks
 						</a>
 					</td>
 

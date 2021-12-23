@@ -1,9 +1,10 @@
 package com.epam.jwd.onlinetraining.service.impl;
 
 import com.epam.jwd.onlinetraining.dao.api.CourseDao;
-import com.epam.jwd.onlinetraining.dao.api.MentorDao;
 import com.epam.jwd.onlinetraining.dao.api.TaskDao;
 import com.epam.jwd.onlinetraining.dao.db.TransactionManager;
+import com.epam.jwd.onlinetraining.dao.model.Course;
+import com.epam.jwd.onlinetraining.dao.model.Mentor;
 import com.epam.jwd.onlinetraining.dao.model.Task;
 import com.epam.jwd.onlinetraining.service.api.TaskService;
 import org.apache.logging.log4j.LogManager;
@@ -16,11 +17,11 @@ public class SimpleTaskService implements TaskService {
 
     private static final Logger LOGGER = LogManager.getLogger(SimpleCourseService.class);
 
-    private final CourseDao courseDao;
     private final TaskDao taskDao;
+    private final CourseDao courseDao;
     private final TransactionManager transactionManager;
 
-    public SimpleTaskService(CourseDao courseDao, TaskDao taskDao, TransactionManager transactionManager) {
+    public SimpleTaskService(TaskDao taskDao, CourseDao courseDao, TransactionManager transactionManager) {
         this.courseDao = courseDao;
         this.taskDao = taskDao;
         this.transactionManager = transactionManager;
@@ -28,7 +29,13 @@ public class SimpleTaskService implements TaskService {
 
     @Override
     public List<Task> findAll() {
+
         return null;
+    }
+
+    @Override
+    public List<Task> findAll(long id) {
+        return taskDao.findTasksByCourseId(id);
     }
 
     @Override
@@ -54,5 +61,15 @@ public class SimpleTaskService implements TaskService {
     @Override
     public boolean delete(Long id) {
         return false;
+    }
+
+    @Override
+    public List<Task> findTasksByCourseId(long id) {
+        return taskDao.findTasksByCourseId(id);
+    }
+
+    @Override
+    public Optional<Task> addTaskToCourse(Task task, long courseId) {
+        return taskDao.addTaskToCourse(task, courseId);
     }
 }

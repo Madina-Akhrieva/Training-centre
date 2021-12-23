@@ -6,60 +6,51 @@ import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
 import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
 import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
 import com.epam.jwd.onlinetraining.dao.model.Course;
-import com.epam.jwd.onlinetraining.service.api.CourseService;
+import com.epam.jwd.onlinetraining.dao.model.Task;
+import com.epam.jwd.onlinetraining.service.api.TaskService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
+import com.epam.jwd.onlinetraining.service.api.TaskService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
 public enum AddTaskCommand implements Command {
-    INSTANCE(RequestFactory.getInstance(), PropertyContext.instance());
+    INSTANCE(ServiceFactory.simple().taskService(), RequestFactory.getInstance(), PropertyContext.instance());
+    private static final Logger LOGGER = LogManager.getLogger(com.epam.jwd.onlinetraining.controller.command.coursecomamnd.AddCourseCommand.class);
 
-    private static final String ADD_COURSE = "page.add_task";
+    private static final String IF_ADDED_ATTRIBUTE = "message";
+    private static final String INVALID_COURSE_MESSAGE = "Course information is invalid";
+    private static final String ADD_TASK_JSP_PAGE = "page.add_task";
+    private static final String ID_REQUEST_PARAM_NAME = "id";
+    private static final String IF_NOT_ADDED_ATTRIBUTE = "notAddedMessge";
 
+    private final TaskService taskService;
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
 
-    AddTaskCommand(RequestFactory requestFactory, PropertyContext propertyContext) {
+    AddTaskCommand(TaskService taskService, RequestFactory requestFactory, PropertyContext propertyContext) {
+        this.taskService = taskService;
         this.requestFactory = requestFactory;
         this.propertyContext = propertyContext;
     }
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        return requestFactory.createForwardResponse(propertyContext.get(ADD_COURSE));
-    }
+        LOGGER.info("We are in execute method in AddCourseCommand");
 
-//    INSTANCE(ServiceFactory.simple().courseService(), RequestFactory.getInstance(), PropertyContext.instance());
-//
-//
-//    private static final String IF_ADDED_ATTRIBUTE = "message";
-//    private static final String INVALID_COURSE_MESSAGE = "Course information is invalid";
-//    private static final String ADD_COURSE_JSP_PAGE = "page.add_course";
-//
-//    private final CourseService courseService;
-//    private final RequestFactory requestFactory;
-//    private final PropertyContext propertyContext;
-//
-//    AddCourseCommand(CourseService courseService, RequestFactory requestFactory, PropertyContext propertyContext) {
-//        this.courseService = courseService;
-//        this.requestFactory = requestFactory;
-//        this.propertyContext = propertyContext;
-//    }
-//
-//    @Override
-//    public CommandResponse execute(CommandRequest request) {
-//
-//        final String title = request.getParameter("title");
-//        final String learning_language = request.getParameter("learning_language");
-//        final String description = request.getParameter("description");
-//
-//        final Optional<Course> course = courseService.create(new Course(title, learning_language, description));
-//        if (course.isPresent()) {
-//            request.addAttributeToJsp(IF_ADDED_ATTRIBUTE, INVALID_COURSE_MESSAGE);
-//            return requestFactory.createForwardResponse(propertyContext.get(ADD_COURSE_JSP_PAGE));
-//        }
-//        request.addAttributeToJsp(IF_ADDED_ATTRIBUTE, "course is added");
-//        return requestFactory.createRedirectResponse(propertyContext.get(ADD_COURSE_JSP_PAGE));
-//
-//    }
+        long courseId = Long.parseLong(request.getParameter(ID_REQUEST_PARAM_NAME));
+        final String title = request.getParameter("title");
+        final String description = request.getParameter("description");
+
+        Optional<Task> task = taskService.addTaskToCourse(new Task( courseId, title, description), courseId);
+
+        if (task.isPresent()) {
+            request.addAttributeToJsp(IF_ADDED_ATTRIBUTE, INVALID_COURSE_MESSAGE);
+            return requestFactory.createForwardResponse(propertyContext.get(ADD_TASK_JSP_PAGE));
+        }
+        request.addAttributeToJsp(IF_NOT_ADDED_ATTRIBUTE, "task is not added");
+        return requestFactory.createRedirectResponse(propertyContext.get(ADD_TASK_JSP_PAGE));
+
+    }
 }

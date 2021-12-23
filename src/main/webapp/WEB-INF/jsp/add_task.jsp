@@ -22,12 +22,15 @@
 	<h1>Add Task Form</h1>
 	<div class="main-agileinfo">
 		<div class="agileits-top">
-			<form action="/controller?=command=submit_add_task&id=${course.id}" method="post">
+			<form action="/controller?command=add_task&id=${courseId}" method="post">
 				<input class="text" type="text" name="title" placeholder="Task title" required="">
-				<input class="text" type="text" name="description" placeholder="Task description" required="">
+				<br><br>
+				<input class="text" type="text" name="description" placeholder="Task link" required="">
 
 				<input type="submit" value="Add task">
-				<p> <a href="/controller?command=manage_courses"> Return to the all courses page!</a></p>
+				<p>
+					<a href="/controller?command=manage_courses"> Return to the all courses
+						page!</a></p>
 			</form>
 		</div>
 	</div>

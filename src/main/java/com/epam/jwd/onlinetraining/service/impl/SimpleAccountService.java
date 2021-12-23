@@ -72,6 +72,10 @@ public class SimpleAccountService implements AccountService {
         return accountDao.read();
     }
 
+    @Override
+    public  List<Account> findAll(long id) {
+        return null;
+    }
 
     @Override
     public Optional<Account> create(Account entity) {

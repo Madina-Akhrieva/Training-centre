@@ -44,6 +44,11 @@ public class SimpleCourseService implements CourseService {
     }
 
     @Override
+    public List<Course> findAll(long id) {
+        return null;
+    }
+
+    @Override
     public Course findById(Long id) {
         final Course course = courseDao.findCourseByCourseID(id);
         LOGGER.info("The course we got is: {}", course);

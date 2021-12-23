@@ -5,61 +5,79 @@ import java.util.Objects;
 public class Task implements Entity {
 
     private Long id;
-    private Integer courseId;
-    private String description;
-    private Integer taskNumber;
-    private String taskAnswer;
-    private String feedback;
-    private Course course;
+    private Long courseId;
+    private final String title;
+    private final String description;
+    private final String task_answer;
+    private final String feedback;
 
-    public Task() {
-    }
-
-    public Task(Integer courseId, String description, Integer taskNumber,
-                String taskAnswer, String feedback) {
+    public Task(Long id,Long courseId, String title, String description, String task_answer, String feedback) {
+        this.id = id;
         this.courseId = courseId;
+        this.title = title;
         this.description = description;
-        this.taskNumber = taskNumber;
-        this.taskAnswer = taskAnswer;
+        this.task_answer = task_answer;
         this.feedback = feedback;
     }
 
-    public Task(Integer id, Integer courseId, String description, Integer taskNumber,
-                String taskAnswer, String feedback) {
-        this.courseId = courseId;
-        this.description = description;
-        this.taskNumber = taskNumber;
-        this.taskAnswer = taskAnswer;
-        this.feedback = feedback;
+    public Task(String title,Long courseId, String description, String task_answer, String feedback) {
+        this(null,null,  title, description, task_answer, feedback);
+    }
+
+    public Task(Long courseId,String title, String description) {
+        this(null,courseId,  title, description, null, null);
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public String getDescription() {
         return description;
     }
 
-
-    public Integer getTaskNumber() {
-        return taskNumber;
-    }
-
-    public String getTaskAnswer() {
-        return taskAnswer;
+    public String getTask_answer() {
+        return task_answer;
     }
 
     public String getFeedback() {
         return feedback;
     }
 
-    public Integer getCourseId() {
-        return courseId;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return Objects.equals(id, task.id)
+                && Objects.equals(title, task.title)
+                && Objects.equals(description, task.description)
+                && Objects.equals(task_answer, task.task_answer)
+                && Objects.equals(feedback, task.feedback);
     }
 
     @Override
-    public Long getId() {
-        return null;
+    public int hashCode() {
+        return Objects.hash(id, title, description, task_answer, feedback);
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", task_answer='" + task_answer + '\'' +
+                ", feedback='" + feedback + '\'' +
+                '}';
     }
 }

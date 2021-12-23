@@ -4,6 +4,7 @@ import com.epam.jwd.onlinetraining.dao.impl.TaskDaoImpl;
 import com.epam.jwd.onlinetraining.dao.model.Task;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TaskDao extends EntityDao<Task> {
 
@@ -13,4 +14,8 @@ public interface TaskDao extends EntityDao<Task> {
     static TaskDao instance() {
         return TaskDaoImpl.getInstance();
     }
+
+    List<Task> findTasksByCourseId(long id);
+
+    Optional<Task> addTaskToCourse(Task task, long courseId);
 }

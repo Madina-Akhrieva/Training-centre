@@ -13,10 +13,10 @@ public enum PagePaths {
     ADD_TASK("/WEB-INF/jsp/add_task.jsp"),
     CHECK_TASK("/WEB-INF/jsp/check_task.jsp"),
     COMPLETE_TASK("/WEB-INF/jsp/complete_task.jsp"),
-    AFTER_ADD_TASK("/WEB-INF/jsp/after_add_task.jsp"),
 
     ERROR("/WEB-INF/jsp/error.jsp"),
-    MANAGE_COURSES("/WEB-INF/jsp/manage_courses.jsp");
+    MANAGE_COURSES("/WEB-INF/jsp/manage_courses.jsp"),
+    MANAGE_TASKS("/WEB-INF/jsp/manage_tasks.jsp");
 
     private final String path;
 

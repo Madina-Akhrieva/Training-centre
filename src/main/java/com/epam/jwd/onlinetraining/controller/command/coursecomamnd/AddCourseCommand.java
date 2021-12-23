@@ -9,12 +9,14 @@ import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.Mentor;
 import com.epam.jwd.onlinetraining.service.api.CourseService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
 public enum AddCourseCommand implements Command {
     INSTANCE(ServiceFactory.simple().courseService(), RequestFactory.getInstance(), PropertyContext.instance());
-
+    private static final Logger LOGGER = LogManager.getLogger(AddCourseCommand.class);
 
     private static final String IF_ADDED_ATTRIBUTE = "message";
     private static final String INVALID_COURSE_MESSAGE = "Course information is invalid";
@@ -32,7 +34,7 @@ public enum AddCourseCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-
+        LOGGER.info("We are in execute method in AddCourseCommand");
         final String title = request.getParameter("title");
         final String learning_language = request.getParameter("learning_language");
         final String description = request.getParameter("description");
