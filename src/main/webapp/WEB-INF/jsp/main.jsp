@@ -1,136 +1,124 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.epam.jwd.onlinetraining.dao.model.Role"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.epam.jwd.onlinetraining.dao.model.Role" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="en_US" />
+<%--<fmt:setLocale value="${cookie.lang.value}" />--%>
+<fmt:setBundle basename="l10n.page.main" var="loc"/>
+<fmt:message bundle="${loc}" key="label.title" var="title"/>
+<fmt:message bundle="${loc}" key="label.manage_courses" var="manageCourses"/>
+<fmt:message bundle="${loc}" key="label.link.login" var="login"/>
+<fmt:message bundle="${loc}" key="label.link.logout" var="logout"/>
+<fmt:message bundle="${loc}" key="label.link.sign_up" var="signUp"/>
+<fmt:message bundle="${loc}" key="label.link.watch_profile" var="watchProfile"/>
+
 <html>
 <head>
-    <title>Title</title>
-    <!-- CSS only -->
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="../css/main.css">
+	<title>${title}</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link rel="stylesheet" href="../css/main.css">
 
 </head>
-    <body>
+<body>
 
 
-    <nav class="black">
-        <div class="nav-wrapper">
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <c:choose>
-                    <c:when test="${not empty sessionScope.account}">
-                        <c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
-                            <li><a href="/controller?command=show_accounts">Show users</a></li>
-                            <li><a href="/controller?command=manage_courses">Manage courses</a></li>
-                        </c:if>
-                        <li><a href="/controller?command=logout ">Logout</a></li>
-                        <li><a href="/controller?command=show_profile">Watch profile</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="/controller?command=show_login">Sign in</a></li>
+<nav class="black">
+	<div class="nav-wrapper">
+		<ul id="nav-mobile" class="right hide-on-med-and-down">
+			<c:choose>
+				<c:when test="${not empty sessionScope.account}">
+					<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
+						<li><a href="<c:url value="/controller?command=manage_courses"/>">${manageCourses}</a></li>
+					</c:if>
+					<li><a href="/controller?command=logout">${logout}</a></li>
+					<li><a href="<c:url value="/controller?command=show_profile"/>">${watchProfile}</a></li>
+				</c:when>
+				<c:otherwise>
+					<li><a href="<c:url value="/controller?command=show_login"/>">${login}</a></li>
+					<li><a href="<c:url value="/controller?command=show_signup"/>">${signUp}</a></li>
+				</c:otherwise>
+			</c:choose>
+		</ul>
+	</div>
+</nav>
 
-	                    <li><a href="/controller?command=show_signup">Sign up</a></li>
-                    </c:otherwise>
-                </c:choose>
+<div class="after_nav">
+	<div class="typing animate"></div>
 
-            </ul>
-        </div>
-    </nav>
+	<c:choose>
+		<c:when test="${not empty sessionScope.account}">
+			<c:if test="${not empty sessionScope.account}">
+				<p><span>Start learning, </span> ${sessionScope.account.email} <span>!</span></p>
 
-    <div class="after_nav">
-        <div class="typing animate"></div>
+			</c:if>
+		</c:when>
+		<c:otherwise>
+			<em style="color: darkgrey">Для прохождения курсов необходимо зарегистрироваться ♥</em>
+		</c:otherwise>
+	</c:choose>
 
-        <c:choose>
-            <c:when test="${not empty sessionScope.account}">
-                <c:if  test="${not empty sessionScope.account}">
-                    <p><span>Start learning, </span> ${sessionScope.account.email} <span>!</span></p>
+</div>
 
-                </c:if>
-            </c:when>
-            <c:otherwise>
-                <em style="color: darkgrey">Для прохождения курсов необходимо зарегистрироваться ♥</em>
-            </c:otherwise>
-        </c:choose>
+<div>
+	<c:forEach var="course" items="${requestScope.courses}">
+		<div class="valign-wrapper">
+			<div class="row">
+				<div>
+					<div class="card black darken-1 crad-size">
+						<div class="card-content white-text">
+							<span class="card-title">${course.title}</span>
+							<p>${course.description}</p>
+							<br>
+							<hr>
+							<br>
+							<p><span>Курсы ведет ментор: </span>${course.mentor.pen_name}</p>
+							<p><span>Позиция ментора:</span>${course.mentor.position}</p>
+							<p>Опыт работы: <span>${course.mentor.experience}</span>
+								<span>года</span></p>
 
-    </div>
+						</div>
 
-    <div>
-        <c:forEach var="course" items="${requestScope.courses}">
-            <div class="valign-wrapper">
-                <div class="row">
-                    <div>
-                        <div class="card black darken-1 crad-size">
-                            <div class="card-content white-text">
-                                <span class="card-title">${course.title}</span>
-                                <p>${course.description}</p>
-                                <br>
-                                <hr>
-                                <br>
-                                <p><span>Курсы ведет ментор: </span>${course.mentor.pen_name}</p>
-                                <p><span>Позиция ментора:</span>${course.mentor.position}</p>
-                                <p>Опыт работы:  <span>${course.mentor.experience}</span>
-                                    <span>года</span></p>
+						<div class="card-action">
+							<c:choose>
+								<c:when test="${not empty sessionScope.account}">
+									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
+										<a href="/controller?command=add_task">Download task</a>
+										<a href="/controller?command=check_task">Check task</a>
+									</c:if>
+									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.STUDENT}">
+										<a href="/controller?command=complete_task&&id=${course.id}">Complete tasks</a>
+									</c:if>
+								</c:when>
 
-                            </div>
+							</c:choose>
+							<a href="/controller?command=watch_tasks">Watch task</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:forEach>
+</div>
 
-                            <div class="card-action">
-                                <c:choose>
-                                    <c:when test="${not empty sessionScope.account}">
-                                        <c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
-                                            <a href="/controller?command=add_task">Download task</a>
-                                            <a href="/controller?command=check_task">Check task</a>
-                                        </c:if>
-                                        <c:if test="${not empty sessionScope.account && sessionScope.account.role eq
-                                        Role.STUDENT}">
-                                            <a href="/controller?command=complete_task">Complete task</a>
-                                        </c:if>
-                                    </c:when>
+<footer class="page-footer black">
+	<div class="container">
+		<div class="row">
+			<div class="col l6 s12">
+				<h5 class="orange-text">Footer Content</h5>
+					content.</p>
+			</div>
+			<div class="col l4 offset-l2 s12">
 
-                                </c:choose>
-<%--                                todo:add watch_tasks_command--%>
-                                <a href="/controller?command=watch_tasks">Watch task</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </c:forEach>
-    </div>
+			</div>
+		</div>
+	</div>
+	<div class="footer-copyright">
+		<div class="container">
+			© 2021 Training centre ♥
 
-    <footer class="page-footer black">
-        <div class="container">
-            <div class="row">
-                <div class="col l6 s12">
-                    <h5 class="orange-text">Footer Content</h5>
-                    <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-                </div>
-                <div class="col l4 offset-l2 s12">
-                    <h5 class="orange-text">Links</h5>
-                    <ul>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright">
-            <div class="container">
-                © 2014 Copyright Text
-                <a class="grey-text text-lighten-4 right" href="#!">More Lin
+				<script src="../js/main.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 
-
-
-
-<%--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>--%>
-<%--        <script src="/docs/5.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>--%>
-
-                    <script src="../js/main.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-
-
-
-    </body>
+</body>
 </html>

@@ -1,51 +1,58 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: HP
-  Date: 14.12.2021
-  Time: 14:44
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
-	<title>Complete task</title>
-	<link rel="stylesheet" href="../css/add_course.css">
-
+	<title>Manage tasks</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="../css/manage_courses.css">
+	<link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
-<div class="main-w3layouts wrapper">
-	<h1>Complete task</h1>
-	<div class="main-agileinfo">
-		<div class="agileits-top">
-			<form action="#" method="post">
-				<input class="text" type="text" name="Username" placeholder="Task 1" required="" disabled>
-				<input class="text email" type="text" name="email" placeholder="Java" disabled>
-				<input class="text" type="text" name="password" placeholder="Введите ваш ответ" required="">
-				<input class="text w3lpass" type="text" name="password"
-				       placeholder="Здесь вы увидете feedback ментора после его проверки" required=""
-				       disabled>
-				<div class="wthree-text">
-					<div class="clear"> </div>
-				</div>
-				<p> <a href="/controller?command=main"> Add answer!</a></p>
-			</form>
-		</div>
-	</div>
-	<!-- copyright -->
 
-	<!-- //copyright -->
-	<ul class="colorlib-bubbles">
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-	</ul>
+
+<nav class="black">
+	<div class="nav-wrapper">
+		<ul id="nav-mobile" class="right hide-on-med-and-down">
+			<li><a href="/controller?command=logout ">Logout</a></li>
+		</ul>
+	</div>
+</nav>
+<div style="width: 1000px; margin: 0 auto">
+
+	<div>
+
+		<table>
+			<thead>
+			<tr>
+				<th>Task Title</th>
+				<th>Task description</th>
+			</tr>
+			</thead>
+
+			<tbody>
+			<c:forEach var="task" items="${requestScope.tasks}">
+				<tr>
+					<td>${task.title}</td>
+					<td>${task.description}</td>
+					<td>
+						<a class="waves-effect waves-light btn-small black"
+						   href="/controller?command=complete_task&&id=${task.id}">Complete task</a>
+					</td>
+
+				</tr>
+			</c:forEach>
+
+			</tbody>
+
+		</table>
+	</div>
+	<br>
+	<a class="waves-effect waves-light btn-small black"
+	   href="/controller?command=show_add_task&&id=${courseId}">Add task ♥</a>
 </div>
+<br>
+
 </body>
 </html>
