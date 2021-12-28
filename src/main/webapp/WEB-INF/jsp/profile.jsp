@@ -1,53 +1,77 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
 	<title>Profile</title>
-	<link rel="stylesheet" href="../css/profil.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../css/profile.css">
+
 </head>
 <body>
+<div class="card">
+	<div class="row">
+		<div class="col-md-8 cart">
+			<div class="title">
+				<div class="row">
+					<div class="col">
+						<h4><b>My courses ♥</b></h4>
+					</div>
+				</div>
+			</div>
+			<c:forEach var="title" items="${requestScope.titles}">
+				<div class="row border-top border-bottom">
+					<div class="row main align-items-center">
+						<div class="col">
+							<div class="row text-muted">${title}</div>
+						</div>
+						<div class="col"><a href="#">Compete course</a></div>
+					</div>
+				</div>
+			</c:forEach>
 
-<form id="msform">
-	<!-- progressbar -->
-	<ul id="progressbar">
-		<li class="active">Account Setup</li>
-		<li>Social Profiles</li>
-		<li>Personal Details</li>
-	</ul>
-	<!-- fieldsets -->
-	<fieldset>
-		<h2 class="fs-title">Create your account</h2>
-		<h3 class="fs-subtitle">This is step 1</h3>
-		<input type="text" name="email" placeholder="Email" />
-		<input type="password" name="pass" placeholder="Password" />
-		<input type="password" name="cpass" placeholder="Confirm Password" />
-		<input type="button" name="next" class="next action-button" value="Next" />
-	</fieldset>
-	<fieldset>
-		<h2 class="fs-title">Social Profiles</h2>
-		<h3 class="fs-subtitle">Your presence on the social network</h3>
-		<input type="text" name="twitter" placeholder="Twitter" />
-		<input type="text" name="facebook" placeholder="Facebook" />
-		<input type="text" name="gplus" placeholder="Google Plus" />
-		<input type="button" name="previous" class="previous action-button" value="Previous" />
-		<input type="button" name="next" class="next action-button" value="Next" />
-	</fieldset>
-	<fieldset>
-		<h2 class="fs-title">Personal Details</h2>
-		<h3 class="fs-subtitle">We will never sell it</h3>
-		<input type="text" name="fname" placeholder="First Name" />
-		<input type="text" name="lname" placeholder="Last Name" />
-		<input type="text" name="phone" placeholder="Phone" />
-		<textarea name="address" placeholder="Address"></textarea>
-		<input type="button" name="previous" class="previous action-button" value="Previous" />
-		<input type="submit" name="submit" class="submit action-button" value="Submit" />
-	</fieldset>
-</form>
-<%--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>--%>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jsquery/2.1.3/jquery.min.js"></script>
-<%--<script src = "../js/jquery-3.4.1.js"></script>--%>
-<script src = "../js/profil.js"></script>
+			<div
+					class="back-to-shop"><a href="/controller?command=main_page">&leftarrow;</a><span
+					class="text-muted">Back	to main
+				page</span></div>
+			<c:if test="${not empty requestScope.isAddedMessage}">
 
-<%--<script src="jquery-3.5.1.min.js"></script>--%>
+				<p style="color:#ffb507">
+						${requestScope.isAddedMessage}
+				</p>
+
+			</c:if>
+		</div>
+
+
+		<div class="col-md-4 summary">
+			<div>
+				<h5><b>My account</b></h5>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col" style="padding-left:0;">
+					<span>${requestScope.user.firstName}</span>
+				</div>
+				<div class="col" style="padding-left:0;">
+					<span>${requestScope.user.lastName}</span>
+				</div>
+				<div class="col" style="padding-left:0;">
+					<span>${requestScope.user.phone}</span>
+				</div>
+			</div>
+
+			<div class="row" style="border-top: 1px solid rgba(0,0,0,.1);color:white; padding: 2vh 0;">
+					<button
+							class="btn"><a style="color: white; text-decoration: none"
+					                       href="/controller?command=logout">LOGOUT</a></button>
+			</div>
+
+		</div>
+	</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script scr="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

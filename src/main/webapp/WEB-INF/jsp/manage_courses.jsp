@@ -18,6 +18,7 @@
 			<c:choose>
 				<c:when test="${not empty sessionScope.account}">
 					<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
+
 						<li><a href="/controller?command=show_accounts">Show users</a></li>
 						<li><a href="/controller?command=manage_courses">Manage courses</a></li>
 					</c:if>
@@ -32,6 +33,8 @@
 			</c:choose>
 
 		</ul>
+		<p>${requestScope.DELETED_MESSAGE_ATTRIBUTE}</p>
+
 	</div>
 </nav>
 <div style="width: 1000px; margin: 0 auto">

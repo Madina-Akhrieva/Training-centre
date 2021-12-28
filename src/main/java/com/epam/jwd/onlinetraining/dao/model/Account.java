@@ -9,17 +9,19 @@ public class Account implements Entity {
     private final String password;
     private final String email;
     private Role role;
+    private User user;
 
     public Account(Long id, String password, String email) {
-        this(id, password, email, STUDENT);
+        this(id, password, email, STUDENT );
     }
 
 
-    public Account(Long id, String password, String email, Role role) {
+    public Account(Long id, String password, String email, Role role ) {
         this.id = id;
         this.password = password;
         this.email = email;
         this.role = role;
+//        this.user = user;
     }
 
 
@@ -37,7 +39,7 @@ public class Account implements Entity {
 
     @Override
     public Long getId() {
-        return null;
+        return id;
     }
 
     public Account withPassword(String password) {

@@ -36,19 +36,12 @@
 			<c:forEach var="task" items="${requestScope.tasks}">
 				<tr>
 					<td>${task.title}</td>
-					<td>${task.description}</td>
 					<td>
-						<a class="waves-effect waves-light btn-small black"
-						   href="/controller?command=edit_task&&id=${task.id}">Edit</a>
-
+						<a href="${task.description}">${task.description}</a>
 					</td>
 					<td>
-						<a class="waves-effect waves-light btn-small black"
-						   href="/controller?command=delete_task&&id=${task.id}">Delete
-						</a>
+						<span class="waves-effect waves-light btn-small black">Follow link ♥</span>
 					</td>
-
-
 				</tr>
 			</c:forEach>
 

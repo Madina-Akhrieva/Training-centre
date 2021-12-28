@@ -16,12 +16,6 @@ public class Mentor extends User {
         this.pen_name = pen_name;
     }
 
-    public Mentor(String phone, String firstName, String lastName, String email, int experience, String position, String pen_name) {
-        super(phone, firstName, lastName, email);
-        this.experience = experience;
-        this.position = position;
-        this.pen_name = pen_name;
-    }
 
 
     public Mentor(Long id, int experience, String position, String pen_name) {

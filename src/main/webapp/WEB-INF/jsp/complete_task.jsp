@@ -15,7 +15,15 @@
 <nav class="black">
 	<div class="nav-wrapper">
 		<ul id="nav-mobile" class="right hide-on-med-and-down">
-			<li><a href="/controller?command=logout ">Logout</a></li>
+			<c:choose>
+				<c:when test="${not empty sessionScope.account}">
+					<li><a href="<c:url value="/controller?command=logout"/>">${logout}</a></li>
+				</c:when>
+				<c:otherwise>
+					<li><a href="<c:url value="/controller?command=show_login"/>">${login}</a></li>
+					<li><a href="<c:url value="/controller?command=show_signup"/>">${signUp}</a></li>
+				</c:otherwise>
+			</c:choose>
 		</ul>
 	</div>
 </nav>
@@ -49,8 +57,11 @@
 		</table>
 	</div>
 	<br>
-	<a class="waves-effect waves-light btn-small black"
-	   href="/controller?command=show_add_task&&id=${courseId}">Add task ♥</a>
+	<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
+		<a class="waves-effect waves-light btn-small black"
+		   href="/controller?command=show_add_task&&id=${courseId}">Add task ♥</a>
+	</c:if>
+
 </div>
 <br>
 

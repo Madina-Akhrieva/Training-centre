@@ -1,5 +1,6 @@
 package com.epam.jwd.onlinetraining.dao.model;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Course implements Entity {
@@ -9,7 +10,16 @@ public class Course implements Entity {
     private final String learningLanguage;
     private final String description;
     private final Mentor mentor;
+    private List<User> users;
 
+    public Course(Long id, String title, String learningLanguage, String description, Mentor mentor, List<User> users) {
+        this.id = id;
+        this.title = title;
+        this.learningLanguage = learningLanguage;
+        this.description = description;
+        this.mentor = mentor;
+        this.users = users;
+    }
 
     public Course(Long id, String title, String learningLanguage, String description, Mentor mentor) {
         this.id = id;

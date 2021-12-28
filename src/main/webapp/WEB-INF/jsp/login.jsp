@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -14,8 +15,22 @@
         <div class="form-container sign-up-container">
             <form name="signup-form" action="/controller?command=signup" method="post">
                 <h1>Create Account</h1>
-                <input id="signup-input" type="email" placeholder="Email"  name="email"  value="" required=""/>
-                <input id="password-input" type="password" placeholder="Password" name="password" vaue="" required=""/>
+                <input id="signup-input" type="email" placeholder="Email (from 7-50 symbols available)"  name="email"  maxlength="50" minlength="7"
+                       required=""/>
+                <input id="password-input" type="password" placeholder="Password (from 7-50 symbols available)" name="password"  maxlength="50"
+                       minlength="7"  required=""/>
+
+                <input id="signup-input" type="text" placeholder="Firstname (from 2-50 symbols available)"
+                       name="firstname"  maxlength="50"
+                       minlength="2"  required=""/>
+
+                <input id="signup-input" type="text" placeholder="Lastname (from 2-50 symbols available)"
+                       name="lastname"  maxlength="50"
+                       minlength="2"  required=""/>
+
+                <input id="signup-input" type="phone" placeholder="Phone example: +375XXXXXXXXX"
+                       name="phone"  maxlength="12"
+                       minlength="12"  required=""/>
                 <c:if test="${not empty requestScope.errorLoginPassMessage}">
 
                     <p style="color:red">
@@ -32,8 +47,10 @@
         <div class="form-container sign-in-container">
             <form name="login-form" action="/controller?command=login" method="post">
                 <h1>Sign in</h1>
-                <input type="email" placeholder="Email" name="email" required=""/>
-                <input type="password" placeholder="Password" name="password" required="" />
+                <input type="email" placeholder="Email (from 7-50 symbols available)" name="email" maxlength="50"
+                       minlength="7" required=""/>
+                <input type="password" placeholder="Password (from 7-50 symbols available)" name="password" maxlength="50" minlength="7"
+                       required="" />
                 <c:if test="${not empty requestScope.errorLoginPassMessage}">
 
                         <p style="color:red">

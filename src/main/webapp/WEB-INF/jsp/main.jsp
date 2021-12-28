@@ -42,8 +42,12 @@
 					<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
 						<li><a href="<c:url value="/controller?command=manage_courses"/>">${manageCourses}</a></li>
 					</c:if>
-					<li><a href="/controller?command=logout">${logout}</a></li>
-					<li><a href="<c:url value="/controller?command=show_profile"/>">${watchProfile}</a></li>
+					<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.STUDENT}">
+						<li><a
+								href="/controller?command=show_profile&&id=${sessionScope.account.id}">
+								${watchProfile}</a></li>
+					</c:if>
+					<li><a href="<c:url value="/controller?command=logout"/>">${logout}</a></li>
 				</c:when>
 				<c:otherwise>
 					<li><a href="<c:url value="/controller?command=show_login"/>">${login}</a></li>
@@ -61,7 +65,6 @@
 		<c:when test="${not empty sessionScope.account}">
 			<c:if test="${not empty sessionScope.account}">
 				<p><span>${startLearningMessage} </span> ${sessionScope.account.email} <span>!</span></p>
-
 			</c:if>
 		</c:when>
 		<c:otherwise>
@@ -94,17 +97,21 @@
 							<c:choose>
 								<c:when test="${not empty sessionScope.account}">
 									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
-										<a href="/controller?command=add_task">${downloadTask}</a>
+										<a href="/controller?command=manage_tasks&&id=${course.id}">${downloadTask}</a>
 										<a href="/controller?command=check_task">${checkTask}</a>
 									</c:if>
 									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.STUDENT}">
 										<a href="/controller?command=complete_task&&id=${course.id}">${completeTask}</a>
+										<a
+												href="/controller?command=add_course_to_user&&course_id=${course.id}&&user_id=${sessionScope.account.id}">
+											Добавить курс в профиль
+										</a>
 									</c:if>
 								</c:when>
-
 							</c:choose>
-							<a href="/controller?command=watch_tasks">${watchTask}</a>
+							<a href="/controller?command=watch_tasks&&id=${course.id}">${watchTask}</a>
 						</div>
+
 					</div>
 				</div>
 			</div>
