@@ -21,7 +21,7 @@ import static java.lang.String.join;
 public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
 
     private static final Logger LOGGER = LogManager.getLogger(AccountDaoImpl.class);
-    private static final String ACCOUNT_TABLE_NAME = "account j join role r on r.id_role = j.id";
+    private static final String ACCOUNT_TABLE_NAME = "account j join role r on r.id_role = j.role_id";
     public static final String ID_FIELD_NAME = "j.id";
     private static final String EMAIL_FIELD_NAME = "j.email";
     private static final String PASSWORD_FIELD_NAME = "j.account_password";
@@ -46,9 +46,11 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
 
     private final String insertSql;
     private final String selectByEmailExpression;
+    private final String selectByIdExpression;
 
     protected AccountDaoImpl(ConnectionPool pool) {
         super(pool);
+        this.selectByIdExpression = format(SELECT_ALL_FROM, join(", ", getFields())) + getTableName() + SPACE + format(WHERE_FIELD, ID_FIELD_NAME);
         this.selectByEmailExpression = format(SELECT_ALL_FROM, join(", ", getFields())) + getTableName() + SPACE + format(WHERE_FIELD, EMAIL_FIELD_NAME);
         this.insertSql = "insert into account  ( account_password, email) values(?, ?)";
 
@@ -85,10 +87,7 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
         );
     }
 
-    @Override
-    protected void fillEntity(PreparedStatement statement, Account entity) throws SQLException {
 
-    }
 
 
     @Override
@@ -102,6 +101,51 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
             return Optional.empty();
         }
     }
+
+    @Override
+    public Optional<Account> findByMail(String mail) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Account> readAccountById(long id) {
+        try {
+            return executePreparedForGenericEntity(selectByIdExpression,
+                    this::extractResultCatchingException,
+                    st -> st.setLong(1, id));
+        } catch (InterruptedException e) {
+            LOGGER.info("take connection interrupted", e);
+            return Optional.empty();
+        }
+    }
+//
+//    @Override
+//    public Optional<Account> findByMail(String mail) {
+//        Account account = null;
+//        try (Connection connection = pool.takeConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement(
+//                     selectByEmailExpression)) {
+//            preparedStatement.setString(1, mail);
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//
+//            if (resultSet.next()) {
+//                Long id = resultSet.getLong(ID_FIELD_NAME);
+//                String email = resultSet.getString(EMAIL_FIELD_NAME);
+//                Role role_id = (Role) resultSet.getObject(ROLE_FIELD_NAME);
+//                String password = resultSet.getString(PASSWORD_FIELD_NAME);
+//
+//                account = new Account(id, password, email, role_id);
+//            }
+//            return Optional.of(account);
+//        } catch (InterruptedException e) {
+//            LOGGER.warn("exception", e);
+//            e.printStackTrace();
+//        } catch (SQLException exception) {
+//            exception.printStackTrace();
+//        }
+//
+//        return Optional.of(account);
+//    }
 
     public static AccountDao getInstance() {
         return Holder.INSTANCE;

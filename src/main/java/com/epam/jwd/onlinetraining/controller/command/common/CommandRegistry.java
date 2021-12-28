@@ -1,6 +1,7 @@
 package com.epam.jwd.onlinetraining.controller.command.common;
 
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.AddCourseCommand;
+import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.AddCourseToUserCommand;
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.DeleteCourseCommand;
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.EditCourseCommand;
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.SubmitEditCourseCommand;
@@ -9,7 +10,6 @@ import com.epam.jwd.onlinetraining.controller.command.logincommand.LogoutCommand
 import com.epam.jwd.onlinetraining.controller.command.logincommand.SignupCommand;
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.ShowAccountsPageCommand;
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.ShowAddCoursePageCommand;
-import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.ShowEditCourseCommand;
 import com.epam.jwd.onlinetraining.controller.command.maincommand.ShowErrorPageCommand;
 import com.epam.jwd.onlinetraining.controller.command.logincommand.ShowLoginPageCommand;
 import com.epam.jwd.onlinetraining.controller.command.maincommand.ShowMainPageCommand;
@@ -43,21 +43,22 @@ public enum CommandRegistry {
     LOGOUT(LogoutCommand.INSTANCE, "logout", STUDENT, MENTOR, ADMIN),
     PROFILE_PAGE(ShowProfilePageCommand.INSTANCE, "show_profile"),
     SHOW_ACCOUNTS(ShowAccountsPageCommand.INSTANCE, "show_accounts", ADMIN),
-    MANAGE_COURSES(ShowManageCoursesPageCommand.INSTANCE, "manage_courses",  ADMIN, MENTOR),
-    MANAGE_TASKS(ShowManageTasksPageCommand.INSTANCE, "manage_tasks",  ADMIN, MENTOR),
+    MANAGE_COURSES(ShowManageCoursesPageCommand.INSTANCE, "manage_courses", ADMIN, MENTOR),
+    MANAGE_TASKS(ShowManageTasksPageCommand.INSTANCE, "manage_tasks", ADMIN, MENTOR),
     SHOW_ADD_COURSE_PAGE(ShowAddCoursePageCommand.INSTANCE, "show_add_course", MENTOR, ADMIN),
     SHOW_ADD_TASK_PAGE(ShowAddTaskPageCommand.INSTANCE, "show_add_task", MENTOR, ADMIN),
     ADD_COURSE(AddCourseCommand.INSTANCE, "add_course", MENTOR, ADMIN),
-    WATCH_TASKS(ShowTasksCommand.INSTANCE, "watch_tasks",  STUDENT, MENTOR, ADMIN),
-    EDIT_COURSE(EditCourseCommand.INSTANCE, "edit_course",   MENTOR, ADMIN),
-    DELETE_COURSE(DeleteCourseCommand.INSTANCE, "delete_course",   MENTOR, ADMIN),
+    WATCH_TASKS(ShowTasksCommand.INSTANCE, "watch_tasks", STUDENT, MENTOR, ADMIN, UNAUTHORIZED),
+    EDIT_COURSE(EditCourseCommand.INSTANCE, "edit_course", MENTOR, ADMIN),
+    DELETE_COURSE(DeleteCourseCommand.INSTANCE, "delete_course", MENTOR, ADMIN),
     ADD_TASK(AddTaskCommand.INSTANCE, "add_task", MENTOR, ADMIN),
-    SUBMIT_EDIT_COURSE(SubmitEditCourseCommand.INSTANCE, "submit_edit_course",   MENTOR, ADMIN),
+    SUBMIT_EDIT_COURSE(SubmitEditCourseCommand.INSTANCE, "submit_edit_course", MENTOR, ADMIN),
+    ADD_COURSE_TO_USER(AddCourseToUserCommand.INSTANCE, "add_course_to_user", STUDENT),
     DEFAULT(ShowMainPageCommand.INSTANCE, ""),
 
 
-    COMPLETE_TASK(CompleteTaskCommand.INSTANCE, "complete_task"),
-    CHECK_TASK(CheckTaskCommand.INSTANCE, "check_task");
+    COMPLETE_TASK(CompleteTaskCommand.INSTANCE, "complete_task", STUDENT),
+    CHECK_TASK(CheckTaskCommand.INSTANCE, "check_task", MENTOR);
 
     private final Command command;
     private final String path;

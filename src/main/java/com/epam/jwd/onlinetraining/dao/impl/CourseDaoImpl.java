@@ -39,6 +39,8 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
     private static final String UPDATE_COURSE_WHERE_TITLE = "update course set title = ?, learning_language = ?, description = ? where title = ?";
     private static final String DELETE_COURSE_WHERE_ID = "delete from course where id=?";
 
+    public static final String FOREIGN_KEY_CHECKS_VALUE_0="SET FOREIGN_KEY_CHECKS=0";
+    public static final String FOREIGN_KEY_CHECKS_VALUE_1="SET FOREIGN_KEY_CHECKS=1";
 
     protected CourseDaoImpl(ConnectionPool pool) {
         super(pool);
@@ -79,10 +81,6 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
     }
 
 
-    @Override
-    protected void fillEntity(PreparedStatement statement, Course entity) {
-
-    }
 
     @Override
     public List<Course> findByTitle(String title) {
@@ -124,6 +122,7 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
 
                 course = new Course(id, title, learning_language, description);
             }
+
         } catch (InterruptedException e) {
             LOGGER.warn("exception", e);
             e.printStackTrace();
@@ -174,7 +173,9 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
              PreparedStatement preparedStatement = connection.prepareStatement(
                      DELETE_COURSE_WHERE_ID)) {
             preparedStatement.setLong(1, id);
+//            preparedStatement.execute(FOREIGN_KEY_CHECKS_VALUE_0);
             boolean rowUpdated = preparedStatement.executeUpdate() > 0;
+//            preparedStatement.execute(FOREIGN_KEY_CHECKS_VALUE_1);
             return rowUpdated;
 
         } catch (SQLException exception) {

@@ -12,5 +12,13 @@ public interface UserDao extends EntityDao<User> {
         return UserDaoImpl.getInstance();
     }
 
+    Optional<User> readUserByPhone(String phone);
 
+    User findById(long id);
+
+    boolean addCourseToUser(long courseId, long userId);
+
+    boolean readSubscriptionByCourseIdAndUserId(long courseId, long userId);
+
+    List<String> findAllCoursesByUserId(long userId);
 }

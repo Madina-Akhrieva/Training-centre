@@ -57,11 +57,6 @@ public final class MentorDaoImpl extends CommonDao<Mentor> implements MentorDao 
         );
     }
 
-    @Override
-    protected void fillEntity(PreparedStatement statement, Mentor entity) {
-
-    }
-
 
     public static MentorDao getInstance() {
         return Holder.INSTANCE;

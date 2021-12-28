@@ -89,10 +89,6 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao{
         return null;
     }
 
-    @Override
-    protected void fillEntity(PreparedStatement statement, Task entity) {
-
-    }
 
     public static TaskDao getInstance() {
         return TaskDaoImpl.Holder.INSTANCE;
