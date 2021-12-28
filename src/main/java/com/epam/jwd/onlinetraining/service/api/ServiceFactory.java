@@ -19,6 +19,10 @@ public interface ServiceFactory {
         return (AccountService) serviceFor(Account.class);
     }
 
+    default UserService userService() {
+        return (UserService) serviceFor(User.class);
+    }
+
     default CourseService courseService() {
         return (CourseService) serviceFor(Course.class);
     }

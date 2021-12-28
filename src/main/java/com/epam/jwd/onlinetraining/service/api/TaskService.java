@@ -12,7 +12,6 @@ public interface TaskService extends EntityService<Task> {
 
     boolean delete(Long id);
 
-
     List<Task> findTasksByCourseId(long id);
 
     Optional<Task> addTaskToCourse(Task task, long id);

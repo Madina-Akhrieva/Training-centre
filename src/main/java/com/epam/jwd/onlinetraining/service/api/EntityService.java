@@ -4,7 +4,6 @@ import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.Entity;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface EntityService<T extends Entity> {
 
@@ -12,7 +11,7 @@ public interface EntityService<T extends Entity> {
 
     List<T> findAll(long id);
 
-    Optional<T> create(T entity);
+    T create(T entity);
 
     T add(T account);
 }

@@ -2,14 +2,18 @@ package com.epam.jwd.onlinetraining.service.api;
 
 import com.epam.jwd.onlinetraining.dao.model.Account;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface AccountService extends EntityService<Account> {
 
     Optional<Account> authenticate(String email, String password);
 
+//    Optional<Account> register(String email, String password);
+
+
     Optional<Account> register(String email, String password);
 
+    Optional<Account> findByMail(String login);
 
+    Optional<Account> findById(long id);
 }
