@@ -33,14 +33,9 @@ public enum EditCourseCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-
         long id = Long.parseLong(request.getParameter(ID_REQUEST_PARAM_NAME));
-
         Course course = courseService.findById(id);
-
-
         LOGGER.info("Id which came is: {}", id);
-
         request.addAttributeToJsp(COURSE_ATTRIBUTE_NAME, course);
         return requestFactory.createForwardResponse(propertyContext.get(EDIT_COURSE_PAGE));
     }

@@ -20,6 +20,11 @@ public enum DeleteCourseCommand implements Command {
     private static final String MANAGE_COURSES_PAGE = "page.manage_courses";
     private static final String COURSES_ATTRIBUTE_NAME = "courses";
     private static final String ID_REQUEST_PARAM_NAME = "id";
+    private static final String DELETED_MESSAGE_ATTRIBUTE = "deletedMessageAttribute";
+    private static final Object IS_DELETED_MESSAGE = "Course deleted successfully!";
+    private static final Object IS_NOT_DELETED_MESSAGE = "Course is not deleted successfully!";
+
+
 
 
     private final CourseService courseService;
@@ -38,6 +43,11 @@ public enum DeleteCourseCommand implements Command {
         LOGGER.trace("deleteCourseCommand ");
         long id = Long.parseLong(request.getParameter(ID_REQUEST_PARAM_NAME));
         boolean isDeleted = courseService.delete(id);
+        if (isDeleted) {
+            request.addAttributeToJsp(DELETED_MESSAGE_ATTRIBUTE, IS_DELETED_MESSAGE);
+        } else {
+            request.addAttributeToJsp(DELETED_MESSAGE_ATTRIBUTE, IS_NOT_DELETED_MESSAGE);
+        }
         final List<Course> courses = courseService.findAll();
         request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, courses);
         return requestFactory.createForwardResponse(propertyContext.get(MANAGE_COURSES_PAGE));

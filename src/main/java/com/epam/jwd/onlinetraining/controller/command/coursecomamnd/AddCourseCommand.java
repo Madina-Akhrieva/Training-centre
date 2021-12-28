@@ -18,9 +18,10 @@ public enum AddCourseCommand implements Command {
     INSTANCE(ServiceFactory.simple().courseService(), RequestFactory.getInstance(), PropertyContext.instance());
     private static final Logger LOGGER = LogManager.getLogger(AddCourseCommand.class);
 
-    private static final String IF_ADDED_ATTRIBUTE = "message";
+    private static final String IF_ADDED_ATTRIBUTE = "isAddedMessage";
     private static final String INVALID_COURSE_MESSAGE = "Course information is invalid";
     private static final String ADD_COURSE_JSP_PAGE = "page.add_course";
+    private static final String INDEX_JSP_PATH = "";
 
     private final CourseService courseService;
     private final RequestFactory requestFactory;
@@ -39,13 +40,14 @@ public enum AddCourseCommand implements Command {
         final String learning_language = request.getParameter("learning_language");
         final String description = request.getParameter("description");
 
-        final Optional<Course> course = courseService.create(new Course(title, learning_language, description));
-        if (course.isPresent()) {
+        final Course course = courseService.create(new Course(title, learning_language, description));
+        if (course!=null) {
             request.addAttributeToJsp(IF_ADDED_ATTRIBUTE, INVALID_COURSE_MESSAGE);
-            return requestFactory.createForwardResponse(propertyContext.get(ADD_COURSE_JSP_PAGE));
+            return requestFactory.createRedirectResponse(propertyContext.get(INDEX_JSP_PATH));
         }
         request.addAttributeToJsp(IF_ADDED_ATTRIBUTE, "course is added");
-        return requestFactory.createRedirectResponse(propertyContext.get(ADD_COURSE_JSP_PAGE));
+        return requestFactory.createRedirectResponse(propertyContext.get(INDEX_JSP_PATH));
+
 
     }
 }
