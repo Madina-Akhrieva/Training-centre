@@ -3,6 +3,7 @@ package com.epam.jwd.onlinetraining.service.impl;
 import com.epam.jwd.onlinetraining.dao.api.AccountDao;
 import com.epam.jwd.onlinetraining.dao.api.UserDao;
 import com.epam.jwd.onlinetraining.dao.db.TransactionManager;
+import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.User;
 import com.epam.jwd.onlinetraining.service.api.UserService;
 
@@ -71,7 +72,7 @@ public class SimpleUserService implements UserService {
     }
 
     @Override
-    public List<String> findAllCoursesByUserId(long userId) {
+    public List<Course> findAllCoursesByUserId(long userId) {
         return userDao.findAllCoursesByUserId(userId);
     }
 }

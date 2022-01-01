@@ -38,9 +38,6 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
             EMAIL_FIELD_NAME,
             PASSWORD_FIELD_NAME
     );
-
-    private static final String INSERT_INTO = "insert into %s (%s)";
-    private static final String COMMA = ", ";
     private static final String INSERT_ACCOUNT = "insert into account  ( account_password, email) values(?, ?)";
 
 

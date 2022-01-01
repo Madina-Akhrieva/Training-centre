@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="../css/manage_courses.css">
 	<link rel="stylesheet" href="../css/main.css">
 </head>
-<body>
+<body style="background-color: #ccc">
 
 
 <nav class="black">

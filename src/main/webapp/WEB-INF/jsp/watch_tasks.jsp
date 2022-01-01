@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="../css/manage_courses.css">
 	<link rel="stylesheet" href="../css/main.css">
 </head>
-<body>
+<body style="background-color: #ccc">
 
 <nav class="black">
 	<div class="nav-wrapper">
@@ -27,10 +27,10 @@
 </nav>
 <div style="width: 1000px; margin: 0 auto">
 	<div>
-		<table>
+		<table style="width: 600px; margin: 0 auto; ">
 			<thead>
 			<tr>
-				<th>Task Title</th>
+				<th>Task title</th>
 				<th>Task link</th>
 			</tr>
 			</thead>
@@ -38,7 +38,9 @@
 			<c:forEach var="task" items="${requestScope.tasks}">
 				<tr>
 					<td>${task.title}</td>
-					<td>${task.description}</td>
+					<td>
+						<a href="${task.description}">${task.description}</a>
+					</td>
 				</tr>
 			</c:forEach>
 			</tbody>

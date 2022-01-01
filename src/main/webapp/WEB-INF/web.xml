@@ -9,30 +9,30 @@
             <taglib-location>WEB-INF/tld/simpleTags.tld</taglib-location>
         </taglib>
     </jsp-config>
-    <error-page>
-        <error-code>404</error-code>
-        <location>/WEB-INF/jsp/error.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>505</error-code>
-        <location>/WEB-INF/jsp/error.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>500</error-code>
-        <location>/WEB-INF/jsp/error.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>200</error-code>
-        <location>/WEB-INF/jsp/error.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>202</error-code>
-        <location>/WEB-INF/jsp/error.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>101</error-code>
-        <location>/WEB-INF/jsp/error.jsp</location>
-    </error-page>
+<!--    <error-page>-->
+<!--        <error-code>404</error-code>-->
+<!--        <location>/WEB-INF/jsp/error.jsp</location>-->
+<!--    </error-page>-->
+<!--    <error-page>-->
+<!--        <error-code>505</error-code>-->
+<!--        <location>/WEB-INF/jsp/error.jsp</location>-->
+<!--    </error-page>-->
+<!--    <error-page>-->
+<!--        <error-code>500</error-code>-->
+<!--        <location>/WEB-INF/jsp/error.jsp</location>-->
+<!--    </error-page>-->
+<!--    <error-page>-->
+<!--        <error-code>200</error-code>-->
+<!--        <location>/WEB-INF/jsp/error.jsp</location>-->
+<!--    </error-page>-->
+<!--    <error-page>-->
+<!--        <error-code>202</error-code>-->
+<!--        <location>/WEB-INF/jsp/error.jsp</location>-->
+<!--    </error-page>-->
+<!--    <error-page>-->
+<!--        <error-code>101</error-code>-->
+<!--        <location>/WEB-INF/jsp/error.jsp</location>-->
+<!--    </error-page>-->
 
 </web-app>
 

@@ -18,4 +18,8 @@ public interface TaskDao extends EntityDao<Task> {
     List<Task> findTasksByCourseId(long id);
 
     Optional<Task> addTaskToCourse(Task task, long courseId);
+
+    boolean addTaskToAnswer(String answer, long courseUserId, long courseId, long idTask);
+
+    List<Task> readAllTasksByCourseIdAndUserId(long courseId, long userId);
 }

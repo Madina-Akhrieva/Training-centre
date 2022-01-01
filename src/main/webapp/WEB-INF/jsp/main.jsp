@@ -31,7 +31,7 @@
 	<link rel="stylesheet" href="../css/main.css">
 
 </head>
-<body>
+<body style="background-color: #ccc">
 
 
 <nav class="black">
@@ -101,9 +101,8 @@
 										<a href="/controller?command=check_task">${checkTask}</a>
 									</c:if>
 									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.STUDENT}">
-										<a href="/controller?command=complete_task&&id=${course.id}">${completeTask}</a>
-										<a
-												href="/controller?command=add_course_to_user&&course_id=${course.id}&&user_id=${sessionScope.account.id}">
+<%--										<a href="/controller?command=complete_task&&id=${course.id}">${completeTask}</a>--%>
+										<a href="/controller?command=add_course_to_user&&course_id=${course.id}&&user_id=${sessionScope.account.id}">
 											Добавить курс в профиль
 										</a>
 									</c:if>

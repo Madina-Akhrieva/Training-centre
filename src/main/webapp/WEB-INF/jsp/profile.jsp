@@ -19,13 +19,16 @@
 					</div>
 				</div>
 			</div>
-			<c:forEach var="title" items="${requestScope.titles}">
+			<c:forEach var="course" items="${requestScope.courses}">
 				<div class="row border-top border-bottom">
 					<div class="row main align-items-center">
 						<div class="col">
-							<div class="row text-muted">${title}</div>
+							<div class="row text-muted">${course.title}</div>
 						</div>
-						<div class="col"><a href="#">Compete course</a></div>
+						<div
+								class="col"><a
+								href="/controller?command=complete_task&&id=${course.id}&&uid=${sessionScope.account.id}">Compete
+							tasks</a></div>
 					</div>
 				</div>
 			</c:forEach>

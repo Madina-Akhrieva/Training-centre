@@ -5,6 +5,7 @@ import com.epam.jwd.onlinetraining.controller.command.common.Command;
 import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
 import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
 import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
+import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.User;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
 import com.epam.jwd.onlinetraining.service.api.UserService;
@@ -23,7 +24,7 @@ public enum AddCourseToUserCommand implements Command {
     private static final String USER_ID_REQUEST_PARAM_NAME = "user_id";
     private static final String IS_ADDED_MESSAGE = "Course is successfully added ♥";
     private static final Object IS_NOT_ADDED_MESSAGE = "You  have this course in your profile ♥";
-    private static final String COURSES_TITLES_ATTRIBUTE_NAME = "titles";
+    private static final String COURSES_ATTRIBUTE_NAME = "courses";
     private static final String USER_ATTRIBUTE = "user";
 
     private final UserService userService;
@@ -48,8 +49,8 @@ public enum AddCourseToUserCommand implements Command {
         }else{
             request.addAttributeToJsp(IS_ADDED_ATTRIBUTE_NAME, IS_NOT_ADDED_MESSAGE);
         }
-        List<String> allCoursesByUserId = userService.findAllCoursesByUserId(userId);
-        request.addAttributeToJsp(COURSES_TITLES_ATTRIBUTE_NAME, allCoursesByUserId);
+        List<Course> allCoursesByUserId = userService.findAllCoursesByUserId(userId);
+        request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, allCoursesByUserId);
         request.addAttributeToJsp(USER_ATTRIBUTE, user);
         return requestFactory.createForwardResponse(propertyContext.get(PROFILE_JSP_PAGE));
     }

@@ -6,6 +6,7 @@ import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
 import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
 import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
 import com.epam.jwd.onlinetraining.dao.model.Account;
+import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.User;
 import com.epam.jwd.onlinetraining.service.api.AccountService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
@@ -23,7 +24,7 @@ public enum ShowProfilePageCommand implements Command {
     private static final String ID_REQUEST_PARAM_NAME = "id" ;
     private static final String USER_ATTRIBUTE_NAME = "user";
     private static final String ACCOUNT_ATTRIBUTE_NAME = "account";
-    private static final String COURSES_TITLES_ATTRIBUTE_NAME = "titles";
+    private static final String COURSES_ATTRIBUTE_NAME = "courses";
 
 
     private final UserService userService;
@@ -43,8 +44,8 @@ public enum ShowProfilePageCommand implements Command {
         long id = Long.parseLong(request.getParameter(ID_REQUEST_PARAM_NAME));
         final User user = userService.findById(id);
         final Optional<Account> account = accountService.findById(id);
-        List<String> allCoursesByUserId = userService.findAllCoursesByUserId(id);
-        request.addAttributeToJsp(COURSES_TITLES_ATTRIBUTE_NAME, allCoursesByUserId);
+        List<Course> allCoursesByUserId = userService.findAllCoursesByUserId(id);
+        request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, allCoursesByUserId);
         request.addAttributeToJsp(USER_ATTRIBUTE_NAME, user);
         request.addAttributeToJsp(ACCOUNT_ATTRIBUTE_NAME, account.get());
         return requestFactory.createForwardResponse(propertyContext.get(PROFILE_PAGE));

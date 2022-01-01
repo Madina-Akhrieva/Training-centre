@@ -1,5 +1,6 @@
 package com.epam.jwd.onlinetraining.service.api;
 
+import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.User;
 
 import java.util.List;
@@ -14,5 +15,5 @@ public interface UserService extends EntityService<User>{
 
     boolean checkIfSubscriptionStringExist(long courseId, long userId);
 
-    List<String> findAllCoursesByUserId(long userId);
+    List<Course> findAllCoursesByUserId(long userId);
 }

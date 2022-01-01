@@ -1,9 +1,7 @@
 package com.epam.jwd.onlinetraining.dao.impl;
 
-import com.epam.jwd.onlinetraining.dao.api.CourseDao;
 import com.epam.jwd.onlinetraining.dao.api.TaskDao;
 import com.epam.jwd.onlinetraining.dao.db.ConnectionPool;
-import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.Task;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,27 +15,31 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class TaskDaoImpl extends CommonDao<Task> implements TaskDao{
+public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
+    private static final String ID_TASK_COLUMN_NAME = "id_task";
     private static final Logger LOGGER = LogManager.getLogger(TaskDaoImpl.class);
-
     private static final String SQL_DELETE_COURSE = "DELETE FROM task WHERE  id=?";
     private static final String INSERT_TASK_TO_COURSE = "INSERT INTO task( title, description, course_id) values(?,?, ?) ";
-    private static final String SELECT_TITLE_DESCRIPTION_FROM_TASK_WHERE_ID = "select title, description from task t where t.course_id = ?";
+    private static final String SUBSCRIPTION_TABLE_NAME = "subscription  join course c on c.id = subscription.course_id inner join task t on t.course_id = subscription.course_id inner join course_user cu on  cu.id = subscription.course_user_id";
+    private static final String SELECT_TITLE_DESCRIPTION_FROM_SUBSCRIPTION_WHERE_ID = "select id_task, c.title, c.description from" + " "+ SUBSCRIPTION_TABLE_NAME+ " "+ " where t.course_id=? and course_user_id=?";
 
-
+    private static final String SELECT_TITLE_DESCRIPTION_FROM_TASK_WHERE_ID = "select id_task, title, description from task t where t.course_id = ?";
     private static final String ID_FIELD_NAME = "task_id";
     private static final String TITLE_FIELD_NAME = "title";
     private static final String DESCRIPTION_FIELD_NAME = "description";
     private static final String TITLE_COLUMN_NAME = "title";
     private static final String DESCRIPTION_COLUMN_NAME = "description";
-
-    private static final List<String> FIELDS = Arrays.asList(
-            "id", "title",  "description"
-    );
     private static final String UPDATE_COURSE_WHERE_TITLE = "update course set title = ?, learning_language = ?, description = ? where title = ?";
     private static final String DELETE_COURSE_WHERE_ID = "delete from course where id=?";
     public static final String TASK_TABLE_NAME = "task";
     private static final String FIELD_NAME = "field name";
+    private static final String INNER_LOIN_SELECT_FROM_COURSE_AND_COURSE_USER = "select cu.id, first_name, last_name, c.id, title from subscription " +
+            "inner join course c on c.id = subscription.course_id\n" +
+            "inner join course_user cu on  cu.id = subscription.course_user_id where course_user_id = ?";
+    private static final List<String> FIELDS = Arrays.asList(
+            "id", "title", "description"
+    );
+    private static final String UPDATE_SUBSCRIPTION_TABLE = "UPDATE" + " "+ SUBSCRIPTION_TABLE_NAME+" "+"SET task_answer=? where course_user_id=? and c.id=? and id_task=?";
 
     protected TaskDaoImpl(ConnectionPool pool) {
         super(pool);
@@ -99,7 +101,6 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao{
         return null;
     }
 
-//    что? для чего? чем отличается? Основыне классы и объекты? Какие этапы нужно пройти
 
     @Override
     public List<Task> findTasksByCourseId(long id) {
@@ -112,9 +113,10 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao{
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
+                Long taskId = resultSet.getLong(ID_TASK_COLUMN_NAME);
                 String title = resultSet.getString(TITLE_COLUMN_NAME);
                 String description = resultSet.getString(DESCRIPTION_COLUMN_NAME);
-                tasks.add(new Task(id, title, description));
+                tasks.add(new Task(taskId, id, title, description, null, null));
             }
         } catch (InterruptedException e) {
             LOGGER.warn("exception", e);
@@ -125,6 +127,7 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao{
         return tasks;
 
     }
+
 
     @Override
     public Optional<Task> addTaskToCourse(Task task, long courseId) {
@@ -145,8 +148,52 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao{
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-
         return Optional.of(task);
+    }
+
+    @Override
+    public boolean addTaskToAnswer(String answer, long courseUserId, long courseId, long idTask) {
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SUBSCRIPTION_TABLE)) {
+            preparedStatement.setString(1, answer);
+            preparedStatement.setLong(2, courseUserId);
+            preparedStatement.setLong(3, courseId);
+            preparedStatement.setLong(4, idTask);
+            boolean rowUpdated = preparedStatement.executeUpdate() > 0;
+            return rowUpdated;
+
+        } catch (InterruptedException e) {
+            LOGGER.warn("exception", e);
+            e.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public List<Task> readAllTasksByCourseIdAndUserId(long courseId, long userId) {
+        List<Task> tasks = new ArrayList<>();
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     SELECT_TITLE_DESCRIPTION_FROM_SUBSCRIPTION_WHERE_ID)) {
+            preparedStatement.setLong(1, courseId);
+            preparedStatement.setLong(2, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Long taskId = resultSet.getLong(ID_TASK_COLUMN_NAME);
+                String title = resultSet.getString(TITLE_COLUMN_NAME);
+                String description = resultSet.getString(DESCRIPTION_COLUMN_NAME);
+                tasks.add(new Task(taskId, courseId, title, description, null, null));
+            }
+        } catch (InterruptedException e) {
+            LOGGER.warn("exception", e);
+            e.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return tasks;
     }
 
     private static class Holder {

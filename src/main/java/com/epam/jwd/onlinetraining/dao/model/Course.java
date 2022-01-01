@@ -38,6 +38,11 @@ public class Course implements Entity {
         this(null, title, learningLanguage, description);
     }
 
+    public Course(Long courseId, String title) {
+        this(courseId, title, null, null);
+
+    }
+
     @Override
     public Long getId() {
         return id;

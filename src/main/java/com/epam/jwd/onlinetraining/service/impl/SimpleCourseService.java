@@ -70,8 +70,8 @@ public class SimpleCourseService implements CourseService {
 
 
     @Override
-    public Optional<Course> create(Course course) {
-        return Optional.of(courseDao.create(course));
+    public Course create(Course course) {
+        return courseDao.create(course);
     }
 
     @Override

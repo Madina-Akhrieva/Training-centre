@@ -27,41 +27,46 @@
 		</ul>
 	</div>
 </nav>
-<div style="width: 1000px; margin: 0 auto">
+<div>
 
-	<div>
-
-		<table>
-			<thead>
-			<tr>
-				<th>Task Title</th>
-				<th>Task description</th>
-			</tr>
-			</thead>
-
-			<tbody>
-			<c:forEach var="task" items="${requestScope.tasks}">
+	<div style="width: 1000px; margin: 0 auto">
+		<div>
+			<table>
+				<thead>
+				<tr>
+					<th>Task title</th>
+					<th>Task description</th>
+					<th>Link to answer</th>
+				</tr>
+				</thead>
+				<tbody>
+				<c:forEach var="task" items="${requestScope.tasks}">
 				<tr>
 					<td>${task.title}</td>
-					<td>${task.description}</td>
 					<td>
-						<a class="waves-effect waves-light btn-small black"
-						   href="/controller?command=complete_task&&id=${task.id}">Complete task</a>
+						<a href="${task.description}">${task.description}</a>
 					</td>
-
+					<td>
+						<button class="waves-effect waves-light btn-small black" style="color: #ffb507" type="submit">
+							<a href="/controller?command=show_add_answer_page&&course_id=${requestScope.id}&&user_id
+			=${sessionScope.account.id}&&task_id=${task.id}">
+								Add answer ♥
+							</a>
+						</button>
+					</td>
 				</tr>
-			</c:forEach>
+				</tbody>
+				</c:forEach>
 
-			</tbody>
+			</table>
+		</div>
+		<br>
+		<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
+			<a class="waves-effect waves-light btn-small black"
+			   href="/controller?command=show_add_task&&id=${courseId}">Add task ♥</a>
+		</c:if>
 
-		</table>
 	</div>
-	<br>
-	<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
-		<a class="waves-effect waves-light btn-small black"
-		   href="/controller?command=show_add_task&&id=${courseId}">Add task ♥</a>
-	</c:if>
-
 </div>
 <br>
 

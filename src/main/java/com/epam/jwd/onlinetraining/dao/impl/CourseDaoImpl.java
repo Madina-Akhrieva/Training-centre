@@ -173,9 +173,9 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
              PreparedStatement preparedStatement = connection.prepareStatement(
                      DELETE_COURSE_WHERE_ID)) {
             preparedStatement.setLong(1, id);
-//            preparedStatement.execute(FOREIGN_KEY_CHECKS_VALUE_0);
+            preparedStatement.execute(FOREIGN_KEY_CHECKS_VALUE_0);
             boolean rowUpdated = preparedStatement.executeUpdate() > 0;
-//            preparedStatement.execute(FOREIGN_KEY_CHECKS_VALUE_1);
+            preparedStatement.execute(FOREIGN_KEY_CHECKS_VALUE_1);
             return rowUpdated;
 
         } catch (SQLException exception) {

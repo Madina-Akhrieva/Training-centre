@@ -21,7 +21,7 @@ public enum AddCourseCommand implements Command {
     private static final String IF_ADDED_ATTRIBUTE = "isAddedMessage";
     private static final String INVALID_COURSE_MESSAGE = "Course information is invalid";
     private static final String ADD_COURSE_JSP_PAGE = "page.add_course";
-    private static final String INDEX_JSP_PATH = "";
+    private static final String INDEX_JSP_PATH = "page.index";
 
     private final CourseService courseService;
     private final RequestFactory requestFactory;

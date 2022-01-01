@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="../css/manage_courses.css">
 	<link rel="stylesheet" href="../css/main.css">
 </head>
-<body>
+<body style="background-color: #ccc">
 
 
 <nav class="black">
@@ -40,7 +40,16 @@
 						<a href="${task.description}">${task.description}</a>
 					</td>
 					<td>
-						<span class="waves-effect waves-light btn-small black">Follow link ♥</span>
+						<span class="waves-effect waves-light btn-small black">
+							<a href="${task.description}">Follow link ♥</a>
+						</span>
+					</td>
+					<td>
+						<span class="waves-effect waves-light btn-small black">
+							<a href="/controller?command=check_task&&user_id=${id}&&course_id=${id}&&task_id=${task.id}">
+								Check tasks ♥
+							</a>
+						</span>
 					</td>
 				</tr>
 			</c:forEach>

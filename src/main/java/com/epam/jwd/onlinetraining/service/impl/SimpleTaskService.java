@@ -3,8 +3,6 @@ package com.epam.jwd.onlinetraining.service.impl;
 import com.epam.jwd.onlinetraining.dao.api.CourseDao;
 import com.epam.jwd.onlinetraining.dao.api.TaskDao;
 import com.epam.jwd.onlinetraining.dao.db.TransactionManager;
-import com.epam.jwd.onlinetraining.dao.model.Course;
-import com.epam.jwd.onlinetraining.dao.model.Mentor;
 import com.epam.jwd.onlinetraining.dao.model.Task;
 import com.epam.jwd.onlinetraining.service.api.TaskService;
 import org.apache.logging.log4j.LogManager;
@@ -29,7 +27,6 @@ public class SimpleTaskService implements TaskService {
 
     @Override
     public List<Task> findAll() {
-
         return null;
     }
 
@@ -39,8 +36,8 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
-    public Optional<Task> create(Task entity) {
-        return Optional.empty();
+    public Task create(Task entity) {
+        return null;
     }
 
     @Override
@@ -71,5 +68,15 @@ public class SimpleTaskService implements TaskService {
     @Override
     public Optional<Task> addTaskToCourse(Task task, long courseId) {
         return taskDao.addTaskToCourse(task, courseId);
+    }
+
+    @Override
+    public boolean addTaskAnswerToUser(String answer, long courseUserId, long courseId, long idTask) {
+        return taskDao.addTaskToAnswer(answer, courseUserId, courseId, idTask);
+    }
+
+    @Override
+    public List<Task> findAllTasksByCourseIdAndUserId(long courseId, long userId) {
+        return taskDao.readAllTasksByCourseIdAndUserId(courseId, userId);
     }
 }

@@ -1,6 +1,7 @@
 package com.epam.jwd.onlinetraining.dao.api;
 
 import com.epam.jwd.onlinetraining.dao.impl.UserDaoImpl;
+import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.User;
 
 import java.util.List;
@@ -20,5 +21,5 @@ public interface UserDao extends EntityDao<User> {
 
     boolean readSubscriptionByCourseIdAndUserId(long courseId, long userId);
 
-    List<String> findAllCoursesByUserId(long userId);
+    List<Course> findAllCoursesByUserId(long userId);
 }

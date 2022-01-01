@@ -7,6 +7,7 @@ import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
 public class ShowCompleteTaskPage implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
+
         return null;
     }
 }

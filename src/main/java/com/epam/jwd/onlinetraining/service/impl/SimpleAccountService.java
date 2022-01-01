@@ -2,6 +2,7 @@ package com.epam.jwd.onlinetraining.service.impl;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.epam.jwd.onlinetraining.dao.api.AccountDao;
+import com.epam.jwd.onlinetraining.dao.api.UserDao;
 import com.epam.jwd.onlinetraining.dao.model.Account;
 import com.epam.jwd.onlinetraining.service.api.AccountService;
 
@@ -15,14 +16,18 @@ public class SimpleAccountService implements AccountService {
 
     public static final byte[] DUMMY_PASSWORD = "password".getBytes(StandardCharsets.UTF_8);
     private final AccountDao accountDao;
+    private final UserDao userDao;
     private final BCrypt.Hasher hasher;
     private final BCrypt.Verifyer verifier;
 
-    public SimpleAccountService(AccountDao accountDao, BCrypt.Hasher hasher, BCrypt.Verifyer verifier) {
+    public SimpleAccountService(AccountDao accountDao, UserDao userDao, BCrypt.Hasher hasher, BCrypt.Verifyer verifier) {
         this.accountDao = accountDao;
+        this.userDao = userDao;
         this.hasher = hasher;
         this.verifier = verifier;
     }
+
+
 
 
     @Override
@@ -37,9 +42,20 @@ public class SimpleAccountService implements AccountService {
             final char[] rawPassword = password.toCharArray();
             final String hashedPassword = hasher.hashToString(MIN_COST, rawPassword);
             Account account = accountDao.create(new Account(null, hashedPassword, email));
+//            User user = userDao.create(new User(account.getId(), phone, firstName, lastName));
             return Optional.ofNullable(account);
         }
 
+    }
+
+    @Override
+    public Optional<Account> findByMail(String mail) {
+        return accountDao.readAccountByEmail(mail);
+    }
+
+    @Override
+    public Optional<Account> findById(long id) {
+        return accountDao.readAccountById(id);
     }
 
     @Override
@@ -78,8 +94,8 @@ public class SimpleAccountService implements AccountService {
     }
 
     @Override
-    public Optional<Account> create(Account entity) {
-        return Optional.empty();
+    public Account create(Account entity) {
+        return null;
     }
 
 

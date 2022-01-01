@@ -8,6 +8,7 @@ public enum PagePaths {
     ACCOUNTS("/WEB-INF/jsp/accounts.jsp"),
     ADD_COURSE("/WEB-INF/jsp/add_course.jsp"),
     WATCH_TASKS("/WEB-INF/jsp/watch_tasks.jsp"),
+    ADD_ANSWER("/WEB-INF/jsp/add_answer.jsp"),
 
     EDIT_COURSE("/WEB-INF/jsp/edit_course.jsp"),
     ADD_TASK("/WEB-INF/jsp/add_task.jsp"),
