@@ -23,7 +23,8 @@
 			      action="<c:url value="/controller?command=send_answer&&course_id=${requestScope.course_id}&&user_id
 			=${sessionScope.account.id}&&task_id=${requestScope.task_id}"/>" method="post" >
 				<input name="answer"  placeholder="Enter link to answer:" />
-				<input type="submit" class="btn"/>
+				<input type="submit"
+				        class="btn">SEND FEEDBACK</input>
 			</form>
 			<c:if test="${not empty requestScope.isAddedMessage}">
 				<p style="color:#ffb507">
@@ -31,7 +32,7 @@
 				</p>
 			</c:if>
 			<div
-					class="back-to-shop"><a href="/controller?command=main_page">&leftarrow;</a><span
+					class="back-to-shop"><a href="<c:url value="/controller?command=main_page"/>">&leftarrow;</a><span
 					class="text-muted">Back	to main
 				page</span></div>
 		</div>
@@ -42,12 +43,12 @@
 				<h5>Feedback from Dziana Bahdanava ♥</h5>
 			</div>
 			<hr>
-			<form action="/controller?command=send_feedback&&course_id=${requestScope.id}&&user_id
-			=${sessionScope.account.id}&&task_id=${task.id}">
-				<textarea style="margin-left: 20px" placeholder="Feedback" rows="10" cols="30">
+			<form action="<c:url value="/controller?command=send_feedback&&course_id=${requestScope.course_id}&&user_id
+			=${sessionScope.account.id}&&task_id=${requestScope.task_id}"/>" method="post">
+				<textarea name="feedback" style="margin-left: 20px" placeholder="Feedback" rows="10" cols="30">
 				</textarea>
-				<button type="submit"
-						class="btn">SEND FEEDBACK</button>
+				<input type="submit"
+						class="btn">SEND FEEDBACK</input>
 			</form>
 
 

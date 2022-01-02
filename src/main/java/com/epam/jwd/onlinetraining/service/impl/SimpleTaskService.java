@@ -79,4 +79,9 @@ public class SimpleTaskService implements TaskService {
     public List<Task> findAllTasksByCourseIdAndUserId(long courseId, long userId) {
         return taskDao.readAllTasksByCourseIdAndUserId(courseId, userId);
     }
+
+    @Override
+    public boolean addFeedbackToAnswer(String answer, long userId, long taskId) {
+        return taskDao.createFeedbackToAnswer(answer, userId,taskId);
+    }
 }

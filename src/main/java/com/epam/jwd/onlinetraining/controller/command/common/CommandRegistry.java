@@ -2,6 +2,7 @@ package com.epam.jwd.onlinetraining.controller.command.common;
 
 import com.epam.jwd.onlinetraining.controller.command.completetaskcommand.AddTaskAnswerCommand;
 import com.epam.jwd.onlinetraining.controller.command.completetaskcommand.SendAnswerCommand;
+import com.epam.jwd.onlinetraining.controller.command.completetaskcommand.SendFeedbackCommand;
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.AddCourseCommand;
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.AddCourseToUserCommand;
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.DeleteCourseCommand;
@@ -57,6 +58,7 @@ public enum CommandRegistry {
     SUBMIT_EDIT_COURSE(SubmitEditCourseCommand.INSTANCE, "submit_edit_course", MENTOR, ADMIN),
     ADD_COURSE_TO_USER(AddCourseToUserCommand.INSTANCE, "add_course_to_user", STUDENT),
     SEND_ANSWER(SendAnswerCommand.INSTANCE, "send_answer", STUDENT),
+    SEND_FEEDBACK(SendFeedbackCommand.INSTANCE, "send_feedback", STUDENT),
     SHOW_ADD_ANSWER_PAGE(AddTaskAnswerCommand.INSTANCE, "show_add_answer_page", STUDENT),
     DEFAULT(ShowMainPageCommand.INSTANCE, ""),
 

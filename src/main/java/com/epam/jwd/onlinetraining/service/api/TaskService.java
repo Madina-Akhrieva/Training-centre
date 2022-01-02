@@ -19,5 +19,7 @@ public interface TaskService extends EntityService<Task> {
     boolean addTaskAnswerToUser(String answer, long courseUserId, long courseId, long idTask);
 
     List<Task> findAllTasksByCourseIdAndUserId(long courseId, long userId);
+
+    boolean addFeedbackToAnswer(String answer, long userId, long taskId);
 }
 

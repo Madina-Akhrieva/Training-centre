@@ -8,9 +8,6 @@ import java.util.Optional;
 
 public interface TaskDao extends EntityDao<Task> {
 
-    List<Task> findByTitle(String title);
-
-
     static TaskDao instance() {
         return TaskDaoImpl.getInstance();
     }
@@ -22,4 +19,6 @@ public interface TaskDao extends EntityDao<Task> {
     boolean addTaskToAnswer(String answer, long courseUserId, long courseId, long idTask);
 
     List<Task> readAllTasksByCourseIdAndUserId(long courseId, long userId);
+
+    boolean createFeedbackToAnswer(String answer, long userId, long taskId);
 }
