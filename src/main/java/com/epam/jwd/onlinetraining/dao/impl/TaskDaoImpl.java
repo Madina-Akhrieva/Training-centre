@@ -21,7 +21,7 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
     private static final String SQL_DELETE_COURSE = "DELETE FROM task WHERE  id=?";
     private static final String INSERT_TASK_TO_COURSE = "INSERT INTO task( title, description, course_id) values(?,?, ?) ";
     private static final String SUBSCRIPTION_TABLE_NAME = "subscription  join course c on c.id = subscription.course_id inner join task t on t.course_id = subscription.course_id inner join course_user cu on  cu.id = subscription.course_user_id";
-    private static final String SELECT_TITLE_DESCRIPTION_FROM_SUBSCRIPTION_WHERE_ID = "select id_task, c.title, c.description from" + " "+ SUBSCRIPTION_TABLE_NAME+ " "+ " where t.course_id=? and course_user_id=?";
+    private static final String SELECT_TITLE_DESCRIPTION_FROM_SUBSCRIPTION_WHERE_ID = "select id_task, c.title, c.description from" + " " + SUBSCRIPTION_TABLE_NAME + " " + " where t.course_id=? and course_user_id=?";
 
     private static final String SELECT_TITLE_DESCRIPTION_FROM_TASK_WHERE_ID = "select id_task, title, description from task t where t.course_id = ?";
     private static final String ID_FIELD_NAME = "task_id";
@@ -39,7 +39,8 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
     private static final List<String> FIELDS = Arrays.asList(
             "id", "title", "description"
     );
-    private static final String UPDATE_SUBSCRIPTION_TABLE = "UPDATE" + " "+ SUBSCRIPTION_TABLE_NAME+" "+"SET task_answer=? where course_user_id=? and c.id=? and id_task=?";
+    private static final String UPDATE_SUBSCRIPTION_TABLE = "UPDATE" + " " + SUBSCRIPTION_TABLE_NAME + " " + "SET task_answer=? where course_user_id=? and c.id=? and id_task=?";
+    private static final String ADD_ANSWER_SQL_EXPRESSION = "insert into answer(task_id, answer, course_user_id) values (?, ?, ?)";
 
     protected TaskDaoImpl(ConnectionPool pool) {
         super(pool);
@@ -154,11 +155,10 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
     @Override
     public boolean addTaskToAnswer(String answer, long courseUserId, long courseId, long idTask) {
         try (Connection connection = pool.takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SUBSCRIPTION_TABLE)) {
-            preparedStatement.setString(1, answer);
-            preparedStatement.setLong(2, courseUserId);
-            preparedStatement.setLong(3, courseId);
-            preparedStatement.setLong(4, idTask);
+             PreparedStatement preparedStatement = connection.prepareStatement(ADD_ANSWER_SQL_EXPRESSION)) {
+            preparedStatement.setLong(1, idTask);
+            preparedStatement.setString(2, answer);
+            preparedStatement.setLong(3, courseUserId);
             boolean rowUpdated = preparedStatement.executeUpdate() > 0;
             return rowUpdated;
 
