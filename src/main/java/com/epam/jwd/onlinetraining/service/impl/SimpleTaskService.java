@@ -84,4 +84,9 @@ public class SimpleTaskService implements TaskService {
     public boolean addFeedbackToAnswer(String answer, long userId, long taskId) {
         return taskDao.createFeedbackToAnswer(answer, userId,taskId);
     }
+
+    @Override
+    public Task findTasksByCourseIdTaskIdAndUserId(long userId, long courseId, long taskId) {
+        return taskDao.readTasksByCourseIdTaskIdAndUserId(userId, courseId, taskId);
+    }
 }

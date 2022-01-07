@@ -99,6 +99,7 @@
 								<c:when test="${not empty sessionScope.account}">
 									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
 										<a href="/controller?command=manage_tasks&id=${course.id}">${downloadTask}</a>
+										<a href="/controller?command=check_task">${checkTask}</a>
 									</c:if>
 									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.MENTOR}">
 										<a href="<c:url

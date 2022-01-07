@@ -16,6 +16,7 @@ public enum PagePaths {
     COMPLETE_TASK("/WEB-INF/jsp/complete_task.jsp"),
     STUDENTS("/WEB-INF/jsp/students.jsp"),
     TASKS_WITH_FEEDBACK("/WEB-INF/jsp/tasks_with_feedback.jsp"),
+    GIVE_FEEDBACK("/WEB-INF/jsp/give_feedback.jsp"),
 
     ERROR("/WEB-INF/jsp/error.jsp"),
     MANAGE_COURSES("/WEB-INF/jsp/manage_courses.jsp"),

@@ -48,7 +48,7 @@
 					</td>
 					<td>
 						<button class="waves-effect waves-light btn-small black" style="color: #ffb507" type="submit">
-							<a href="/controller?command=show_add_answer_page&course_id=${requestScope.id}&user_id
+							<a href="/controller?command=give_feedback&course_id=${requestScope.id}&user_id
 			=${sessionScope.account.id}&task_id=${task.id}">
 								Give feedback ♥
 							</a>
