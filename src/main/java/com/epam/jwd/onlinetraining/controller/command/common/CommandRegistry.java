@@ -1,8 +1,12 @@
 package com.epam.jwd.onlinetraining.controller.command.common;
 
 import com.epam.jwd.onlinetraining.controller.command.completetaskcommand.AddTaskAnswerCommand;
+import com.epam.jwd.onlinetraining.controller.command.completetaskcommand.CheckTasksPage;
 import com.epam.jwd.onlinetraining.controller.command.completetaskcommand.SendAnswerCommand;
 import com.epam.jwd.onlinetraining.controller.command.completetaskcommand.SendFeedbackCommand;
+import com.epam.jwd.onlinetraining.controller.command.completetaskcommand.ShowCheckStudentsCommandPage;
+import com.epam.jwd.onlinetraining.controller.command.completetaskcommand.ShowCheckTasksPage;
+import com.epam.jwd.onlinetraining.controller.command.completetaskcommand.ShowTasksToGiveFeedbackCommand;
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.AddCourseCommand;
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.AddCourseToUserCommand;
 import com.epam.jwd.onlinetraining.controller.command.coursecomamnd.DeleteCourseCommand;
@@ -60,11 +64,13 @@ public enum CommandRegistry {
     SEND_ANSWER(SendAnswerCommand.INSTANCE, "send_answer", STUDENT),
     SEND_FEEDBACK(SendFeedbackCommand.INSTANCE, "send_feedback", STUDENT),
     SHOW_ADD_ANSWER_PAGE(AddTaskAnswerCommand.INSTANCE, "show_add_answer_page", STUDENT),
+    SHOW_CHECK_TASKS_PAGE(ShowTasksToGiveFeedbackCommand.INSTANCE, "show_check_tasks_page", MENTOR),
     DEFAULT(ShowMainPageCommand.INSTANCE, ""),
 
 
     COMPLETE_TASK(CompleteTaskCommand.INSTANCE, "complete_task", STUDENT),
-    CHECK_TASK(CheckTaskCommand.INSTANCE, "check_task", MENTOR);
+    CHECK_TASK(CheckTaskCommand.INSTANCE, "check_task", MENTOR),
+    SHOW_CHECK_STUDENTS_PAGE(ShowCheckStudentsCommandPage.INSTANCE, "check_students", MENTOR);
 
     private final Command command;
     private final String path;

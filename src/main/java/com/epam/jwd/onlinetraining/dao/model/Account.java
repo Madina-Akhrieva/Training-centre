@@ -21,7 +21,6 @@ public class Account implements Entity {
         this.password = password;
         this.email = email;
         this.role = role;
-//        this.user = user;
     }
 
 

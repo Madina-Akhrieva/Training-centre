@@ -23,8 +23,8 @@
 			      action="<c:url value="/controller?command=send_answer&&course_id=${requestScope.course_id}&&user_id
 			=${sessionScope.account.id}&&task_id=${requestScope.task_id}"/>" method="post" >
 				<input name="answer"  placeholder="Enter link to answer:" />
-				<input type="submit"
-				        class="btn">SEND FEEDBACK</input>
+				<button type="submit"
+				        class="btn">COMPLETE TASK</button>
 			</form>
 			<c:if test="${not empty requestScope.isAddedMessage}">
 				<p style="color:#ffb507">
@@ -47,8 +47,8 @@
 			=${sessionScope.account.id}&&task_id=${requestScope.task_id}"/>" method="post">
 				<textarea name="feedback" style="margin-left: 20px" placeholder="Feedback" rows="10" cols="30">
 				</textarea>
-				<input type="submit"
-						class="btn">SEND FEEDBACK</input>
+				<button type="submit"
+						class="btn">SEND FEEDBACK</button>
 			</form>
 
 

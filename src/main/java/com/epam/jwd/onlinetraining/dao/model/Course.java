@@ -82,6 +82,7 @@ public class Course implements Entity {
                 && Objects.equals(mentor, course.mentor);
     }
 
+
     @Override
     public int hashCode() {
         return Objects.hash(id, title, learningLanguage, description, mentor);

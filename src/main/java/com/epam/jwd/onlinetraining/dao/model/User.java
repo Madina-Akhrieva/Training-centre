@@ -8,6 +8,7 @@ public class User implements Entity {
     private String phone;
     private String firstName;
     private String lastName;
+    private Course course;
 
     public User(Long id, String phone, String firstName, String lastName) {
         this.id = id;
@@ -19,6 +20,13 @@ public class User implements Entity {
     public User(String phone, String firstName, String lastName) {
         this(null, phone, firstName, lastName);
 
+    }
+
+    public User(long userId, Course course, String firstName, String lastName) {
+      this.id = userId;
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.course = course;
     }
 
     @Override
@@ -54,20 +62,25 @@ public class User implements Entity {
         this.lastName = lastName;
     }
 
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id)
-                && Objects.equals(phone, user.phone)
-                && Objects.equals(firstName, user.firstName)
-                && Objects.equals(lastName, user.lastName);
+        return Objects.equals(id, user.id) && Objects.equals(phone, user.phone) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(course, user.course);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, phone, firstName, lastName);
+        return Objects.hash(id, phone, firstName, lastName, course);
     }
 
     @Override
@@ -77,6 +90,7 @@ public class User implements Entity {
                 ", phone='" + phone + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", course=" + course +
                 '}';
     }
 }

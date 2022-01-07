@@ -75,4 +75,9 @@ public class SimpleUserService implements UserService {
     public List<Course> findAllCoursesByUserId(long userId) {
         return userDao.findAllCoursesByUserId(userId);
     }
+
+    @Override
+    public List<User> findStudentsByCourseId(long courseId) {
+        return userDao.readStudentsByCourseId(courseId);
+    }
 }

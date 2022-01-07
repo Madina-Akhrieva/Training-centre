@@ -50,7 +50,7 @@
 						<button class="waves-effect waves-light btn-small black" style="color: #ffb507" type="submit">
 							<a href="/controller?command=show_add_answer_page&course_id=${requestScope.id}&user_id
 			=${sessionScope.account.id}&task_id=${task.id}">
-								Add answer ♥
+								Give feedback ♥
 							</a>
 						</button>
 					</td>
@@ -61,10 +61,6 @@
 			</table>
 		</div>
 		<br>
-		<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
-			<a class="waves-effect waves-light btn-small black"
-			   href="/controller?command=show_add_task&id=${courseId}">Add task ♥</a>
-		</c:if>
 
 	</div>
 </div>

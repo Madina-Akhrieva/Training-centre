@@ -16,4 +16,6 @@ public interface UserService extends EntityService<User>{
     boolean checkIfSubscriptionStringExist(long courseId, long userId);
 
     List<Course> findAllCoursesByUserId(long userId);
+
+    List<User> findStudentsByCourseId(long courseId);
 }

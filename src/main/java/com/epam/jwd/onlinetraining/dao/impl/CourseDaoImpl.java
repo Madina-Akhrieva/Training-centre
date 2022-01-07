@@ -22,7 +22,7 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
 
     private static final String SQL_DELETE_COURSE = "DELETE FROM course WHERE  id=,";
     private static final String INSERT_COURSE = "INSERT INTO course( title, learning_language, description) values(?,?,?)  ";
-    private static final String SELECT_TITLE_LEARNING_LANGUAGE_DESCRIPTION_FROM_COURSE__WHERE__ID = "select title, learning_language, description from course c where c.id = ?";
+    private static final String SELECT_TITLE_LEARNING_LANGUAGE_DESCRIPTION_FROM_COURSE_WHERE_ID = "select title, learning_language, description from course c where c.id = ?";
     private static final String SELECT_MENTOR_ID_FROM_COURSE = "select mentor_id from course c where c.id = ?";
 
     private static final String COURSE = "course";
@@ -101,9 +101,8 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
                     st -> st.setLong(1, id));
         } catch (InterruptedException e) {
             e.printStackTrace();
-            return null;
         }
-
+        return Optional.empty();
     }
 
     @Override
@@ -111,7 +110,7 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
         Course course = null;
         try (Connection connection = pool.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     SELECT_TITLE_LEARNING_LANGUAGE_DESCRIPTION_FROM_COURSE__WHERE__ID)) {
+                     SELECT_TITLE_LEARNING_LANGUAGE_DESCRIPTION_FROM_COURSE_WHERE_ID)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 

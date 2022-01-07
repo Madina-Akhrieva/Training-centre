@@ -22,4 +22,6 @@ public interface UserDao extends EntityDao<User> {
     boolean readSubscriptionByCourseIdAndUserId(long courseId, long userId);
 
     List<Course> findAllCoursesByUserId(long userId);
+
+    List<User> readStudentsByCourseId(long courseId);
 }

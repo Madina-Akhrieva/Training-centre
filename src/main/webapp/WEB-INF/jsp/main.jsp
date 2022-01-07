@@ -42,6 +42,7 @@
 					<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
 						<li><a href="<c:url value="/controller?command=manage_courses"/>">${manageCourses}</a></li>
 					</c:if>
+
 					<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.STUDENT}">
 						<li><a
 								href="/controller?command=show_profile&&id=${sessionScope.account.id}">
@@ -97,8 +98,11 @@
 							<c:choose>
 								<c:when test="${not empty sessionScope.account}">
 									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
-										<a href="/controller?command=manage_tasks&&id=${course.id}">${downloadTask}</a>
-										<a href="/controller?command=check_task">${checkTask}</a>
+										<a href="/controller?command=manage_tasks&id=${course.id}">${downloadTask}</a>
+									</c:if>
+									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.MENTOR}">
+										<a href="<c:url
+										value="/controller?command=check_students&id=${course.id}"/>">Check students</a>
 									</c:if>
 									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.STUDENT}">
 <%--										<a href="/controller?command=complete_task&&id=${course.id}">${completeTask}</a>--%>
