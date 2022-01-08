@@ -39,11 +39,9 @@
 			</div>
 			<hr>
 			<form action="<c:url value="/controller?command=send_feedback&&course_id=${requestScope.course_id}&&user_id
-			=${sessionScope.account.id}&&task_id=${requestScope.task_id}"/>" method="post">
-				<textarea name="feedback" style="margin-left: 20px" placeholder="Feedback" rows="10" cols="30">
-				</textarea>
-				<button type="submit"
-				        class="btn">SEND FEEDBACK</button>
+			=${requestScope.user_id}&&task_id=${requestScope.task_id}"/>" method="post">
+				<textarea name="feedback" style="margin-left: 20px" placeholder="Feedback" rows="10" cols="30"></textarea>
+				<button type="submit" class="btn">SEND FEEDBACK</button>
 			</form>
 
 

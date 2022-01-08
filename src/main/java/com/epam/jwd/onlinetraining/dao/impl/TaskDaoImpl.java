@@ -22,25 +22,27 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
     private static final String SUBSCRIPTION_TABLE_NAME = "subscription  join course c on c.id = subscription.course_id inner join task t on t.course_id = subscription.course_id inner join course_user cu on  cu.id = subscription.course_user_id";
     private static final String SELECT_TITLE_DESCRIPTION_FROM_SUBSCRIPTION_WHERE_ID = "select id_task, t.title, c.description from" + " " + SUBSCRIPTION_TABLE_NAME + " " + " where t.course_id=? and course_user_id=?";
     private static final String SELECT_TITLE_DESCRIPTION_FROM_TASK_WHERE_ID = "select id_task, title, description from task t where t.course_id = ?";
-    private static final String ADD_ANSWER_SQL_EXPRESSION = "insert into answer(task_id, answer, course_user_id) values (?, ?, ?)";
-    private static final String UPDATE_FEEDBACK_SQL_EXPRESSION = "update  answer set feedback=? where task_id=? and course_user_id=?";
-    private static final String ID_TASK_COLUMN_NAME = "id_task";
-    private static final String TITLE_COLUMN_NAME = "t.title";
-    private static final String DESCRIPTION_COLUMN_NAME = "c.description";
-    public static final String TASK_TABLE_NAME = "task";
-    private static final String FIELD_NAME = "field name";
-    private static final List<String> FIELDS = Arrays.asList(
-            "id", "t.title", "description"
-    );
+    private static final String ADD_ANSWER_SQL_EXPRESSION = "insert into answer_table(task_id, answer, course_user_id) values (?, ?, ?)";
+    private static final String UPDATE_FEEDBACK_SQL_EXPRESSION = "update  answer_table set feedback=? where task_id=? and course_user_id=?";
     private static final String SELECT_TITLE_DESCRIPTION_FROM_TASK_WHERE_USER_COURSE_TASK_ID = "SELECT task_answer, course_user_id, c.id, id_task\n" +
             "FROM subscription" +
             "         join course c on c.id = subscription.course_id" +
             "         inner join task t on t.course_id = subscription.course_id" +
-            "         inner join course_user cu on cu.id = subscription.course_user_id where course_user_id=? and c.id=? and id_task=?;";
+            "         inner join course_user cu on cu.id = subscription.course_user_id where course_user_id=? and c.id=? and id_task=?";
+    private static final String ID_TASK_COLUMN_NAME = "id_task";
+    private static final String TITLE_COLUMN_NAME = "t.title";
+    private static final String DESCRIPTION_COLUMN_NAME = "description";
+    public static final String TASK_TABLE_NAME = "task";
+    private static final String FIELD_NAME = "field name";
     private static final String COURSE_USER_ID_COLUMN_NAME = "course_user_id";
     private static final String COURSE_ID_COLUMN_NAME = "c.id";
     private static final String TASK_ID_COLUMN_NAME = "id_task";
     private static final String ANSWER_COLUMN_NAME = "task_answer";
+    private static final List<String> FIELDS = Arrays.asList(
+            "id", "t.title", "description"
+    );
+    private static final String SELECT_FEEDBACK_FROM_ANSWER_TABLE = "select feedback from answer_table where task_id=? and course_user_id=?";
+    private static final String FEEDBACK_ID_COLUMN_NAME = "feedback";
 
     protected TaskDaoImpl(ConnectionPool pool) {
         super(pool);
@@ -152,7 +154,6 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
             preparedStatement.setLong(3, courseUserId);
             boolean rowUpdated = preparedStatement.executeUpdate() > 0;
             return rowUpdated;
-
         } catch (InterruptedException e) {
             LOGGER.warn("exception", e);
             e.printStackTrace();
@@ -171,8 +172,7 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
             preparedStatement.setLong(1, courseId);
             preparedStatement.setLong(2, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 Long taskId = resultSet.getLong(ID_TASK_COLUMN_NAME);
                 String title = resultSet.getString(TITLE_COLUMN_NAME);
                 String description = resultSet.getString(DESCRIPTION_COLUMN_NAME);
@@ -208,7 +208,6 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
 
     @Override
     public Task readTasksByCourseIdTaskIdAndUserId(long userId, long courseId, long taskId) {
-        List<Task> tasks = new ArrayList<>();
         Task task = null;
         try (Connection connection = pool.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
@@ -218,7 +217,7 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
             preparedStatement.setLong(3, taskId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 Long courseUserId = resultSet.getLong(COURSE_USER_ID_COLUMN_NAME);
                 Long idCourse = resultSet.getLong(COURSE_ID_COLUMN_NAME);
                 Long idTask = resultSet.getLong(TASK_ID_COLUMN_NAME);
@@ -233,6 +232,30 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
         }
         return task;
     }
+
+    @Override
+    public String readFeedbackByCourseIdUserIdAndTaskId(long courseId, long userId, long taskId) {
+       String feedback="";
+        try (Connection connection = pool.takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     SELECT_FEEDBACK_FROM_ANSWER_TABLE)) {
+            preparedStatement.setLong(2, userId);
+            preparedStatement.setLong(1, taskId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                feedback = resultSet.getString(FEEDBACK_ID_COLUMN_NAME);
+            }
+        } catch (InterruptedException e) {
+            LOGGER.warn("exception", e);
+            e.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return feedback ;
+    }
+
+
 
     private static class Holder {
         public static final TaskDao INSTANCE = new TaskDaoImpl(ConnectionPool.instance());

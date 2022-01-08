@@ -24,6 +24,7 @@ public enum AddTaskAnswerCommand implements Command {
     private static final String COURSE_ID_REQUEST_PARAM_NAME = "course_id";
     private static final String USER_ID_REQUEST_PARAM_NAME = "user_id";
     private static final String TASK_ID_REQUEST_PARAM_NAME = "task_id";
+    private static final String FEEDBACK_REQUEST_PARAM_NAME = "feedback";
 
     private final TaskService taskService;
     private final RequestFactory requestFactory;
@@ -42,10 +43,13 @@ public enum AddTaskAnswerCommand implements Command {
         final long courseId = Long.parseLong(request.getParameter(COURSE_ID_REQUEST_PARAM_NAME));
         final long userId = Long.parseLong(request.getParameter(USER_ID_REQUEST_PARAM_NAME));
         final long taskId = Long.parseLong(request.getParameter(TASK_ID_REQUEST_PARAM_NAME));
+        String feedback =  taskService.findFeedbackByCourseIdUserIdAndTaskId(courseId, userId, taskId);
         request.addAttributeToJsp(IF_ADDED_ATTRIBUTE, INVALID_COURSE_MESSAGE);
+
         request.addAttributeToJsp(COURSE_ID_REQUEST_PARAM_NAME, courseId);
         request.addAttributeToJsp(TASK_ID_REQUEST_PARAM_NAME, taskId);
         request.addAttributeToJsp(USER_ID_REQUEST_PARAM_NAME, userId);
+        request.addAttributeToJsp(FEEDBACK_REQUEST_PARAM_NAME, feedback);
         return requestFactory.createForwardResponse(propertyContext.get(ADD_ANSWER_PAGE));
 
     }

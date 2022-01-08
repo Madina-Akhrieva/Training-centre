@@ -49,7 +49,7 @@
 					<td>
 						<button class="waves-effect waves-light btn-small black" style="color: #ffb507" type="submit">
 							<a href="/controller?command=give_feedback&course_id=${requestScope.id}&user_id
-			=${sessionScope.account.id}&task_id=${task.id}">
+			=${requestScope.uid}&task_id=${task.id}">
 								Give feedback ♥
 							</a>
 						</button>

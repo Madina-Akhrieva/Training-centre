@@ -61,7 +61,7 @@ public enum CommandRegistry {
     SUBMIT_EDIT_COURSE(SubmitEditCourseCommand.INSTANCE, "submit_edit_course", MENTOR, ADMIN),
     ADD_COURSE_TO_USER(AddCourseToUserCommand.INSTANCE, "add_course_to_user", STUDENT),
     SEND_ANSWER(SendAnswerCommand.INSTANCE, "send_answer", STUDENT),
-    SEND_FEEDBACK(SendFeedbackCommand.INSTANCE, "send_feedback", STUDENT),
+    SEND_FEEDBACK(SendFeedbackCommand.INSTANCE, "send_feedback", MENTOR),
     GIVE_FEEDBACK(GiveFeedbackCommand.INSTANCE, "give_feedback", MENTOR),
     SHOW_ADD_ANSWER_PAGE(AddTaskAnswerCommand.INSTANCE, "show_add_answer_page", STUDENT),
     SHOW_CHECK_TASKS_PAGE(ShowTasksToGiveFeedbackCommand.INSTANCE, "show_check_tasks_page", MENTOR),

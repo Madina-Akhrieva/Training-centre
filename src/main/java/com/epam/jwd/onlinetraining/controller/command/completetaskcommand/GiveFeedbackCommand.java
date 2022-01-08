@@ -40,7 +40,9 @@ public enum GiveFeedbackCommand implements Command {
         final long taskId = Long.parseLong(request.getParameter(TASK_ID_REQUEST_PARAM_NAME));
         final Task task = taskService.findTasksByCourseIdTaskIdAndUserId(userId, courseId, taskId);
         request.addAttributeToJsp(TASK_ATTRIBUTE_NAME, task);
-
+        request.addAttributeToJsp(COURSE_ID_REQUEST_PARAM_NAME, courseId);
+        request.addAttributeToJsp(USER_ID_REQUEST_PARAM_NAME, userId);
+        request.addAttributeToJsp(TASK_ID_REQUEST_PARAM_NAME, taskId);
         return requestFactory.createForwardResponse(propertyContext.get(GIVE_FEEDBACK_PAGE));
     }
 }

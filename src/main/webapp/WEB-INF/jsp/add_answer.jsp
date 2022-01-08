@@ -41,18 +41,18 @@
 		<div class="col-md-4 summary">
 			<div>
 				<h5>Feedback from Dziana Bahdanava ♥</h5>
+			</div><hr>
+			<div>
+				${requestScope.feedback}
 			</div>
-			<hr>
-			<form action="<c:url value="/controller?command=send_feedback&&course_id=${requestScope.course_id}&&user_id
-			=${sessionScope.account.id}&&task_id=${requestScope.task_id}"/>" method="post">
-				<textarea name="feedback" style="margin-left: 20px" placeholder="Feedback" rows="10" cols="30">
-				</textarea>
-				<button type="submit"
-						class="btn">SEND FEEDBACK</button>
-			</form>
+<%--			<form action="<c:url value="/controller?command=send_feedback&&course_id=${requestScope.course_id}&&user_id--%>
+<%--			=${sessionScope.account.id}&&task_id=${requestScope.task_id}"/>" method="post">--%>
 
-
+<%--				<textarea name="feedback" style="margin-left: 20px" placeholder="Feedback" rows="10" cols="30"></textarea>--%>
+<%--				<button type="submit" class="btn">SEND FEEDBACK</button>--%>
+<%--			</form>--%>
 		</div>
+
 	</div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

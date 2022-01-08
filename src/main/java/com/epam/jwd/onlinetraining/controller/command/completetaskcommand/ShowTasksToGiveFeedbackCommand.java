@@ -39,6 +39,7 @@ public enum ShowTasksToGiveFeedbackCommand implements Command {
 //        final List<Task> tasks = taskService.findAll(courseId);
         final List<Task> tasks = taskService.findAllTasksByCourseIdAndUserId(courseId, userId);
         request.addAttributeToJsp(COURSE_ID_PARAM, courseId);
+        request.addAttributeToJsp(USER_ID_REQUEST_PARAM_NAME, userId);
         request.addAttributeToJsp(TASKS_ATTRIBUTE_NAME, tasks);
 
         return requestFactory.createForwardResponse(propertyContext.get(LEAVE_FEEDBACK));
