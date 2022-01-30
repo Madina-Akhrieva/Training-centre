@@ -64,11 +64,6 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
         return FIELDS;
     }
 
-    protected List<String> getInsertFields() {
-        return INSERT_FIELDS;
-    }
-
-
     @Override
     protected String getIdFieldName() {
         return ID_FIELD_NAME;
@@ -83,9 +78,6 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
                 Role.of(rs.getString(ROLE_FIELD_NAME))
         );
     }
-
-
-
 
     @Override
     public Optional<Account> readAccountByEmail(String email) {
@@ -115,34 +107,6 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
             return Optional.empty();
         }
     }
-//
-//    @Override
-//    public Optional<Account> findByMail(String mail) {
-//        Account account = null;
-//        try (Connection connection = pool.takeConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(
-//                     selectByEmailExpression)) {
-//            preparedStatement.setString(1, mail);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//            if (resultSet.next()) {
-//                Long id = resultSet.getLong(ID_FIELD_NAME);
-//                String email = resultSet.getString(EMAIL_FIELD_NAME);
-//                Role role_id = (Role) resultSet.getObject(ROLE_FIELD_NAME);
-//                String password = resultSet.getString(PASSWORD_FIELD_NAME);
-//
-//                account = new Account(id, password, email, role_id);
-//            }
-//            return Optional.of(account);
-//        } catch (InterruptedException e) {
-//            LOGGER.warn("exception", e);
-//            e.printStackTrace();
-//        } catch (SQLException exception) {
-//            exception.printStackTrace();
-//        }
-//
-//        return Optional.of(account);
-//    }
 
     public static AccountDao getInstance() {
         return Holder.INSTANCE;

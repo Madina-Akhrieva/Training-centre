@@ -10,6 +10,8 @@ import com.epam.jwd.onlinetraining.dao.db.TransactionManager;
 import com.epam.jwd.onlinetraining.dao.model.Entity;
 import com.epam.jwd.onlinetraining.service.api.EntityService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
+import com.epam.jwd.onlinetraining.service.validator.AccountValidator;
+import com.epam.jwd.onlinetraining.service.validator.UserValidator;
 
 
 import java.util.Map;
@@ -41,9 +43,9 @@ public class SimpleServiceFactory implements ServiceFactory {
                 case "Task":
                     return new SimpleTaskService( TaskDao.instance(),CourseDao.instance(), TransactionManager.instance());
                 case "User":
-                    return new SimpleUserService(AccountDao.instance(), UserDao.instance(), TransactionManager.instance());
+                    return new SimpleUserService(UserValidator.getInstance(), AccountDao.instance(), UserDao.instance(), TransactionManager.instance());
                 case "Account":
-                    return new SimpleAccountService(AccountDao.instance(), UserDao.instance(), BCrypt.withDefaults(), BCrypt.verifyer());
+                    return new SimpleAccountService(AccountValidator.getInstance(), AccountDao.instance(), UserDao.instance(), BCrypt.withDefaults(), BCrypt.verifyer());
                 default:
                     throw new IllegalArgumentException(String.format(SERVICE_NOT_FOUND, className));
 

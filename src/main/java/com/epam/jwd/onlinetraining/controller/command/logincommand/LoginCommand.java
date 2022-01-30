@@ -22,7 +22,8 @@ public enum LoginCommand implements Command {
     public static final String LOGIN_REQUEST_PARAM_NAME = "email";
     public static final String PASSWORD_REQUEST_PARAM_NAME = "password";
     private static final String ERROR_LOGIN_PASS_ATTRIBUTE = "errorLoginPassMessage";
-    private static final String INVALID_LOGIN_PASS_MESSAGE = "Such account doesn't exist.";
+    private static final String INVALID_LOGIN_PASS_MESSAGE = "Account doesn't exist. Sign in first please ♥";
+    public static final String WRONG_PASSWORD_MESSAGE = "Password is wrong.";
     private static final String ACCOUNT_SESSION_ATTRIBUTE_NAME = "account";
 
     private final AccountService accountService;
@@ -37,23 +38,19 @@ public enum LoginCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request){
-        if (request.sessionExists() && request.retrieveFromSession(ACCOUNT_SESSION_ATTRIBUTE_NAME).isPresent()) {
-//            throw new UserAlreadyExistsException();
-        }
+//        if (request.sessionExists() && request.retrieveFromSession(ACCOUNT_SESSION_ATTRIBUTE_NAME).isPresent()) {
+////            throw new UserAlreadyExistsException();
+//        }
         final String login = request.getParameter(LOGIN_REQUEST_PARAM_NAME);
         final String password = request.getParameter(PASSWORD_REQUEST_PARAM_NAME);
         final Optional<Account> account = accountService.authenticate(login, password);
-        LOGGER.trace("Account is", account);
-
         if (!account.isPresent()) {
             request.addAttributeToJsp(ERROR_LOGIN_PASS_ATTRIBUTE, INVALID_LOGIN_PASS_MESSAGE);
             return requestFactory.createForwardResponse(propertyContext.get(LOGIN_JSP_PATH));
         }
         request.cleareSession();
         request.createSession();
-        LOGGER.trace("Id is", account.get().getId());
         request.addToSession(ACCOUNT_SESSION_ATTRIBUTE_NAME, account.get());
-
         return requestFactory.createRedirectResponse(propertyContext.get(INDEX_JSP_PATH));
 
     }

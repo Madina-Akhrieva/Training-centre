@@ -6,17 +6,26 @@ import com.epam.jwd.onlinetraining.dao.db.TransactionManager;
 import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.User;
 import com.epam.jwd.onlinetraining.service.api.UserService;
+import com.epam.jwd.onlinetraining.service.exception.WrongFirstNameException;
+import com.epam.jwd.onlinetraining.service.exception.WrongLastNameException;
+import com.epam.jwd.onlinetraining.service.exception.WrongPhoneException;
+import com.epam.jwd.onlinetraining.service.validator.UserValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
 
 public class SimpleUserService implements UserService {
 
+    private static final Logger LOGGER = LogManager.getLogger(SimpleUserService.class);
+    private final UserValidator userValidator;
     private final UserDao userDao;
     private final AccountDao accountDao;
     private final TransactionManager transactionManager;
 
-    public SimpleUserService(AccountDao accountDao, UserDao userDao, TransactionManager transactionManager) {
+    public SimpleUserService(UserValidator userValidator, AccountDao accountDao, UserDao userDao, TransactionManager transactionManager) {
+        this.userValidator = userValidator;
         this.userDao = userDao;
         this.accountDao = accountDao;
         this.transactionManager = transactionManager;
@@ -43,10 +52,15 @@ public class SimpleUserService implements UserService {
     }
 
     @Override
-    public Optional<User> register(Long id, String phone, String firstname, String lastname) {
+    public Optional<User> register(Long id, String phone, String firstname, String lastname) throws WrongFirstNameException, WrongPhoneException, WrongLastNameException {
+
         if (phone == null || firstname == null || lastname==null) {
             return Optional.empty();
         }
+        userValidator.validateFirstname(firstname);
+        userValidator.validateLastname(lastname);
+        userValidator.validatePhone(phone);
+
         final Optional<User> readUser = userDao.readUserByPhone(phone);
         if (readUser.isPresent()) {
             return Optional.empty();

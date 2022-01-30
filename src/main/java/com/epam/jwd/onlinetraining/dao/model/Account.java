@@ -23,6 +23,11 @@ public class Account implements Entity {
         this.role = role;
     }
 
+    public Account(String password, String email) {
+        this.password = password;
+        this.email = email;
+    }
+
 
     public Role getRole() {
         return role;

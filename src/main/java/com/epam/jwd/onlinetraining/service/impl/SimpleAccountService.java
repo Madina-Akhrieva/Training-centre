@@ -5,6 +5,10 @@ import com.epam.jwd.onlinetraining.dao.api.AccountDao;
 import com.epam.jwd.onlinetraining.dao.api.UserDao;
 import com.epam.jwd.onlinetraining.dao.model.Account;
 import com.epam.jwd.onlinetraining.service.api.AccountService;
+import com.epam.jwd.onlinetraining.service.exception.AccountWithSuchEmailExists;
+import com.epam.jwd.onlinetraining.service.exception.WrongMailException;
+import com.epam.jwd.onlinetraining.service.exception.WrongPasswordException;
+import com.epam.jwd.onlinetraining.service.validator.AccountValidator;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -15,12 +19,14 @@ import static at.favre.lib.crypto.bcrypt.BCrypt.MIN_COST;
 public class SimpleAccountService implements AccountService {
 
     public static final byte[] DUMMY_PASSWORD = "password".getBytes(StandardCharsets.UTF_8);
+    private final AccountValidator accountValidator;
     private final AccountDao accountDao;
     private final UserDao userDao;
     private final BCrypt.Hasher hasher;
     private final BCrypt.Verifyer verifier;
 
-    public SimpleAccountService(AccountDao accountDao, UserDao userDao, BCrypt.Hasher hasher, BCrypt.Verifyer verifier) {
+    public SimpleAccountService(AccountValidator accountValidator, AccountDao accountDao, UserDao userDao, BCrypt.Hasher hasher, BCrypt.Verifyer verifier) {
+        this.accountValidator = accountValidator;
         this.accountDao = accountDao;
         this.userDao = userDao;
         this.hasher = hasher;
@@ -31,17 +37,19 @@ public class SimpleAccountService implements AccountService {
 
 
     @Override
-    public Optional<Account> register(String email, String password) {
+    public Optional<Account> register(String email, String password) throws WrongMailException, WrongPasswordException, AccountWithSuchEmailExists {
         if (email == null || password == null) {
             return Optional.empty();
         }
+        accountValidator.validateMail(email);
+        accountValidator.validatePassword(password);
         final Optional<Account> readAccount = accountDao.readAccountByEmail(email);
         if (readAccount.isPresent()) {
-            return Optional.empty();
+           throw new AccountWithSuchEmailExists("Such account already exists exception");
         } else {
             final char[] rawPassword = password.toCharArray();
             final String hashedPassword = hasher.hashToString(MIN_COST, rawPassword);
-            Account account = accountDao.create(new Account(null, hashedPassword, email));
+            Account account = accountDao.create(new Account( hashedPassword, email));
 //            User user = userDao.create(new User(account.getId(), phone, firstName, lastName));
             return Optional.ofNullable(account);
         }

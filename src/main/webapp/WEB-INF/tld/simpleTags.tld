@@ -9,12 +9,12 @@
     <uri>jwd.epam.com</uri>
     <tag>
         <name>welcomeUser</name>
-        <tag-class>com.epam.jwd.onlinetraining.controller.tag.WelcomeTag</tag-class>
+        <tag-class>com.epam.jwd.onlinetraining.controller.tag.WelcomeUserTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <description>Text prefix before user name</description>
             <name>text</name>
-            <required>true</required>
+            <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>

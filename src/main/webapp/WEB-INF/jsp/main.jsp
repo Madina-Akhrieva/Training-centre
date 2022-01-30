@@ -2,6 +2,7 @@
 <%@ page import="com.epam.jwd.onlinetraining.dao.model.Role" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="jwds" uri="jwd.epam.com" %>
 <fmt:setLocale value="${cookie.lang.value}"/>
 <fmt:setBundle basename="l10n.page.main" var="loc"/>
 <fmt:message bundle="${loc}" key="label.title" var="title"/>
@@ -32,23 +33,25 @@
 
 </head>
 <body style="background-color: #ccc">
-
-
+<jwds:welcomeUser/>
 <nav class="black">
 	<div class="nav-wrapper">
 		<ul id="nav-mobile" class="right hide-on-med-and-down">
 			<c:choose>
 				<c:when test="${not empty sessionScope.account}">
-					<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
+					<c:if test="${sessionScope.account.role eq Role.ADMIN}">
 						<li><a href="<c:url value="/controller?command=manage_courses"/>">${manageCourses}</a></li>
+						<li><a href="<c:url value="/controller?command=logout"/>">${logout}</a></li>
 					</c:if>
-
-					<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.STUDENT}">
+					<c:if test="${sessionScope.account.role eq Role.STUDENT}">
 						<li><a
 								href="/controller?command=show_profile&&id=${sessionScope.account.id}">
 								${watchProfile}</a></li>
+						<li><a href="<c:url value="/controller?command=logout"/>">${logout}</a></li>
 					</c:if>
-					<li><a href="<c:url value="/controller?command=logout"/>">${logout}</a></li>
+					<c:if test="${sessionScope.account.role eq Role.MENTOR}">
+						<li><a href="<c:url value="/controller?command=logout"/>">${logout}</a></li>
+					</c:if>
 				</c:when>
 				<c:otherwise>
 					<li><a href="<c:url value="/controller?command=show_login"/>">${login}</a></li>
