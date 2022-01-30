@@ -37,7 +37,7 @@ public enum LoginCommand implements Command {
     }
 
     @Override
-    public CommandResponse execute(CommandRequest request){
+    public CommandResponse execute(CommandRequest request) {
 //        if (request.sessionExists() && request.retrieveFromSession(ACCOUNT_SESSION_ATTRIBUTE_NAME).isPresent()) {
 ////            throw new UserAlreadyExistsException();
 //        }

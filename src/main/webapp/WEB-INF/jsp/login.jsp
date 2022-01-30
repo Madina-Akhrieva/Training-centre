@@ -17,8 +17,8 @@
 				<p style="color:red">${requestScope.errorLoginPassMessage}</p>
 			</c:if>
 			<input type="email" placeholder="Email (from 7-50 symbols available)" name="email" maxlength="50"
-			       minlength="7"  required=""/>
-			<input type="password"  placeholder="Password symbols: a-z,A-Z,0-9" name="password" pattern="^[a-zA-Z0-9]+$"
+			       minlength="7" required=""/>
+			<input type="password" placeholder="Password symbols: a-z,A-Z,0-9" name="password" pattern="^[a-zA-Z0-9]+$"
 			       maxlength="17" minlength="7" required=""/>
 			<button type="submit">Sign In</button>
 		</form>
@@ -53,7 +53,7 @@
 				</c:otherwise>
 			</c:choose>
 			<input id="signup-input" type="email" placeholder="Email (from 7-50 symbols available)" name="email"
-			       maxlength="50" minlength="7"  required=""/>
+			       maxlength="50" minlength="7" required=""/>
 			<input id="password-input" type="password" maxlength="17" minlength="7" required=""
 			       placeholder="Password symbols: a-z,A-Z,0-9" name="password" pattern="^[a-zA-Z0-9]+$"/>
 			<input id="signup-input" type="text" placeholder="Firstname (from 2-50 symbols)"

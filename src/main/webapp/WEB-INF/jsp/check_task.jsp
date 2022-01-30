@@ -19,9 +19,9 @@
 				<input class="text w3lpass" type="text" name="password"
 				       placeholder="Введите feedback по таску" required="">
 				<div class="wthree-text">
-					<div class="clear"> </div>
+					<div class="clear"></div>
 				</div>
-				<p> <a href="/controller?command=main"> Send feedback!</a></p>
+				<p><a href="/controller?command=main"> Send feedback!</a></p>
 			</form>
 		</div>
 	</div>

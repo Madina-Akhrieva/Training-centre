@@ -82,7 +82,7 @@ public class SimpleTaskService implements TaskService {
 
     @Override
     public boolean addFeedbackToAnswer(String answer, long userId, long taskId) {
-        return taskDao.createFeedbackToAnswer(answer, userId,taskId);
+        return taskDao.createFeedbackToAnswer(answer, userId, taskId);
     }
 
     @Override

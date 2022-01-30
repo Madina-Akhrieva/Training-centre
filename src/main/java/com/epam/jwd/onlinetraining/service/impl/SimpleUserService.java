@@ -54,7 +54,7 @@ public class SimpleUserService implements UserService {
     @Override
     public Optional<User> register(Long id, String phone, String firstname, String lastname) throws WrongFirstNameException, WrongPhoneException, WrongLastNameException {
 
-        if (phone == null || firstname == null || lastname==null) {
+        if (phone == null || firstname == null || lastname == null) {
             return Optional.empty();
         }
         userValidator.validateFirstname(firstname);

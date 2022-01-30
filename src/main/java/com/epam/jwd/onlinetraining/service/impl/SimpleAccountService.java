@@ -34,8 +34,6 @@ public class SimpleAccountService implements AccountService {
     }
 
 
-
-
     @Override
     public Optional<Account> register(String email, String password) throws WrongMailException, WrongPasswordException, AccountWithSuchEmailExists {
         if (email == null || password == null) {
@@ -45,11 +43,11 @@ public class SimpleAccountService implements AccountService {
         accountValidator.validatePassword(password);
         final Optional<Account> readAccount = accountDao.readAccountByEmail(email);
         if (readAccount.isPresent()) {
-           throw new AccountWithSuchEmailExists("Such account already exists exception");
+            throw new AccountWithSuchEmailExists("Such account already exists exception");
         } else {
             final char[] rawPassword = password.toCharArray();
             final String hashedPassword = hasher.hashToString(MIN_COST, rawPassword);
-            Account account = accountDao.create(new Account( hashedPassword, email));
+            Account account = accountDao.create(new Account(hashedPassword, email));
 //            User user = userDao.create(new User(account.getId(), phone, firstName, lastName));
             return Optional.ofNullable(account);
         }
@@ -97,7 +95,7 @@ public class SimpleAccountService implements AccountService {
     }
 
     @Override
-    public  List<Account> findAll(long id) {
+    public List<Account> findAll(long id) {
         return null;
     }
 
