@@ -19,13 +19,9 @@
     function hideURLbar() {
         window.scrollTo(0, 1);
     } </script>
-	<!-- Custom Theme files -->
 	<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
 	<link rel="stylesheet" href="../css/add_course.css">
-	<!-- //Custom Theme files -->
-	<!-- web font -->
 	<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
-	<!-- //web font -->
 </head>
 
 
@@ -35,7 +31,9 @@
 	<div class="main-agileinfo">
 		<div class="agileits-top">
 			<form name="course-form" action="/controller?command=add_course" method="post">
-				<input class="text" type="text" name="title" placeholder="Title" required>
+				<input class="text" type="text" name="title" placeholder="Title (2-70 symbols [0-9a-zA-Z .,'-])"
+				       maxlength="70" minlength="2"
+				       pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$" required>
 
 				<br><br>
 
@@ -60,7 +58,10 @@
 					<option value="Dziana Bahdanava">Dziana Bahdanava</option>
 				</select>
 
-				<input class="text w3lpass" type="text" name="description" placeholder="description" required>
+				<input class="text w3lpass" type="text" name="description"
+				       placeholder="Description (2-50 symbols) [0-9a-zA-Z .,'-]"
+				       maxlength="70"
+				       minlength="2" pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$"  required>
 
 
 				<input type="submit" value="Add course">
@@ -68,9 +69,7 @@
 			</form>
 		</div>
 	</div>
-	<!-- copyright -->
 
-	<!-- //copyright -->
 	<ul class="colorlib-bubbles">
 		<li></li>
 		<li></li>
@@ -89,6 +88,5 @@
 </div>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-<!-- //main -->
 </body>
 </html>

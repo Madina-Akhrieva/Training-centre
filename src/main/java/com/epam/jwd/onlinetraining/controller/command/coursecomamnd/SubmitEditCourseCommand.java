@@ -8,6 +8,8 @@ import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
 import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.service.api.CourseService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
+import com.epam.jwd.onlinetraining.service.exception.WrongDescriptionException;
+import com.epam.jwd.onlinetraining.service.exception.WrongTitleException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,13 +46,14 @@ public enum SubmitEditCourseCommand implements Command {
         final String learning_language = request.getParameter("learning_language");
         final String description = request.getParameter("description");
         Course course = new Course(title, learning_language, description);
-        final boolean isUpdated = courseService.update(course, oldCourse.getTitle());
-        if (!isUpdated) {
-            //todo : если курса нет, значит, обновление не удалось и нужно добавить сообщение о том, что
-            //todo:курс не был обновлен на страниицу edit_course
-            request.addAttributeToJsp(IF_ADDED_ATTRIBUTE, INVALID_COURSE_MESSAGE);
-            return requestFactory.createForwardResponse(propertyContext.get(EDIT_COURSE_JSP_PAGE));
+        try {
+            courseService.update(course, oldCourse.getTitle());
+        } catch (WrongDescriptionException e) {
+            e.printStackTrace();
+        } catch (WrongTitleException e) {
+            e.printStackTrace();
         }
+
         final List<Course> courses = courseService.findAll();
         request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, courses);
         return requestFactory.createForwardResponse(propertyContext.get(MANAGE_COURSES_JSP_PAGE));

@@ -12,9 +12,12 @@
 <body>
 
 
-<nav class="black">
-	<div class="nav-wrapper">
+<nav class="black" >
+	TRAINING CENTRE ♥
+	<div class="nav-wrapper" style="color: white">
 		<ul id="nav-mobile" class="right hide-on-med-and-down">
+			<li><a  href="<c:url value="/controller?command=logout"/>">Main page</a></li>
+
 			<c:choose>
 				<c:when test="${not empty sessionScope.account}">
 					<li><a href="<c:url value="/controller?command=logout"/>">${logout}</a></li>
@@ -44,11 +47,11 @@
 				<tr>
 					<td>${task.title}</td>
 					<td>
-						<a href="${task.description}">${task.description}</a>
+							${task.description}
 					</td>
 					<td>
-						<button class="waves-effect waves-light btn-small black" style="color: #ffb507" type="submit">
-							<a href="/controller?command=give_feedback&course_id=${requestScope.id}&user_id
+						<button class="waves-effect waves-light btn-small black"  type="submit">
+							<a style="color: #ffb507" href="/controller?command=give_feedback&course_id=${requestScope.id}&user_id
 			=${requestScope.uid}&task_id=${task.id}">
 								Give feedback ♥
 							</a>
@@ -58,13 +61,31 @@
 				</tbody>
 				</c:forEach>
 
+
 			</table>
 		</div>
-		<br>
 
 	</div>
 </div>
-<br>
 
+<footer class="page-footer black">
+	<h6 style="color: #ffb507; margin-left: 40px">
+		With love your training centre ♥
+	</h6>
+	<div class="container">
+		<div class="row">
+			<div class="col l6 s12">
+				<h5 class="orange-text">${joinUsMessage}</h5>
+			</div>
+		</div>
+	</div>
+	<div class="footer-copyright">
+		<div class="container">
+			${withLoveTrainingCentreMessage}
+			<script src="../js/main.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+		</div>
+	</div>
+</footer>
 </body>
 </html>

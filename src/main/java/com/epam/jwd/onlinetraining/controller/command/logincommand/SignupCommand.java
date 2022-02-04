@@ -106,6 +106,6 @@ public enum SignupCommand implements Command {
             return requestFactory.createForwardResponse(propertyContext.get(LOGIN_JSP_PATH));
         }
         request.addAttributeToJsp(SUCCESSFUL_SIGNUP_ATTRIBUTE, SUCCESSFUL_SIGNUP_MESSAGE_TEXT);
-        return requestFactory.createRedirectResponse(propertyContext.get(INDEX_JSP_PATH));
+        return requestFactory.createForwardResponse(propertyContext.get(LOGIN_JSP_PATH));
     }
 }

@@ -9,6 +9,8 @@ import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.Mentor;
 import com.epam.jwd.onlinetraining.service.api.CourseService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
+import com.epam.jwd.onlinetraining.service.exception.WrongDescriptionException;
+import com.epam.jwd.onlinetraining.service.exception.WrongTitleException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,17 +37,24 @@ public enum AddCourseCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
+        try {
         LOGGER.info("We are in execute method in AddCourseCommand");
         final String title = request.getParameter("title");
         final String learning_language = request.getParameter("learning_language");
         final String description = request.getParameter("description");
 
-        final Course course = courseService.create(new Course(title, learning_language, description));
+        final Course course;
+            course = courseService.create(new Course(title, learning_language, description));
         if (course!=null) {
             request.addAttributeToJsp(IF_ADDED_ATTRIBUTE, INVALID_COURSE_MESSAGE);
             return requestFactory.createRedirectResponse(propertyContext.get(INDEX_JSP_PATH));
         }
         request.addAttributeToJsp(IF_ADDED_ATTRIBUTE, "course is added");
+        } catch (WrongDescriptionException e) {
+            e.printStackTrace();
+        } catch (WrongTitleException e) {
+            e.printStackTrace();
+        }
         return requestFactory.createRedirectResponse(propertyContext.get(INDEX_JSP_PATH));
 
 

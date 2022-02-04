@@ -48,9 +48,27 @@
 		</div>
 	</div>
 </div>
+<footer class="page-footer black" >
+	<h6 style="color: #ffb507; margin-left: 40px">
+		With love your training centre ♥
+	</h6>
+	<div class="container">
+		<div class="row">
+			<div class="col l6 s12">
+				<h5 class="orange-text">${joinUsMessage}</h5>
+			</div>
+		</div>
+	</div>
+	<div class="footer-copyright">
+		<div class="container">
+			${withLoveTrainingCentreMessage}
+
+		</div>
+	</div>
+</footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script scr="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 
 </body>
-</body>
+
 </html>

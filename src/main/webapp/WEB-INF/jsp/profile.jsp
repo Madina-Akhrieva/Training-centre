@@ -8,7 +8,18 @@
 	<link rel="stylesheet" href="../css/profile.css">
 
 </head>
+
 <body>
+<%--<nav class="black">--%>
+<%--	<div class="nav-wrapper">--%>
+<%--		<ul id="nav-mobile" class="right hide-on-med-and-down">--%>
+<%--			<li><a href="/controller?command=logout ">Logout</a></li>--%>
+<%--			<li><a href="/controller?command=main">Main page</a></li>--%>
+
+<%--		</ul>--%>
+<%--	</div>--%>
+<%--</nav>--%>
+
 <div class="card">
 	<div class="row">
 		<div class="col-md-8 cart">
@@ -20,6 +31,7 @@
 				</div>
 			</div>
 			<c:forEach var="course" items="${requestScope.courses}">
+
 				<div class="row border-top border-bottom">
 					<div class="row main align-items-center">
 						<div class="col">

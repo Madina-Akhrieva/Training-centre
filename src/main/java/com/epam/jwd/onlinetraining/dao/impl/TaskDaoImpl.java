@@ -172,7 +172,7 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
             preparedStatement.setLong(1, courseId);
             preparedStatement.setLong(2, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 Long taskId = resultSet.getLong(ID_TASK_COLUMN_NAME);
                 String title = resultSet.getString(TITLE_COLUMN_NAME);
                 String description = resultSet.getString(DESCRIPTION_COLUMN_NAME);

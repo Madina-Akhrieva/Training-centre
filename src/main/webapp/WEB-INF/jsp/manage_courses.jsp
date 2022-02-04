@@ -10,10 +10,9 @@
 	<link rel="stylesheet" href="../css/main.css">
 </head>
 <body style="background-color: #ccc">
-
-
 <nav class="black">
 	<div class="nav-wrapper">
+		TRAINING CENTRE ♥
 		<ul id="nav-mobile" class="right hide-on-med-and-down">
 			<c:choose>
 				<c:when test="${not empty sessionScope.account}">
@@ -90,7 +89,25 @@
 	<a class="waves-effect waves-light btn-small black"
 	   href="/controller?command=show_add_course">Add course ♥</a>
 </div>
-<br>
+<footer class="page-footer black" >
+	<h6 style="color: #ffb507; margin-left: 40px">
+		With love your training centre ♥
+	</h6>
+	<div class="container">
+		<div class="row">
+			<div class="col l6 s12">
+				<h5 class="orange-text">${joinUsMessage}</h5>
+			</div>
+		</div>
+	</div>
+	<div class="footer-copyright">
+		<div class="container">
+			${withLoveTrainingCentreMessage}
+			<script src="../js/main.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+		</div>
+	</div>
+</footer>
 
 </body>
 

@@ -101,10 +101,10 @@
 							<c:choose>
 								<c:when test="${not empty sessionScope.account}">
 									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
-										<a href="/controller?command=manage_tasks&id=${course.id}">${downloadTask}</a>
-										<a href="/controller?command=check_task">${checkTask}</a>
+<%--										<a href="/controller?command=check_task">${checkTask}</a>--%>
 									</c:if>
 									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.MENTOR}">
+										<a href="/controller?command=manage_tasks&id=${course.id}">${downloadTask}</a>
 										<a href="<c:url
 										value="/controller?command=check_students&id=${course.id}"/>">Check students</a>
 									</c:if>
@@ -137,11 +137,11 @@
 	<div class="footer-copyright">
 		<div class="container">
 			${withLoveTrainingCentreMessage}
-			<script src="../js/main.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 		</div>
 	</div>
 </footer>
+			<script src="../js/main.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>

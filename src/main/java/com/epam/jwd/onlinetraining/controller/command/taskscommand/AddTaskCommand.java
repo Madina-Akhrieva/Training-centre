@@ -13,6 +13,7 @@ import com.epam.jwd.onlinetraining.service.api.TaskService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.Optional;
 
 public enum AddTaskCommand implements Command {
@@ -24,6 +25,10 @@ public enum AddTaskCommand implements Command {
     private static final String ADD_TASK_JSP_PAGE = "page.add_task";
     private static final String ID_REQUEST_PARAM_NAME = "id";
     private static final String IF_NOT_ADDED_ATTRIBUTE = "notAddedMessge";
+    private static final String COURSE_ID_REQUEST_ATTRIBUTE_NAME = "courseId";
+    private static final String WATCH_TASKS = "page.manage_tasks";
+    private static final String TASKS_ATTRIBUTE_NAME = "tasks";
+
 
     private final TaskService taskService;
     private final RequestFactory requestFactory;
@@ -39,18 +44,19 @@ public enum AddTaskCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         LOGGER.info("We are in execute method in AddCourseCommand");
 
+
         long courseId = Long.parseLong(request.getParameter(ID_REQUEST_PARAM_NAME));
+        final List<Task> tasks = taskService.findAll(courseId);
         final String title = request.getParameter("title");
         final String description = request.getParameter("description");
 
         Optional<Task> task = taskService.addTaskToCourse(new Task( courseId, title, description), courseId);
 
-        if (task.isPresent()) {
-            request.addAttributeToJsp(IF_ADDED_ATTRIBUTE, INVALID_COURSE_MESSAGE);
-            return requestFactory.createForwardResponse(propertyContext.get(ADD_TASK_JSP_PAGE));
-        }
+
+        request.addAttributeToJsp(TASKS_ATTRIBUTE_NAME, tasks);
+        request.addAttributeToJsp(COURSE_ID_REQUEST_ATTRIBUTE_NAME, courseId);
         request.addAttributeToJsp(IF_NOT_ADDED_ATTRIBUTE, "task is not added");
-        return requestFactory.createRedirectResponse(propertyContext.get(ADD_TASK_JSP_PAGE));
+        return requestFactory.createForwardResponse(propertyContext.get(WATCH_TASKS));
 
     }
 }

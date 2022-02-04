@@ -7,6 +7,9 @@ import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.Mentor;
 
 import com.epam.jwd.onlinetraining.service.api.CourseService;
+import com.epam.jwd.onlinetraining.service.exception.WrongDescriptionException;
+import com.epam.jwd.onlinetraining.service.exception.WrongTitleException;
+import com.epam.jwd.onlinetraining.service.validator.CourseValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,11 +21,13 @@ import java.util.stream.Collectors;
 public class SimpleCourseService implements CourseService {
     private static final Logger LOGGER = LogManager.getLogger(SimpleCourseService.class);
 
+    private final CourseValidator courseValidator;
     private final CourseDao courseDao;
     private final MentorDao mentorDao;
     private final TransactionManager transactionManager;
 
-    public SimpleCourseService(CourseDao courseDao, MentorDao mentorDao, TransactionManager transactionManager) {
+    public SimpleCourseService(CourseValidator courseValidator, CourseDao courseDao, MentorDao mentorDao, TransactionManager transactionManager) {
+        this.courseValidator = courseValidator;
         this.courseDao = courseDao;
         this.mentorDao = mentorDao;
         this.transactionManager = transactionManager;
@@ -57,7 +62,9 @@ public class SimpleCourseService implements CourseService {
     }
 
     @Override
-    public boolean update(Course course, String title) {
+    public boolean update(Course course, String title) throws WrongDescriptionException, WrongTitleException {
+        courseValidator.validateDescription(course.getDescription());
+        courseValidator.validateTitle(title);
         LOGGER.info("The course we got is: {}", course);
         return courseDao.update(course, title);
 
@@ -70,7 +77,9 @@ public class SimpleCourseService implements CourseService {
 
 
     @Override
-    public Course create(Course course) {
+    public Course create(Course course) throws WrongDescriptionException, WrongTitleException {
+        courseValidator.validateDescription(course.getDescription());
+        courseValidator.validateTitle(course.getTitle());
         return courseDao.create(course);
     }
 

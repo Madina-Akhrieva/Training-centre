@@ -12,10 +12,10 @@
 			<form action="#" method="post">
 				<input class="text" type="text" name="Username" placeholder="Task 1" required="" disabled>
 				<input class="text email" type="text" name="email" placeholder="Java" disabled>
-				<div style="color: white">
-					"Ответ студент: int main(){ int array[] arra1 = {1,2,5,3}; for(int i=0; i<4;
-					i++){arra1[i]=arra1[i]+i}}"
-				</div>
+<%--				<div style="color: white">--%>
+<%--					"Ответ студент: int main(){ int array[] arra1 = {1,2,5,3}; for(int i=0; i<4;--%>
+<%--					i++){arra1[i]=arra1[i]+i}}"--%>
+<%--				</div>--%>
 				<input class="text w3lpass" type="text" name="password"
 				       placeholder="Введите feedback по таску" required="">
 				<div class="wthree-text">
