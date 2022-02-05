@@ -43,7 +43,6 @@ public enum ShowManageTasksPageCommand implements Command {
         final List<Task> tasks = service.findAll(id);
         request.addAttributeToJsp(COURSE_ID_PARAM, id);
         request.addAttributeToJsp(TASKS_ATTRIBUTE_NAME, tasks);
-
         return requestFactory.createForwardResponse(propertyContext.get(MANAGE_TASKS));
     }
 }

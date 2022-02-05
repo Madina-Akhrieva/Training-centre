@@ -1,13 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: HP
-  Date: 13.12.2021
-  Time: 19:58
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-
 <head>
 	<title>Add course form</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,12 +21,23 @@
 </div>
 <div class="main-w3layouts wrapper">
 	<h1>Create Course Form</h1>
+	<c:choose>
+
+		<c:when test="${not empty requestScope.wrongDescriptionAttribute}">
+			<h6 style="color:red; text-align: center;">${requestScope.wrongDescriptionAttribute}</h6>
+		</c:when>
+		<c:when test="${not empty requestScope.wrongTitleAttribute}">
+			<h6 style="color:red; text-align: center;">${requestScope.wrongTitleAttribute}</h6>
+		</c:when>
+		<c:otherwise>
+			<h6 style="color:#1aff00; text-align: center;">${requestScope.successfulSignupMessage}</h6>
+		</c:otherwise>
+	</c:choose>
 	<div class="main-agileinfo">
 		<div class="agileits-top">
 			<form name="course-form" action="/controller?command=add_course" method="post">
 				<input class="text" type="text" name="title" placeholder="Title (2-70 symbols [0-9a-zA-Z .,'-])"
-				       maxlength="70" minlength="2"
-				       pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$" required>
+				       maxlength="70" minlength="2" pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$" required>
 
 				<br><br>
 
@@ -60,9 +64,7 @@
 
 				<input class="text w3lpass" type="text" name="description"
 				       placeholder="Description (2-50 symbols) [0-9a-zA-Z .,'-]"
-				       maxlength="70"
-				       minlength="2" pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$"  required>
-
+				       maxlength="70" minlength="2" pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$"  required>
 
 				<input type="submit" value="Add course">
 				<p><a href="/controller?command=manage_courses"> Return to the all courses page!</a></p>
