@@ -63,8 +63,8 @@ public class SimpleCourseService implements CourseService {
 
     @Override
     public boolean update(Course course, String title) throws WrongDescriptionException, WrongTitleException {
+        courseValidator.validateTitle(course.getTitle());
         courseValidator.validateDescription(course.getDescription());
-        courseValidator.validateTitle(title);
         LOGGER.info("The course we got is: {}", course);
         return courseDao.update(course, title);
 

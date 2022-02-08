@@ -12,20 +12,27 @@
 <div class="card">
 	<div class="row">
 		<div class="col-md-8 cart">
-			<div class="title">
-				<div class="row">
-					<div class="col">
-						<h5><b>Task answer is below ♥</b></h5>
-						<div>${requestScope.task.taskAnswer}</div>
-					</div>
-				</div>
+			<div>
+				<h5>Feedback from Dziana Bahdanava ♥</h5>
+				<c:choose>
+					<c:when test="${not empty requestScope.wrongFeedbackAttribute}">
+						<h6 style="color:red; text-align: center;">${requestScope.wrongFeedbackAttribute}</h6>
+					</c:when>
+					<c:otherwise>
+						<h6 style="color:#1aff00; text-align: center;">${requestScope.successfulAddMessage}</h6>
+					</c:otherwise>
+				</c:choose>
 			</div>
+			<hr>
+			<form action="<c:url value="/controller?command=send_feedback&&course_id=${requestScope.course_id}&&user_id
+			=${requestScope.user_id}&&task_id=${requestScope.task_id}"/>" method="post">
+				<textarea name="feedback" style="width: 100%; text-align: left; height: 45%">
+					Enter feedback, please.
+				</textarea>
+				<button type="submit" class="btn">SEND FEEDBACK</button>
+			</form>
 
-			<c:if test="${not empty requestScope.isAddedMessage}">
-				<p style="color:#ffb507">
-						${requestScope.isAddedMessage}
-				</p>
-			</c:if>
+
 			<div
 					class="back-to-shop"><a href="<c:url value="/controller?command=main_page"/>">&leftarrow;</a><span
 					class="text-muted">Back	to main
@@ -34,38 +41,21 @@
 
 
 		<div class="col-md-4 summary">
-			<div>
-				<h5>Feedback from Dziana Bahdanava ♥</h5>
+			<div class="title">
+				<div class="row">
+					<div class="col">
+						<h5><b>Task answer is below ♥</b></h5>
+						<h6>${requestScope.task.taskAnswer}</h6>
+
+					</div>
+				</div>
 			</div>
-			<hr>
-			<form action="<c:url value="/controller?command=send_feedback&&course_id=${requestScope.course_id}&&user_id
-			=${requestScope.user_id}&&task_id=${requestScope.task_id}"/>" method="post">
-				<textarea name="feedback" style="margin-left: 20px" placeholder="Feedback" rows="10" cols="30"></textarea>
-				<button type="submit" class="btn">SEND FEEDBACK</button>
-			</form>
 
 
 		</div>
 	</div>
 </div>
-<footer class="page-footer black" >
-	<h6 style="color: #ffb507; margin-left: 40px">
-		With love your training centre ♥
-	</h6>
-	<div class="container">
-		<div class="row">
-			<div class="col l6 s12">
-				<h5 class="orange-text">${joinUsMessage}</h5>
-			</div>
-		</div>
-	</div>
-	<div class="footer-copyright">
-		<div class="container">
-			${withLoveTrainingCentreMessage}
 
-		</div>
-	</div>
-</footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script scr="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 

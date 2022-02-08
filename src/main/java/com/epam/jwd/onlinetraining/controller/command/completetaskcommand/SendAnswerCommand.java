@@ -9,6 +9,7 @@ import com.epam.jwd.onlinetraining.dao.model.Task;
 import com.epam.jwd.onlinetraining.service.api.CourseService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
 import com.epam.jwd.onlinetraining.service.api.TaskService;
+import com.epam.jwd.onlinetraining.service.exception.WrongLinkException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,9 +24,13 @@ public enum SendAnswerCommand implements Command {
     private static final String USER_ID_REQUEST_PARAM_NAME = "user_id";
     private static final String TASK_ID_REQUEST_PARAM_NAME = "task_id";
     private static final String LINK_ANSWER_REQUEST_PARAM_NAME = "answer";
-    private static final String COMPLETE_TASK = "page.complete_task";
-    private static final String COURSE_ID_PARAM = "id";
-    private static final String TASKS_ATTRIBUTE_NAME ="tasks";
+    private static final String COMPLETE_TASK = "page.add_answer";
+    private static final String COURSE_ID_PARAM = "course_id";
+    private static final String TASKS_ATTRIBUTE_NAME = "tasks";
+    private static final String WRONG_LINK_ATTRIBUTE = "wrongLinkAttribute";
+    private static final String WRONG_LINK_MESSAGE = "Check link to answer once more please ♥";
+    private static final String SUCCESSFUL_ADD_ATTRIBUTE = "successfulAddMessage";
+    private static final String SUCCESSFUL_ADD_MESSAGE_TEXT = "Answer is successfully added ♥";
 
     private final TaskService taskService;
     private final RequestFactory requestFactory;
@@ -39,21 +44,22 @@ public enum SendAnswerCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        final long courseId = Long.parseLong(request.getParameter(COURSE_ID_REQUEST_PARAM_NAME));
-        final long userId = Long.parseLong(request.getParameter(USER_ID_REQUEST_PARAM_NAME));
-        final long taskId = Long.parseLong(request.getParameter(TASK_ID_REQUEST_PARAM_NAME));
-        final String answer = request.getParameter(LINK_ANSWER_REQUEST_PARAM_NAME);
-
-        if (taskService.addTaskAnswerToUser(answer, userId, courseId, taskId)) {
-            LOGGER.info("TaskAnswer is added");
-        }else{
-            LOGGER.info("TaskAnswer is not added");
-
+        try {
+            final long courseId = Long.parseLong(request.getParameter(COURSE_ID_REQUEST_PARAM_NAME));
+            final long userId = Long.parseLong(request.getParameter(USER_ID_REQUEST_PARAM_NAME));
+            final long taskId = Long.parseLong(request.getParameter(TASK_ID_REQUEST_PARAM_NAME));
+            request.addAttributeToJsp(TASK_ID_REQUEST_PARAM_NAME, taskId);
+            request.addAttributeToJsp(COURSE_ID_PARAM, courseId);
+            final String answer = request.getParameter(LINK_ANSWER_REQUEST_PARAM_NAME);
+            taskService.addTaskAnswerToUser(answer, userId, courseId, taskId);
+            final List<Task> tasks = taskService.findAll(courseId);
+            request.addAttributeToJsp(TASKS_ATTRIBUTE_NAME, tasks);
+        } catch (WrongLinkException e) {
+            LOGGER.warn("WrongLinkException is caught");
+            request.addAttributeToJsp(WRONG_LINK_ATTRIBUTE, WRONG_LINK_MESSAGE);
+            return requestFactory.createForwardResponse(propertyContext.get(COMPLETE_TASK));
         }
-        final List<Task> tasks = taskService.findAll(courseId);
-        request.addAttributeToJsp(COURSE_ID_PARAM, courseId);
-        request.addAttributeToJsp(TASKS_ATTRIBUTE_NAME, tasks);
-
+        request.addAttributeToJsp(SUCCESSFUL_ADD_ATTRIBUTE, SUCCESSFUL_ADD_MESSAGE_TEXT);
         return requestFactory.createForwardResponse(propertyContext.get(COMPLETE_TASK));
     }
 }

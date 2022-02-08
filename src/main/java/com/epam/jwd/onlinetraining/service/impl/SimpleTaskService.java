@@ -5,6 +5,11 @@ import com.epam.jwd.onlinetraining.dao.api.TaskDao;
 import com.epam.jwd.onlinetraining.dao.db.TransactionManager;
 import com.epam.jwd.onlinetraining.dao.model.Task;
 import com.epam.jwd.onlinetraining.service.api.TaskService;
+import com.epam.jwd.onlinetraining.service.exception.WrongFeedbackException;
+import com.epam.jwd.onlinetraining.service.exception.WrongLinkException;
+import com.epam.jwd.onlinetraining.service.exception.WrongTitleException;
+import com.epam.jwd.onlinetraining.service.validator.FeedbackValidator;
+import com.epam.jwd.onlinetraining.service.validator.TaskValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,10 +21,14 @@ public class SimpleTaskService implements TaskService {
     private static final Logger LOGGER = LogManager.getLogger(SimpleCourseService.class);
 
     private final TaskDao taskDao;
+    private final TaskValidator taskValidator;
+    private final FeedbackValidator feedbackValidator;
     private final CourseDao courseDao;
     private final TransactionManager transactionManager;
 
-    public SimpleTaskService(TaskDao taskDao, CourseDao courseDao, TransactionManager transactionManager) {
+    public SimpleTaskService(TaskDao taskDao, TaskValidator taskValidator, FeedbackValidator feedbackValidator, CourseDao courseDao, TransactionManager transactionManager) {
+        this.taskValidator = taskValidator;
+        this.feedbackValidator = feedbackValidator;
         this.courseDao = courseDao;
         this.taskDao = taskDao;
         this.transactionManager = transactionManager;
@@ -66,12 +75,15 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
-    public Optional<Task> addTaskToCourse(Task task, long courseId) {
+    public Optional<Task> addTaskToCourse(Task task, long courseId) throws WrongLinkException, WrongTitleException {
+        taskValidator.validateLink(task.getDescription());
+        taskValidator.validateTitle(task.getTitle());
         return taskDao.addTaskToCourse(task, courseId);
     }
 
     @Override
-    public boolean addTaskAnswerToUser(String answer, long courseUserId, long courseId, long idTask) {
+    public boolean addTaskAnswerToUser(String answer, long courseUserId, long courseId, long idTask) throws WrongLinkException {
+        taskValidator.validateAnswer(answer);
         return taskDao.addTaskToAnswer(answer, courseUserId, courseId, idTask);
     }
 
@@ -81,8 +93,9 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
-    public boolean addFeedbackToAnswer(String answer, long userId, long taskId) {
-        return taskDao.createFeedbackToAnswer(answer, userId, taskId);
+    public boolean addFeedbackToAnswer(String feedback, long userId, long taskId) throws WrongFeedbackException {
+        feedbackValidator.validateFeedback(feedback);
+        return taskDao.createFeedbackToAnswer(feedback, userId, taskId);
     }
 
     @Override

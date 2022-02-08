@@ -30,8 +30,8 @@
 				<c:when test="${not empty requestScope.wrongPasswordMessage}">
 					<p style="color:red">${requestScope.wrongPasswordMessage}</p>
 				</c:when>
-				<c:when test="${not empty requestScope.wrongMailExceptionMessage}">
-					<p style="color:red">${requestScope.wrongMailExceptionMessage}</p>
+				<c:when test="${not empty sessionScope.wrongMailExceptionMessage}">
+					<p style="color:red">${sessionScope.wrongMailExceptionMessage}</p>
 				</c:when>
 				<c:when test="${not empty requestScope.accountExistsExceptionMessage}">
 					<p style="color:red">${requestScope.accountExistsExceptionMessage}</p>

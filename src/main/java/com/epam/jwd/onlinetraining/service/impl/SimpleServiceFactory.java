@@ -12,6 +12,8 @@ import com.epam.jwd.onlinetraining.service.api.EntityService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
 import com.epam.jwd.onlinetraining.service.validator.AccountValidator;
 import com.epam.jwd.onlinetraining.service.validator.CourseValidator;
+import com.epam.jwd.onlinetraining.service.validator.FeedbackValidator;
+import com.epam.jwd.onlinetraining.service.validator.TaskValidator;
 import com.epam.jwd.onlinetraining.service.validator.UserValidator;
 
 
@@ -42,7 +44,7 @@ public class SimpleServiceFactory implements ServiceFactory {
                 case "Course":
                     return new SimpleCourseService(CourseValidator.getInstance(), CourseDao.instance(), MentorDao.instance(), TransactionManager.instance());
                 case "Task":
-                    return new SimpleTaskService(TaskDao.instance(), CourseDao.instance(), TransactionManager.instance());
+                    return new SimpleTaskService(TaskDao.instance(), TaskValidator.getInstance(), FeedbackValidator.getInstance(), CourseDao.instance(), TransactionManager.instance());
                 case "User":
                     return new SimpleUserService(UserValidator.getInstance(), AccountDao.instance(), UserDao.instance(), TransactionManager.instance());
                 case "Account":

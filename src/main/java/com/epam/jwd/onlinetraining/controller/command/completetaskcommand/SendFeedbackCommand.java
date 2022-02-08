@@ -8,6 +8,7 @@ import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
 import com.epam.jwd.onlinetraining.dao.model.Task;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
 import com.epam.jwd.onlinetraining.service.api.TaskService;
+import com.epam.jwd.onlinetraining.service.exception.WrongFeedbackException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,6 +23,12 @@ public enum SendFeedbackCommand implements Command {
     private static final String TASK_ID_REQUEST_PARAM_NAME = "task_id";
     private static final String FEEDBACK_REQUEST_PARAM_NAME = "feedback";
     private static final String MAIN_PAGE = "page.main";
+    public static final String GIVE_FEEDBACK_JSP = "page.give_feedback";
+    private static final String WRONG_FEEDBACK_ATTRIBUTE = "wrongFeedbackAttribute";
+    private static final Object WRONG_FEEDBACK_MESSAGE = "Feedback is wrong. Check it please ♥" ;
+    private static final String SUCCESSFUL_ADD_ATTRIBUTE = "successfulAddMessage";
+    private static final String SUCCESSFUL_ADD_MESSAGE_TEXT = "Answer is successfully added ♥";
+    private static final String COURSE_ID_PARAM = "course_id";
 
     private final TaskService taskService;
     private final RequestFactory requestFactory;
@@ -35,19 +42,22 @@ public enum SendFeedbackCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        final long courseId = Long.parseLong(request.getParameter(COURSE_ID_REQUEST_PARAM_NAME));
-        final long userId = Long.parseLong(request.getParameter(USER_ID_REQUEST_PARAM_NAME));
-        final long taskId = Long.parseLong(request.getParameter(TASK_ID_REQUEST_PARAM_NAME));
-        final String feedback = request.getParameter(FEEDBACK_REQUEST_PARAM_NAME);
-
-        if (taskService.addFeedbackToAnswer(feedback, userId, taskId)) {
-            LOGGER.info("Feedback is added");
-            //todo:add message that feedback is added
-        } else {
-            LOGGER.info("Feedback is not added");
-            //todo:add message that feedback is not added
+        try {
+            final long courseId = Long.parseLong(request.getParameter(COURSE_ID_REQUEST_PARAM_NAME));
+            final long userId = Long.parseLong(request.getParameter(USER_ID_REQUEST_PARAM_NAME));
+            final long taskId = Long.parseLong(request.getParameter(TASK_ID_REQUEST_PARAM_NAME));
+            final String feedback = request.getParameter(FEEDBACK_REQUEST_PARAM_NAME).trim();
+            request.addAttributeToJsp(TASK_ID_REQUEST_PARAM_NAME, taskId);
+            request.addAttributeToJsp(USER_ID_REQUEST_PARAM_NAME, userId);
+            request.addAttributeToJsp(COURSE_ID_PARAM, courseId);
+            taskService.addFeedbackToAnswer(feedback, userId, taskId);
+        } catch (WrongFeedbackException e) {
+            LOGGER.warn("WrongFeedbackException is caught");
+            request.addAttributeToJsp(WRONG_FEEDBACK_ATTRIBUTE, WRONG_FEEDBACK_MESSAGE);
+            return requestFactory.createForwardResponse(propertyContext.get(GIVE_FEEDBACK_JSP));
         }
-        return requestFactory.createForwardResponse(propertyContext.get(MAIN_PAGE));
+        request.addAttributeToJsp(SUCCESSFUL_ADD_ATTRIBUTE, SUCCESSFUL_ADD_MESSAGE_TEXT);
+        return requestFactory.createForwardResponse(propertyContext.get(GIVE_FEEDBACK_JSP));
     }
 
 

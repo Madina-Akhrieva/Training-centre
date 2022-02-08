@@ -37,6 +37,7 @@ public enum ShowEditCourseCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         final List<Course> courses = service.findAll();
+
         request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, courses);
         return requestFactory.createForwardResponse(propertyContext.get(MAIN_PAGE));
     }

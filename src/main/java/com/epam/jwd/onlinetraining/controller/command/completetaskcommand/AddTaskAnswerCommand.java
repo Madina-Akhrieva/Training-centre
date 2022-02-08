@@ -39,13 +39,11 @@ public enum AddTaskAnswerCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         LOGGER.info("We are in execute method in AddCourseCommand");
-
         final long courseId = Long.parseLong(request.getParameter(COURSE_ID_REQUEST_PARAM_NAME));
         final long userId = Long.parseLong(request.getParameter(USER_ID_REQUEST_PARAM_NAME));
         final long taskId = Long.parseLong(request.getParameter(TASK_ID_REQUEST_PARAM_NAME));
         String feedback =  taskService.findFeedbackByCourseIdUserIdAndTaskId(courseId, userId, taskId);
         request.addAttributeToJsp(IF_ADDED_ATTRIBUTE, INVALID_COURSE_MESSAGE);
-
         request.addAttributeToJsp(COURSE_ID_REQUEST_PARAM_NAME, courseId);
         request.addAttributeToJsp(TASK_ID_REQUEST_PARAM_NAME, taskId);
         request.addAttributeToJsp(USER_ID_REQUEST_PARAM_NAME, userId);

@@ -14,7 +14,7 @@
         <attribute>
             <description>Text prefix before user name</description>
             <name>text</name>
-            <required>false</required>
+            <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>

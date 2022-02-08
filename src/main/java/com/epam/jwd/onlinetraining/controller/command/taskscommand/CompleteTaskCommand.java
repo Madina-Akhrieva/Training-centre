@@ -38,11 +38,9 @@ public enum CompleteTaskCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         long courseId = Long.parseLong(request.getParameter(ID_REQUEST_PARAM_NAME));
         long userId = Long.parseLong(request.getParameter(USER_ID_REQUEST_PARAM_NAME));
-//        final List<Task> tasks = taskService.findAll(courseId);
         final List<Task> tasks = taskService.findAllTasksByCourseIdAndUserId(courseId, userId);
         request.addAttributeToJsp(COURSE_ID_PARAM, courseId);
         request.addAttributeToJsp(TASKS_ATTRIBUTE_NAME, tasks);
-
         return requestFactory.createForwardResponse(propertyContext.get(COMPLETE_TASK));
     }
 }

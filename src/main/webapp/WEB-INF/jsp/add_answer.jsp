@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-	<title>Title</title>
+	<title>Complete task ♥</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="../css/profile.css">
@@ -16,13 +16,23 @@
 				<div class="row">
 					<div class="col">
 						<h5><b>Complete task ♥</b></h5>
+						<c:choose>
+							<c:when test="${not empty requestScope.wrongLinkAttribute}">
+								<h6 style="color:red; text-align: center;">${requestScope.wrongLinkAttribute}</h6>
+							</c:when>
+							<c:otherwise>
+								<h6 style="color:#1aff00; text-align: center;">${requestScope.successfulAddMessage}</h6>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>
 			<form name="addtask-form"
 			      action="<c:url value="/controller?command=send_answer&&course_id=${requestScope.course_id}&&user_id
 			=${sessionScope.account.id}&&task_id=${requestScope.task_id}"/>" method="post" >
-				<input name="answer"  placeholder="Enter link to answer:" />
+				<input name="answer"
+				       pattern = "(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"
+				       placeholder="Enter link to answer:" />
 				<button type="submit"
 				        class="btn">COMPLETE TASK</button>
 			</form>

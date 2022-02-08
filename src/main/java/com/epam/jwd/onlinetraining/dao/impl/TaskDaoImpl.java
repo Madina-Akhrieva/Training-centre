@@ -196,12 +196,10 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
             preparedStatement.setLong(3, userId);
             boolean rowUpdated = preparedStatement.executeUpdate() > 0;
             return rowUpdated;
-
-        } catch (InterruptedException e) {
-            LOGGER.warn("exception", e);
-            e.printStackTrace();
+        } catch (InterruptedException exception) {
+            LOGGER.warn("InterruptedException is caught", exception);
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            LOGGER.warn("SQLException is caught", exception);
         }
         return false;
     }

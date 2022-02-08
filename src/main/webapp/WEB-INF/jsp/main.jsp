@@ -33,7 +33,6 @@
 
 </head>
 <body style="background-color: #ccc">
-<jwds:welcomeUser/>
 <nav class="black">
 	<div class="nav-wrapper">
 		<ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -64,18 +63,7 @@
 
 <div class="after_nav">
 	<div class="typing animate"></div>
-
-	<c:choose>
-		<c:when test="${not empty sessionScope.account}">
-			<c:if test="${not empty sessionScope.account}">
-				<p><span>${startLearningMessage} </span> ${sessionScope.account.email} <span>!</span></p>
-			</c:if>
-		</c:when>
-		<c:otherwise>
-			<em style="color: darkgrey">${labal}${messageBeforeSignUp}</em>
-		</c:otherwise>
-	</c:choose>
-
+	<jwds:welcomeUser text="${startLearningMessage}"/>
 </div>
 
 <div>

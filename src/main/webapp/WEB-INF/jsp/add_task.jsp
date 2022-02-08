@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: HP
@@ -20,12 +21,29 @@
 <!-- main -->
 <div class="main-w3layouts wrapper">
 	<h1>Add Task Form</h1>
+	<c:choose>
+
+		<c:when test="${not empty requestScope.wrongLinkAttribute}">
+			<h6 style="color:red; text-align: center;">${requestScope.wrongLinkAttribute}</h6>
+		</c:when>
+		<c:when test="${not empty requestScope.wrongTitleAttribute}">
+			<h6 style="color:red; text-align: center;">${requestScope.wrongTitleAttribute}</h6>
+		</c:when>
+		<c:otherwise>
+			<h6 style="color:#1aff00; text-align: center;">${requestScope.successfulAddMessage}</h6>
+		</c:otherwise>
+	</c:choose>
 	<div class="main-agileinfo">
 		<div class="agileits-top">
 			<form action="/controller?command=add_task&id=${courseId}" method="post">
-				<input class="text" type="text" name="title" placeholder="Task title" required="">
+				<input class="text" type="text" name="title"  placeholder="Title (2-70 symbols [0-9a-zA-Z .,'-])"
+				       maxlength="70" minlength="2"
+				       pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$"
+				       required="">
 				<br><br>
-				<input class="text" type="text" name="description" placeholder="Task link" required="">
+				<input class="text" type="text" name="description" placeholder="Task link"
+				       pattern = "(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"
+				       required="">
 
 				<input type="submit" value="Add task">
 				<p>

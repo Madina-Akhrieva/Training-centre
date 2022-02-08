@@ -18,6 +18,7 @@ public enum EditCourseCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger(EditCourseCommand.class);
     private static final String COURSE_ATTRIBUTE_NAME = "course";
     private static final String EDIT_COURSE_PAGE = "page.edit_course";
+    private static final String COURSE_ID_REQUEST_ATTRIBUTE_NAME = "courseId";
 
     private final CourseService courseService;
     private final RequestFactory requestFactory;
@@ -36,6 +37,7 @@ public enum EditCourseCommand implements Command {
         long id = Long.parseLong(request.getParameter(ID_REQUEST_PARAM_NAME));
         Course course = courseService.findById(id);
         LOGGER.info("Id which came is: {}", id);
+        request.addAttributeToJsp(COURSE_ID_REQUEST_ATTRIBUTE_NAME, id);
         request.addAttributeToJsp(COURSE_ATTRIBUTE_NAME, course);
         return requestFactory.createForwardResponse(propertyContext.get(EDIT_COURSE_PAGE));
     }
