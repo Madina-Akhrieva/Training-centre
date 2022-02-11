@@ -7,8 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
 
-public enum ThreadLocalTransactionManager implements TransactionManager {
-    INSTANCE;
+public class ThreadLocalTransactionManager implements TransactionManager {
 
     private static final Logger LOGGER = LogManager.getLogger(ThreadLocalTransactionManager.class);
 
@@ -21,6 +20,15 @@ public enum ThreadLocalTransactionManager implements TransactionManager {
             return null;
         }
     });
+
+
+    public static ThreadLocalTransactionManager getInstance() {
+        return ThreadLocalTransactionManager.Holder.INSTANCE;
+    }
+
+    private static class Holder {
+        private final static ThreadLocalTransactionManager INSTANCE = new ThreadLocalTransactionManager();
+    }
 
     @Override
     public synchronized void initTransaction() {
@@ -81,4 +89,6 @@ public enum ThreadLocalTransactionManager implements TransactionManager {
             return Optional.empty();
         }
     }
+
+
 }

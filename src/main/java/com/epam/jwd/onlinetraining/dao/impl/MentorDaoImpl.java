@@ -48,9 +48,6 @@ public final class MentorDaoImpl extends CommonDao<Mentor> implements MentorDao 
     protected Mentor extractResult(ResultSet rs) throws SQLException {
         return new Mentor(
                 rs.getLong(ID_FIELD_NAME),
-//                rs.getString("phone"),
-//                rs.getString("first_name"),
-//                rs.getString("last_name"),
                 rs.getInt(EXPERIENCE_FIELD_NAME),
                 rs.getString(POSITION_FIELD_NAME),
                 rs.getString(PEN_NAME_FIELD_NAME)
@@ -62,19 +59,10 @@ public final class MentorDaoImpl extends CommonDao<Mentor> implements MentorDao 
         return Holder.INSTANCE;
     }
 
-    @Override
-    public Boolean delete(Long id) {
-        return null;
-    }
 
     @Override
     public Mentor create(Mentor entity) {
         return null;
-    }
-
-    @Override
-    public boolean update(Mentor entity, String param) {
-        return false;
     }
 
     private static class Holder {

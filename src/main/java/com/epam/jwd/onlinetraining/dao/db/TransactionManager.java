@@ -13,7 +13,7 @@ public interface TransactionManager {
     Optional<TransactionId> getTransactionId();
 
     static TransactionManager instance() {
-        return ThreadLocalTransactionManager.INSTANCE;
+        return ThreadLocalTransactionManager.getInstance();
     }
 
 }

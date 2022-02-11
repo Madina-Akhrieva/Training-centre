@@ -48,51 +48,9 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
         super(pool);
     }
 
-    @Override
-    public Boolean delete(Long id) {
-        return null;
+    private static class Holder {
+        public static final TaskDao INSTANCE = new TaskDaoImpl(ConnectionPool.instance());
     }
-
-    @Override
-    public List<Task> read() {
-        return null;
-    }
-
-    @Override
-    public Optional<Task> read(Long id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Task create(Task entity) {
-        return null;
-    }
-
-    @Override
-    public boolean update(Task entity, String param) {
-        return false;
-    }
-
-    @Override
-    protected String getTableName() {
-        return TASK_TABLE_NAME;
-    }
-
-    @Override
-    protected List<String> getFields() {
-        return FIELDS;
-    }
-
-    @Override
-    protected String getIdFieldName() {
-        return FIELD_NAME;
-    }
-
-    @Override
-    protected Task extractResult(ResultSet rs) {
-        return null;
-    }
-
 
     public static TaskDao getInstance() {
         return TaskDaoImpl.Holder.INSTANCE;
@@ -233,7 +191,7 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
 
     @Override
     public String readFeedbackByCourseIdUserIdAndTaskId(long courseId, long userId, long taskId) {
-       String feedback="";
+        String feedback="";
         try (Connection connection = pool.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
                      SELECT_FEEDBACK_FROM_ANSWER_TABLE)) {
@@ -255,8 +213,43 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
 
 
 
-    private static class Holder {
-        public static final TaskDao INSTANCE = new TaskDaoImpl(ConnectionPool.instance());
+    @Override
+    protected String getTableName() {
+        return TASK_TABLE_NAME;
     }
+
+    @Override
+    protected List<String> getFields() {
+        return FIELDS;
+    }
+
+    @Override
+    protected String getIdFieldName() {
+        return FIELD_NAME;
+    }
+
+    @Override
+    protected Task extractResult(ResultSet rs) {
+        return null;
+    }
+    @Override
+    public List<Task> read() {
+        return null;
+    }
+
+    @Override
+    public Optional<Task> read(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Task create(Task entity) {
+        return null;
+    }
+
+
+
+
+
 
 }

@@ -23,9 +23,8 @@ public enum DeleteCourseCommand implements Command {
     private static final String DELETED_MESSAGE_ATTRIBUTE = "deletedMessageAttribute";
     private static final Object IS_DELETED_MESSAGE = "Course deleted successfully!";
     private static final Object IS_NOT_DELETED_MESSAGE = "Course is not deleted successfully!";
-
-
-
+    private static final String SUCCESSFUL_DELETE_ATTRIBUTE = "successfulDeleteMessage";
+    private static final String SUCCESSFUL_DELETE_MESSAGE_TEXT = "Course is deleted successfully ♥";
 
     private final CourseService courseService;
     private final RequestFactory requestFactory;
@@ -50,6 +49,7 @@ public enum DeleteCourseCommand implements Command {
         }
         final List<Course> courses = courseService.findAll();
         request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, courses);
+        request.addToSession(SUCCESSFUL_DELETE_ATTRIBUTE, SUCCESSFUL_DELETE_MESSAGE_TEXT);
         return requestFactory.createForwardResponse(propertyContext.get(MANAGE_COURSES_PAGE));
     }
 

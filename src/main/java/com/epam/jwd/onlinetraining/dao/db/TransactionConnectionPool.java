@@ -48,6 +48,6 @@ public final class TransactionConnectionPool implements ConnectionPool {
     }
 
     private static class Holder {
-        private static final ConnectionPool INSTANCE = new TransactionConnectionPool(LockingConnectionPool.INSTANCE, TransactionManager.instance());
+        private static final ConnectionPool INSTANCE = new TransactionConnectionPool(LockingConnectionPool.getInstance(), TransactionManager.instance());
     }
 }

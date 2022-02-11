@@ -71,10 +71,6 @@ public class UserDaoImpl extends CommonDao<User> implements UserDao {
         return Holder.INSTANCE;
     }
 
-    @Override
-    public Boolean delete(Long id) {
-        return null;
-    }
 
     @Override
     public User create(User user) {
@@ -94,11 +90,6 @@ public class UserDaoImpl extends CommonDao<User> implements UserDao {
         }
 
         return user;
-    }
-
-    @Override
-    public boolean update(User entity, String param) {
-        return false;
     }
 
     @Override

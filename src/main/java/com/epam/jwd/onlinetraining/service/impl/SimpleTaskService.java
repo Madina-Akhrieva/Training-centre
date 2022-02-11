@@ -76,8 +76,8 @@ public class SimpleTaskService implements TaskService {
 
     @Override
     public Optional<Task> addTaskToCourse(Task task, long courseId) throws WrongLinkException, WrongTitleException {
-        taskValidator.validateLink(task.getDescription());
         taskValidator.validateTitle(task.getTitle());
+        taskValidator.validateLink(task.getDescription());
         return taskDao.addTaskToCourse(task, courseId);
     }
 

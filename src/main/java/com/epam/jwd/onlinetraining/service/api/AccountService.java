@@ -11,9 +11,6 @@ public interface AccountService extends EntityService<Account> {
 
     Optional<Account> authenticate(String email, String password);
 
-//    Optional<Account> register(String email, String password);
-
-
     Optional<Account> register(String email, String password) throws WrongMailException, WrongPasswordException, AccountWithSuchEmailExists;
 
     Optional<Account> findByMail(String login);

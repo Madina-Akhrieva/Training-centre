@@ -80,18 +80,6 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
         );
     }
 
-
-
-    @Override
-    public List<Course> findByTitle(String title) {
-        return null;
-    }
-
-    @Override
-    public List<Course> findByLanguage(String language) {
-        return null;
-    }
-
     @Override
     public Optional<Long> findMentorIdByCourseID(Long id) {
 

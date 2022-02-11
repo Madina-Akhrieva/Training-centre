@@ -23,7 +23,6 @@ public enum LoginCommand implements Command {
     public static final String PASSWORD_REQUEST_PARAM_NAME = "password";
     private static final String ERROR_LOGIN_PASS_ATTRIBUTE = "errorLoginPassMessage";
     private static final String INVALID_LOGIN_PASS_MESSAGE = "Account doesn't exist. Sign in first please ♥";
-    public static final String WRONG_PASSWORD_MESSAGE = "Password is wrong.";
     private static final String ACCOUNT_SESSION_ATTRIBUTE_NAME = "account";
 
     private final AccountService accountService;

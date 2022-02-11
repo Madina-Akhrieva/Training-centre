@@ -29,8 +29,8 @@ public enum SubmitEditCourseCommand implements Command {
     private static final String WRONG_DESCRIPTION_MESSAGE = "Description has wrong symbols";
     private static final String WRONG_TITLE_ATTRIBUTE = "wrongTitleAttribute";
     private static final String WRONG_TITLE_MESSAGE = "Title contains wrong symbols. Check once more please ♥";
-    private static final String SUCCESSFUL_SIGNUP_ATTRIBUTE = "successfulSignupMessage";
-    private static final String SUCCESSFUL_SIGNUP_MESSAGE_TEXT = "Signed up successfully";
+    private static final String SUCCESSFUL_EDIT_ATTRIBUTE = "successfulEditMessage";
+    private static final String SUCCESSFUL_EDIT_MESSAGE_TEXT = "Course is edited successfully ♥";
     private static final String COURSE_ID_REQUEST_ATTRIBUTE_NAME = "courseId";
 
     private final CourseService courseService;
@@ -60,14 +60,15 @@ public enum SubmitEditCourseCommand implements Command {
             request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, courses);
         } catch (WrongDescriptionException e) {
             LOGGER.warn("WrongDescriptionException is caught");
-            request.addAttributeToJsp(WRONG_DESCRIPTION_ATTRIBUTE, WRONG_DESCRIPTION_MESSAGE);
-            return requestFactory.createForwardResponse(propertyContext.get(EDIT_COURSE_JSP_PAGE));
+            request.addToSession(WRONG_DESCRIPTION_ATTRIBUTE, WRONG_DESCRIPTION_MESSAGE);
+            return requestFactory.createRedirectResponse(propertyContext.get(EDIT_COURSE_JSP_PAGE));
         } catch (WrongTitleException e) {
             LOGGER.warn("WrongTitleException is caught");
-            request.addAttributeToJsp(WRONG_TITLE_ATTRIBUTE, WRONG_TITLE_MESSAGE);
-            return requestFactory.createForwardResponse(propertyContext.get(EDIT_COURSE_JSP_PAGE));
+            request.addToSession(WRONG_TITLE_ATTRIBUTE, WRONG_TITLE_MESSAGE);
+            return requestFactory.createRedirectResponse(propertyContext.get(EDIT_COURSE_JSP_PAGE));
 
         }
+        request.addToSession(SUCCESSFUL_EDIT_ATTRIBUTE, SUCCESSFUL_EDIT_MESSAGE_TEXT);
         return requestFactory.createForwardResponse(propertyContext.get(MANAGE_COURSES_JSP_PAGE));
 
     }

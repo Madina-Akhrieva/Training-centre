@@ -8,6 +8,11 @@
     margin-right: auto;
 
 }
+
+img{
+    width: 25px;
+    height: 10px;
+}
 .after_nav{
     height: 20%;
     color: #ffb507;

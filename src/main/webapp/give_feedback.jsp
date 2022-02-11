@@ -15,17 +15,22 @@
 			<div>
 				<h5>Feedback from Dziana Bahdanava ♥</h5>
 				<c:choose>
-					<c:when test="${not empty requestScope.wrongFeedbackAttribute}">
-						<h6 style="color:red; text-align: center;">${requestScope.wrongFeedbackAttribute}</h6>
+
+					<c:when test="${not empty sessionScope.wrongFeedbackAttribute}">
+						<h6 style="color:red; text-align: center">${sessionScope['wrongFeedbackAttribute']}</h6>
+						${sessionScope.remove('wrongFeedbackAttribute')}
 					</c:when>
 					<c:otherwise>
-						<h6 style="color:#1aff00; text-align: center;">${requestScope.successfulAddMessage}</h6>
+						<h6 style="color:#1aff00; text-align: center;">${sessionScope.successfulAddMessage}</h6>
+						${sessionScope.remove('successfulAddMessage')}
+
 					</c:otherwise>
 				</c:choose>
 			</div>
 			<hr>
-			<form action="<c:url value="/controller?command=send_feedback&&course_id=${requestScope.course_id}&&user_id
-			=${requestScope.user_id}&&task_id=${requestScope.task_id}"/>" method="post">
+			<form action="<c:url
+			value="/controller?command=send_feedback&&course_id=${sessionScope['course_id']}&&user_id
+			=${sessionScope['user_id']}&&task_id=${sessionScope['task_id']}"/>" method="post">
 				<textarea name="feedback" style="width: 100%; text-align: left; height: 45%">
 					Enter feedback, please.
 				</textarea>
@@ -45,7 +50,7 @@
 				<div class="row">
 					<div class="col">
 						<h5><b>Task answer is below ♥</b></h5>
-						<h6>${requestScope.task.taskAnswer}</h6>
+						<h6>${sessionScope.task.taskAnswer}</h6>
 
 					</div>
 				</div>

@@ -31,7 +31,7 @@ public enum AddCourseCommand implements Command {
     private static final String WRONG_TITLE_ATTRIBUTE = "wrongTitleAttribute";
     private static final String WRONG_TITLE_MESSAGE = "Title contains wrong symbols. Check once more please ♥";
     private static final String SUCCESSFUL_SIGNUP_ATTRIBUTE = "successfulSignupMessage";
-    private static final String SUCCESSFUL_SIGNUP_MESSAGE_TEXT = "Signed up successfully";
+    private static final String SUCCESSFUL_SIGNUP_MESSAGE_TEXT = "Course is added successfully ♥";
     private static final String COURSES_ATTRIBUTE_NAME = "courses";
 
     private final CourseService courseService;
@@ -54,18 +54,18 @@ public enum AddCourseCommand implements Command {
             courseService.create(new Course(title, learning_language, description));
             final List<Course> courses = courseService.findAll();
             request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, courses);
-            request.addAttributeToJsp(IF_ADDED_ATTRIBUTE, "course is added");
+            request.addToSession(IF_ADDED_ATTRIBUTE, "course is added");
 
         } catch (WrongDescriptionException e) {
             LOGGER.warn("WrongDescriptionException is caught");
-            request.addAttributeToJsp(WRONG_DESCRIPTION_ATTRIBUTE, WRONG_DESCRIPTION_MESSAGE);
-            return requestFactory.createForwardResponse(propertyContext.get(ADD_COURSE_JSP_PAGE));
+            request.addToSession(WRONG_DESCRIPTION_ATTRIBUTE, WRONG_DESCRIPTION_MESSAGE);
+            return requestFactory.createRedirectResponse(propertyContext.get(ADD_COURSE_JSP_PAGE));
         } catch (WrongTitleException e) {
             LOGGER.warn("WrongTitleException is caught");
-            request.addAttributeToJsp(WRONG_TITLE_ATTRIBUTE, WRONG_TITLE_MESSAGE);
-            return requestFactory.createForwardResponse(propertyContext.get(ADD_COURSE_JSP_PAGE));
+            request.addToSession(WRONG_TITLE_ATTRIBUTE, WRONG_TITLE_MESSAGE);
+            return requestFactory.createRedirectResponse(propertyContext.get(ADD_COURSE_JSP_PAGE));
         }
-        request.addAttributeToJsp(SUCCESSFUL_SIGNUP_ATTRIBUTE, SUCCESSFUL_SIGNUP_MESSAGE_TEXT);
+        request.addToSession(SUCCESSFUL_SIGNUP_ATTRIBUTE, SUCCESSFUL_SIGNUP_MESSAGE_TEXT);
         return requestFactory.createForwardResponse(propertyContext.get(COURSE_JSP_PAGE));
 
 

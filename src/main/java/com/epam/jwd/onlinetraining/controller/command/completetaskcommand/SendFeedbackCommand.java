@@ -47,16 +47,16 @@ public enum SendFeedbackCommand implements Command {
             final long userId = Long.parseLong(request.getParameter(USER_ID_REQUEST_PARAM_NAME));
             final long taskId = Long.parseLong(request.getParameter(TASK_ID_REQUEST_PARAM_NAME));
             final String feedback = request.getParameter(FEEDBACK_REQUEST_PARAM_NAME).trim();
-            request.addAttributeToJsp(TASK_ID_REQUEST_PARAM_NAME, taskId);
-            request.addAttributeToJsp(USER_ID_REQUEST_PARAM_NAME, userId);
-            request.addAttributeToJsp(COURSE_ID_PARAM, courseId);
+            request.addToSession(TASK_ID_REQUEST_PARAM_NAME, taskId);
+            request.addToSession(USER_ID_REQUEST_PARAM_NAME, userId);
+            request.addToSession(COURSE_ID_PARAM, courseId);
             taskService.addFeedbackToAnswer(feedback, userId, taskId);
         } catch (WrongFeedbackException e) {
             LOGGER.warn("WrongFeedbackException is caught");
-            request.addAttributeToJsp(WRONG_FEEDBACK_ATTRIBUTE, WRONG_FEEDBACK_MESSAGE);
+            request.addToSession(WRONG_FEEDBACK_ATTRIBUTE, WRONG_FEEDBACK_MESSAGE);
             return requestFactory.createForwardResponse(propertyContext.get(GIVE_FEEDBACK_JSP));
         }
-        request.addAttributeToJsp(SUCCESSFUL_ADD_ATTRIBUTE, SUCCESSFUL_ADD_MESSAGE_TEXT);
+        request.addToSession(SUCCESSFUL_ADD_ATTRIBUTE, SUCCESSFUL_ADD_MESSAGE_TEXT);
         return requestFactory.createForwardResponse(propertyContext.get(GIVE_FEEDBACK_JSP));
     }
 

@@ -9,7 +9,7 @@ public interface ConnectionPool {
     }
 
     static ConnectionPool locking() {
-        return LockingConnectionPool.INSTANCE;
+        return LockingConnectionPool.getInstance();
     }
 
     boolean isInitialized();

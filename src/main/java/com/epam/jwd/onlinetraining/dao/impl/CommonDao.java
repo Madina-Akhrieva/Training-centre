@@ -145,9 +145,5 @@ public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
 
     protected abstract T extractResult(ResultSet rs) throws SQLException;
 
-
-
-
-
 }
 

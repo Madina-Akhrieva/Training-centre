@@ -43,11 +43,11 @@ public enum AddTaskAnswerCommand implements Command {
         final long userId = Long.parseLong(request.getParameter(USER_ID_REQUEST_PARAM_NAME));
         final long taskId = Long.parseLong(request.getParameter(TASK_ID_REQUEST_PARAM_NAME));
         String feedback =  taskService.findFeedbackByCourseIdUserIdAndTaskId(courseId, userId, taskId);
-        request.addAttributeToJsp(IF_ADDED_ATTRIBUTE, INVALID_COURSE_MESSAGE);
-        request.addAttributeToJsp(COURSE_ID_REQUEST_PARAM_NAME, courseId);
-        request.addAttributeToJsp(TASK_ID_REQUEST_PARAM_NAME, taskId);
-        request.addAttributeToJsp(USER_ID_REQUEST_PARAM_NAME, userId);
-        request.addAttributeToJsp(FEEDBACK_REQUEST_PARAM_NAME, feedback);
+        request.addToSession(IF_ADDED_ATTRIBUTE, INVALID_COURSE_MESSAGE);
+        request.addToSession(COURSE_ID_REQUEST_PARAM_NAME, courseId);
+        request.addToSession(TASK_ID_REQUEST_PARAM_NAME, taskId);
+        request.addToSession(USER_ID_REQUEST_PARAM_NAME, userId);
+        request.addToSession(FEEDBACK_REQUEST_PARAM_NAME, feedback);
         return requestFactory.createForwardResponse(propertyContext.get(ADD_ANSWER_PAGE));
 
     }

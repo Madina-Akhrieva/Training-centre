@@ -23,6 +23,8 @@
 <fmt:message bundle="${loc}" key="label.watch_task" var="watchTask"/>
 <fmt:message bundle="${loc}" key="label.join_us_message" var="joinUsMessage"/>
 <fmt:message bundle="${loc}" key="label.with_love_training_centre_message" var="withLoveTrainingCentreMessage"/>
+<fmt:message bundle="${loc}" key="label.rus_lang" var="rusLang"/>
+<fmt:message bundle="${loc}" key="label.eng_lang" var="engLang"/>
 
 
 <html>
@@ -36,9 +38,12 @@
 <nav class="black">
 	<div class="nav-wrapper">
 		<ul id="nav-mobile" class="right hide-on-med-and-down">
+
 			<c:choose>
 				<c:when test="${not empty sessionScope.account}">
 					<c:if test="${sessionScope.account.role eq Role.ADMIN}">
+
+
 						<li><a href="<c:url value="/controller?command=manage_courses"/>">${manageCourses}</a></li>
 						<li><a href="<c:url value="/controller?command=logout"/>">${logout}</a></li>
 					</c:if>
@@ -57,6 +62,12 @@
 					<li><a href="<c:url value="/controller?command=show_signup"/>">${signUp}</a></li>
 				</c:otherwise>
 			</c:choose>
+			<li><button style="background-color: #ffb507; color:black; border: 1px solid black; border-radius: 5px;
+			height: 30px;"
+			            id="set_rus">${rusLang}</button></li>
+			<li><button style="background-color: #ffb507; color:black; border: 1px solid black; height: 30px; border-radius: 5px"
+			            id="set_eng">${engLang}</button></li>
+
 		</ul>
 	</div>
 </nav>
@@ -89,7 +100,6 @@
 							<c:choose>
 								<c:when test="${not empty sessionScope.account}">
 									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.ADMIN}">
-<%--										<a href="/controller?command=check_task">${checkTask}</a>--%>
 									</c:if>
 									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.MENTOR}">
 										<a href="/controller?command=manage_tasks&id=${course.id}">${downloadTask}</a>
@@ -97,7 +107,6 @@
 										value="/controller?command=check_students&id=${course.id}"/>">Check students</a>
 									</c:if>
 									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.STUDENT}">
-										<%--										<a href="/controller?command=complete_task&&id=${course.id}">${completeTask}</a>--%>
 										<a href="/controller?command=add_course_to_user&&course_id=${course.id}&&user_id=${sessionScope.account.id}">
 											Добавить курс в профиль
 										</a>
@@ -130,6 +139,7 @@
 	</div>
 </footer>
 			<script src="../js/main.js"></script>
+			<script src="../js/change_lang.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>

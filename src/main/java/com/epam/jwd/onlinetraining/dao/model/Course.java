@@ -10,7 +10,6 @@ public class Course implements Entity {
     private final String learningLanguage;
     private final String description;
     private final Mentor mentor;
-    private List<User> users;
 
     public Course(Long id, String title, String learningLanguage, String description, Mentor mentor, List<User> users) {
         this.id = id;
@@ -18,13 +17,11 @@ public class Course implements Entity {
         this.learningLanguage = learningLanguage;
         this.description = description;
         this.mentor = mentor;
-        this.users = users;
     }
 
     public Course(Long id, String title, String learningLanguage, String description, Mentor mentor) {
         this.id = id;
         this.title = title;
-
         this.learningLanguage = learningLanguage;
         this.description = description;
         this.mentor = mentor;
@@ -48,11 +45,9 @@ public class Course implements Entity {
         return id;
     }
 
-
     public String getTitle() {
         return title;
     }
-
 
     public String getLearningLanguage() {
         return learningLanguage;
@@ -64,6 +59,10 @@ public class Course implements Entity {
 
     public Mentor getMentor() {
         return mentor;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Course withMentor(Mentor mentor) {
@@ -82,13 +81,19 @@ public class Course implements Entity {
                 && Objects.equals(mentor, course.mentor);
     }
 
-
     @Override
     public int hashCode() {
         return Objects.hash(id, title, learningLanguage, description, mentor);
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", learningLanguage='" + learningLanguage + '\'' +
+                ", description='" + description + '\'' +
+                ", mentor=" + mentor +
+                '}';
     }
 }

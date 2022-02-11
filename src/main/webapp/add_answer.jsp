@@ -17,28 +17,32 @@
 					<div class="col">
 						<h5><b>Complete task ♥</b></h5>
 						<c:choose>
-							<c:when test="${not empty requestScope.wrongLinkAttribute}">
-								<h6 style="color:red; text-align: center;">${requestScope.wrongLinkAttribute}</h6>
+							<c:when test="${not empty sessionScope.wrongLinkAttribute}">
+								<h6 style="color:red; text-align: center">${sessionScope['wrongLinkAttribute']}</h6>
+								${sessionScope.remove('wrongLinkAttribute')}
 							</c:when>
 							<c:otherwise>
-								<h6 style="color:#1aff00; text-align: center;">${requestScope.successfulAddMessage}</h6>
+								<h6 style="color:#1aff00; text-align: center;">${sessionScope.successfulAddMessage}</h6>
+								${sessionScope.remove('successfulAddMessage')}
+
 							</c:otherwise>
 						</c:choose>
 					</div>
 				</div>
 			</div>
 			<form name="addtask-form"
-			      action="<c:url value="/controller?command=send_answer&&course_id=${requestScope.course_id}&&user_id
-			=${sessionScope.account.id}&&task_id=${requestScope.task_id}"/>" method="post" >
+			      action="<c:url
+			      value="/controller?command=send_answer&course_id=${sessionScope['course_id']}&user_id
+			=${sessionScope.account.id}&task_id=${sessionScope['task_id']}"/>" method="post" >
 				<input name="answer"
 				       pattern = "(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"
 				       placeholder="Enter link to answer:" />
 				<button type="submit"
 				        class="btn">COMPLETE TASK</button>
 			</form>
-			<c:if test="${not empty requestScope.isAddedMessage}">
+			<c:if test="${not empty sessionScope.isAddedMessage}">
 				<p style="color:#ffb507">
-						${requestScope.isAddedMessage}
+						${sessionScope.isAddedMessage}
 				</p>
 			</c:if>
 			<div
@@ -53,14 +57,8 @@
 				<h5>Feedback from Dziana Bahdanava ♥</h5>
 			</div><hr>
 			<div>
-				${requestScope.feedback}
+				${sessionScope['feedback']}
 			</div>
-<%--			<form action="<c:url value="/controller?command=send_feedback&&course_id=${requestScope.course_id}&&user_id--%>
-<%--			=${sessionScope.account.id}&&task_id=${requestScope.task_id}"/>" method="post">--%>
-
-<%--				<textarea name="feedback" style="margin-left: 20px" placeholder="Feedback" rows="10" cols="30"></textarea>--%>
-<%--				<button type="submit" class="btn">SEND FEEDBACK</button>--%>
-<%--			</form>--%>
 		</div>
 
 	</div>

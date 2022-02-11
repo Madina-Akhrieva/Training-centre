@@ -7,10 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CourseDao extends EntityDao<Course> {
-
-    List<Course> findByTitle(String title);
-
-    List<Course> findByLanguage(String language);
+    Boolean delete(Long id);
 
     Optional<Long> findMentorIdByCourseID(Long id);
 
@@ -19,5 +16,8 @@ public interface CourseDao extends EntityDao<Course> {
     }
 
     Course findCourseByCourseID(Long id);
+
+    boolean update(Course entity, String title);
+
 
 }

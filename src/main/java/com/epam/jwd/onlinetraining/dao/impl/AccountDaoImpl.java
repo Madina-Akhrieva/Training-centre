@@ -53,7 +53,6 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
 
     }
 
-
     @Override
     protected String getTableName() {
         return ACCOUNT_TABLE_NAME;
@@ -91,10 +90,7 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
         }
     }
 
-    @Override
-    public Optional<Account> findByMail(String mail) {
-        return Optional.empty();
-    }
+
 
     @Override
     public Optional<Account> readAccountById(long id) {
@@ -112,10 +108,6 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
         return Holder.INSTANCE;
     }
 
-    @Override
-    public Boolean delete(Long id) {
-        return null;
-    }
 
     @Override
     public Account create(Account account) {
@@ -137,10 +129,6 @@ public class AccountDaoImpl extends CommonDao<Account> implements AccountDao {
         return account;
     }
 
-    @Override
-    public boolean update(Account entity, String param) {
-        return false;
-    }
 
     private static class Holder {
         public static final AccountDao INSTANCE = new AccountDaoImpl(ConnectionPool.instance());

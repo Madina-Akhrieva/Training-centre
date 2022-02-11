@@ -9,6 +9,7 @@ import com.epam.jwd.onlinetraining.service.api.UserService;
 import com.epam.jwd.onlinetraining.service.exception.WrongFirstNameException;
 import com.epam.jwd.onlinetraining.service.exception.WrongLastNameException;
 import com.epam.jwd.onlinetraining.service.exception.WrongPhoneException;
+import com.epam.jwd.onlinetraining.service.exception.WrongPhoneLength;
 import com.epam.jwd.onlinetraining.service.validator.UserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,13 +23,11 @@ public class SimpleUserService implements UserService {
     private final UserValidator userValidator;
     private final UserDao userDao;
     private final AccountDao accountDao;
-    private final TransactionManager transactionManager;
 
-    public SimpleUserService(UserValidator userValidator, AccountDao accountDao, UserDao userDao, TransactionManager transactionManager) {
+    public SimpleUserService(UserValidator userValidator, AccountDao accountDao, UserDao userDao, TransactionManager instance) {
         this.userValidator = userValidator;
         this.userDao = userDao;
         this.accountDao = accountDao;
-        this.transactionManager = transactionManager;
     }
 
     @Override
@@ -52,7 +51,7 @@ public class SimpleUserService implements UserService {
     }
 
     @Override
-    public Optional<User> register(Long id, String phone, String firstname, String lastname) throws WrongFirstNameException, WrongPhoneException, WrongLastNameException {
+    public Optional<User> register(Long id, String phone, String firstname, String lastname) throws WrongFirstNameException, WrongPhoneException, WrongLastNameException, WrongPhoneLength {
 
         if (phone == null || firstname == null || lastname == null) {
             return Optional.empty();
@@ -60,7 +59,6 @@ public class SimpleUserService implements UserService {
         userValidator.validateFirstname(firstname);
         userValidator.validateLastname(lastname);
         userValidator.validatePhone(phone);
-
         final Optional<User> readUser = userDao.readUserByPhone(phone);
         if (readUser.isPresent()) {
             return Optional.empty();

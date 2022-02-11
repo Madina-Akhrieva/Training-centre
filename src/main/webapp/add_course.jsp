@@ -22,22 +22,26 @@
 <div class="main-w3layouts wrapper">
 	<h1>Create Course Form</h1>
 	<c:choose>
+		<c:when test="${not empty sessionScope.wrongDescriptionAttribute}">
+			<h6 style="color:red; text-align: center">${sessionScope['wrongDescriptionAttribute']}</h6>
+			${sessionScope.remove('wrongDescriptionAttribute')}
+		</c:when>
+		<c:when test="${not empty sessionScope.wrongTitleAttribute}">
+			<h6 style="color:red; text-align: center">${sessionScope['wrongTitleAttribute']}</h6>
+			${sessionScope.remove('wrongTitleAttribute')}
+		</c:when>
 
-		<c:when test="${not empty requestScope.wrongDescriptionAttribute}">
-			<h6 style="color:red; text-align: center;">${requestScope.wrongDescriptionAttribute}</h6>
-		</c:when>
-		<c:when test="${not empty requestScope.wrongTitleAttribute}">
-			<h6 style="color:red; text-align: center;">${requestScope.wrongTitleAttribute}</h6>
-		</c:when>
 		<c:otherwise>
-			<h6 style="color:#1aff00; text-align: center;">${requestScope.successfulSignupMessage}</h6>
+			<h6 style="color:#1aff00; text-align: center;">${sessionScope.successfulSignupMessage}</h6>
 		</c:otherwise>
 	</c:choose>
 	<div class="main-agileinfo">
 		<div class="agileits-top">
 			<form name="course-form" action="/controller?command=add_course" method="post">
 				<input class="text" type="text" name="title" placeholder="Title (2-70 symbols [0-9a-zA-Z .,'-])"
-				       maxlength="70" minlength="2" pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$" required>
+				       maxlength="70" minlength="2"
+<%--				       pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$" --%>
+				       required>
 
 				<br><br>
 
@@ -64,7 +68,9 @@
 
 				<input class="text w3lpass" type="text" name="description"
 				       placeholder="Description (2-50 symbols) [0-9a-zA-Z .,'-]"
-				       maxlength="70" minlength="2" pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$"  required>
+				       maxlength="70" minlength="2"
+<%--				       pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$"  --%>
+				       required>
 
 				<input type="submit" value="Add course">
 				<p><a href="/controller?command=manage_courses"> Return to the all courses page!</a></p>

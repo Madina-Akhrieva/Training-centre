@@ -10,17 +10,12 @@ public enum Role {
     ADMIN(2),
     MENTOR(3);
 
+    private static final List<Role> ALL_AVAILABLE_ROLES = Arrays.asList(values());
     private int id;
 
     Role(int id) {
         this.id = id;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    private static final List<Role> ALL_AVAILABLE_ROLES = Arrays.asList(values());
 
     public static List<Role> valuesAsList() {
         return ALL_AVAILABLE_ROLES;
@@ -31,9 +26,12 @@ public enum Role {
             if (role.name().equalsIgnoreCase(name)) {
                 return role;
             }
-
         }
         return STUDENT;
+    }
+
+    public int getId() {
+        return id;
     }
 }
 

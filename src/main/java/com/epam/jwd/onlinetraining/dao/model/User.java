@@ -23,10 +23,10 @@ public class User implements Entity {
     }
 
     public User(long userId, Course course, String firstName, String lastName) {
-      this.id = userId;
-      this.firstName = firstName;
-      this.lastName = lastName;
-      this.course = course;
+        this.id = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.course = course;
     }
 
     @Override
@@ -34,32 +34,16 @@ public class User implements Entity {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getPhone() {
         return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public Course getCourse() {
@@ -70,12 +54,33 @@ public class User implements Entity {
         this.course = course;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(phone, user.phone) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(course, user.course);
+        return Objects.equals(id, user.id)
+                && Objects.equals(phone, user.phone)
+                && Objects.equals(firstName, user.firstName)
+                && Objects.equals(lastName, user.lastName)
+                && Objects.equals(course, user.course);
     }
 
     @Override

@@ -48,18 +48,18 @@ public enum SendAnswerCommand implements Command {
             final long courseId = Long.parseLong(request.getParameter(COURSE_ID_REQUEST_PARAM_NAME));
             final long userId = Long.parseLong(request.getParameter(USER_ID_REQUEST_PARAM_NAME));
             final long taskId = Long.parseLong(request.getParameter(TASK_ID_REQUEST_PARAM_NAME));
-            request.addAttributeToJsp(TASK_ID_REQUEST_PARAM_NAME, taskId);
-            request.addAttributeToJsp(COURSE_ID_PARAM, courseId);
+            request.addToSession(TASK_ID_REQUEST_PARAM_NAME, taskId);
+            request.addToSession(COURSE_ID_PARAM, courseId);
             final String answer = request.getParameter(LINK_ANSWER_REQUEST_PARAM_NAME);
             taskService.addTaskAnswerToUser(answer, userId, courseId, taskId);
             final List<Task> tasks = taskService.findAll(courseId);
-            request.addAttributeToJsp(TASKS_ATTRIBUTE_NAME, tasks);
+            request.addToSession(TASKS_ATTRIBUTE_NAME, tasks);
         } catch (WrongLinkException e) {
             LOGGER.warn("WrongLinkException is caught");
-            request.addAttributeToJsp(WRONG_LINK_ATTRIBUTE, WRONG_LINK_MESSAGE);
-            return requestFactory.createForwardResponse(propertyContext.get(COMPLETE_TASK));
+            request.addToSession(WRONG_LINK_ATTRIBUTE, WRONG_LINK_MESSAGE);
+            return requestFactory.createRedirectResponse(propertyContext.get(COMPLETE_TASK));
         }
-        request.addAttributeToJsp(SUCCESSFUL_ADD_ATTRIBUTE, SUCCESSFUL_ADD_MESSAGE_TEXT);
-        return requestFactory.createForwardResponse(propertyContext.get(COMPLETE_TASK));
+        request.addToSession(SUCCESSFUL_ADD_ATTRIBUTE, SUCCESSFUL_ADD_MESSAGE_TEXT);
+        return requestFactory.createRedirectResponse(propertyContext.get(COMPLETE_TASK));
     }
 }
