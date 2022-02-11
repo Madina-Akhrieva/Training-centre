@@ -1,4 +1,4 @@
-package com.epam.jwd.onlinetraining.dao.impl;
+package com.epam.jwd.onlinetraining.dao.core;
 
 import com.epam.jwd.onlinetraining.dao.api.CourseDao;
 import com.epam.jwd.onlinetraining.dao.db.ConnectionPool;

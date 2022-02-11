@@ -18,9 +18,6 @@ public enum ShowManageCoursesPageCommand implements Command {
     INSTANCE(ServiceFactory.simple().serviceFor(Course.class),
             RequestFactory.getInstance(), PropertyContext.instance());
 
-    private static final Logger LOGGER = LogManager.getLogger(ShowMainPageCommand.class);
-
-
     private static final String COURSES_ATTRIBUTE_NAME = "courses";
     private static final String MANAGE_COURSES = "page.manage_courses";
 

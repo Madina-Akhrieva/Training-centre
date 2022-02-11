@@ -5,14 +5,11 @@ import com.epam.jwd.onlinetraining.controller.command.common.Command;
 import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
 import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
 import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
-import com.epam.jwd.onlinetraining.dao.model.Task;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
 import com.epam.jwd.onlinetraining.service.api.TaskService;
 import com.epam.jwd.onlinetraining.service.exception.WrongFeedbackException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.List;
 
 public enum SendFeedbackCommand implements Command {
     INSTANCE(ServiceFactory.simple().taskService(), RequestFactory.getInstance(), PropertyContext.instance());
@@ -23,7 +20,7 @@ public enum SendFeedbackCommand implements Command {
     private static final String TASK_ID_REQUEST_PARAM_NAME = "task_id";
     private static final String FEEDBACK_REQUEST_PARAM_NAME = "feedback";
     private static final String MAIN_PAGE = "page.main";
-    public static final String GIVE_FEEDBACK_JSP = "page.give_feedback";
+    private static final String GIVE_FEEDBACK_JSP = "page.give_feedback";
     private static final String WRONG_FEEDBACK_ATTRIBUTE = "wrongFeedbackAttribute";
     private static final Object WRONG_FEEDBACK_MESSAGE = "Feedback is wrong. Check it please ♥" ;
     private static final String SUCCESSFUL_ADD_ATTRIBUTE = "successfulAddMessage";

@@ -6,7 +6,6 @@ import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
 import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
 import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
 import com.epam.jwd.onlinetraining.controller.command.maincommand.ShowMainPageCommand;
-import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.Task;
 import com.epam.jwd.onlinetraining.service.api.EntityService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
@@ -25,8 +24,6 @@ public enum ShowTasksCommand implements Command {
     private static final String TASKS_ATTRIBUTE_NAME = "tasks";
     private static final String WATCH_TASKS = "page.watch_tasks";
     private static final String COURSE_ID_REQUEST_PARAM_NAME = "id";
-    private static final String USER_ID_REQUEST_PARAM_NAME = "uid";
-    private static final String USER_ID_REQUEST_ATTRIBUTE_NAME = "userId";
     private static final String COURSE_ID_REQUEST_ATTRIBUTE_NAME = "courseId";
 
     private final EntityService<Task> taskService;

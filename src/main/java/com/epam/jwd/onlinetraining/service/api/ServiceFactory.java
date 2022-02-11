@@ -5,7 +5,7 @@ import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.Entity;
 import com.epam.jwd.onlinetraining.dao.model.Task;
 import com.epam.jwd.onlinetraining.dao.model.User;
-import com.epam.jwd.onlinetraining.service.impl.SimpleServiceFactory;
+import com.epam.jwd.onlinetraining.service.core.SimpleServiceFactory;
 
 public interface ServiceFactory {
 

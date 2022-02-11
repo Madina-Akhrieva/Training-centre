@@ -10,17 +10,13 @@ import com.epam.jwd.onlinetraining.service.api.TaskService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Optional;
-
 public enum AddTaskAnswerCommand implements Command {
     INSTANCE(ServiceFactory.simple().taskService(), RequestFactory.getInstance(), PropertyContext.instance());
-    private static final Logger LOGGER = LogManager.getLogger(com.epam.jwd.onlinetraining.controller.command.coursecomamnd.AddCourseCommand.class);
 
+    private static final Logger LOGGER = LogManager.getLogger(com.epam.jwd.onlinetraining.controller.command.coursecomamnd.AddCourseCommand.class);
     private static final String IF_ADDED_ATTRIBUTE = "message";
     private static final String INVALID_COURSE_MESSAGE = "Course information is invalid";
     private static final String ADD_ANSWER_PAGE = "page.add_answer";
-    private static final String ID_REQUEST_PARAM_NAME = "id";
-    private static final String IF_NOT_ADDED_ATTRIBUTE = "notAddedMessge";
     private static final String COURSE_ID_REQUEST_PARAM_NAME = "course_id";
     private static final String USER_ID_REQUEST_PARAM_NAME = "user_id";
     private static final String TASK_ID_REQUEST_PARAM_NAME = "task_id";

@@ -1,6 +1,6 @@
 package com.epam.jwd.onlinetraining.dao.api;
 
-import com.epam.jwd.onlinetraining.dao.impl.UserDaoImpl;
+import com.epam.jwd.onlinetraining.dao.core.UserDaoImpl;
 import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.User;
 

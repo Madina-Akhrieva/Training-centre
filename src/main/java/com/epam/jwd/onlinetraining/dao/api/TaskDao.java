@@ -1,6 +1,6 @@
 package com.epam.jwd.onlinetraining.dao.api;
 
-import com.epam.jwd.onlinetraining.dao.impl.TaskDaoImpl;
+import com.epam.jwd.onlinetraining.dao.core.TaskDaoImpl;
 import com.epam.jwd.onlinetraining.dao.model.Task;
 
 import java.util.List;

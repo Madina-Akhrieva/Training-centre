@@ -1,4 +1,4 @@
-package com.epam.jwd.onlinetraining.controller.impl;
+package com.epam.jwd.onlinetraining.controller.core;
 
 public enum PagePaths {
     INDEX("/"),

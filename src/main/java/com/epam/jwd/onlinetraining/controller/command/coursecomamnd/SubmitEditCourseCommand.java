@@ -10,7 +10,6 @@ import com.epam.jwd.onlinetraining.service.api.CourseService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
 import com.epam.jwd.onlinetraining.service.exception.WrongDescriptionException;
 import com.epam.jwd.onlinetraining.service.exception.WrongTitleException;
-import com.epam.jwd.onlinetraining.service.validator.CourseValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

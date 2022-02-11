@@ -6,7 +6,6 @@ import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
 import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
 import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
 import com.epam.jwd.onlinetraining.controller.command.maincommand.ShowMainPageCommand;
-import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.Task;
 import com.epam.jwd.onlinetraining.service.api.EntityService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;

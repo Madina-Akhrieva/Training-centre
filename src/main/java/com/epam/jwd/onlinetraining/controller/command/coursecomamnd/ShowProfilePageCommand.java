@@ -26,7 +26,6 @@ public enum ShowProfilePageCommand implements Command {
     private static final String ACCOUNT_ATTRIBUTE_NAME = "account";
     private static final String COURSES_ATTRIBUTE_NAME = "courses";
 
-
     private final UserService userService;
     private final AccountService accountService;
     private final RequestFactory requestFactory;

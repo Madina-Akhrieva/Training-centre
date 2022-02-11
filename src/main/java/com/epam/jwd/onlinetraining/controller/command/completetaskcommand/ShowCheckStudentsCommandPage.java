@@ -17,8 +17,8 @@ public enum ShowCheckStudentsCommandPage implements Command {
     INSTANCE(ServiceFactory.simple().userService(), ServiceFactory.simple().courseService(), RequestFactory.getInstance(), PropertyContext.instance());
 
     private static final String COURSE_ID_REQUEST_PARAM_NAME = "id";
-    public static final String STUDENTS_ATTRIBUTE_NAME = "students";
-    public static final String STUDENTS_PAGE = "page.students";
+    private static final String STUDENTS_ATTRIBUTE_NAME = "students";
+    private static final String STUDENTS_PAGE = "page.students";
     private static final String TITLE_ATTRIBUTE_NAME = "title";
 
     private final UserService userService;

@@ -1,4 +1,4 @@
-package com.epam.jwd.onlinetraining.service.impl;
+package com.epam.jwd.onlinetraining.service.core;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.epam.jwd.onlinetraining.dao.api.AccountDao;

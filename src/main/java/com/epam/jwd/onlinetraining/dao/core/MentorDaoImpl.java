@@ -1,4 +1,4 @@
-package com.epam.jwd.onlinetraining.dao.impl;
+package com.epam.jwd.onlinetraining.dao.core;
 
 import com.epam.jwd.onlinetraining.dao.api.MentorDao;
 import com.epam.jwd.onlinetraining.dao.db.ConnectionPool;
@@ -6,7 +6,6 @@ import com.epam.jwd.onlinetraining.dao.model.Mentor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;

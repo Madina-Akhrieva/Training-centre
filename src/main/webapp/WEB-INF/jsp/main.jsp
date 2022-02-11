@@ -25,6 +25,8 @@
 <fmt:message bundle="${loc}" key="label.with_love_training_centre_message" var="withLoveTrainingCentreMessage"/>
 <fmt:message bundle="${loc}" key="label.rus_lang" var="rusLang"/>
 <fmt:message bundle="${loc}" key="label.eng_lang" var="engLang"/>
+<fmt:message bundle="${loc}" key="label.check_student" var="check_student"/>
+<fmt:message bundle="${loc}" key="label.add_course" var="add_course"/>
 
 
 <html>
@@ -104,11 +106,12 @@
 									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.MENTOR}">
 										<a href="/controller?command=manage_tasks&id=${course.id}">${downloadTask}</a>
 										<a href="<c:url
-										value="/controller?command=check_students&id=${course.id}"/>">Check students</a>
+										value="/controller?command=check_students&id=${course.id}"/>">${check_student}</a>
 									</c:if>
 									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.STUDENT}">
 										<a href="/controller?command=add_course_to_user&&course_id=${course.id}&&user_id=${sessionScope.account.id}">
 											Добавить курс в профиль
+											${add_course}
 										</a>
 									</c:if>
 								</c:when>

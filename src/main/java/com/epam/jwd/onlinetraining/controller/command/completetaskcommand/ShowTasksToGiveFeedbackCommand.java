@@ -18,8 +18,6 @@ public enum ShowTasksToGiveFeedbackCommand implements Command {
     private static final String LEAVE_FEEDBACK = "page.tasks_with_feedback";
     private static final String COURSE_ID_PARAM = "id";
     private static final String TASKS_ATTRIBUTE_NAME = "tasks";
-    private static final String ID_COURSE_REQUEST_PARAM_NAME = "course_id";
-    private static final String ID_TASK_REQUEST_PARAM_NAME = "task_id";
     private static final String USER_ID_REQUEST_PARAM_NAME = "uid";
 
     private final TaskService taskService;

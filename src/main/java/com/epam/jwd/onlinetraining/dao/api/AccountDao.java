@@ -1,6 +1,6 @@
 package com.epam.jwd.onlinetraining.dao.api;
 
-import com.epam.jwd.onlinetraining.dao.impl.AccountDaoImpl;
+import com.epam.jwd.onlinetraining.dao.core.AccountDaoImpl;
 import com.epam.jwd.onlinetraining.dao.model.Account;
 
 import java.util.Optional;

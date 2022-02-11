@@ -1,8 +1,10 @@
-package com.epam.jwd.onlinetraining.service.impl;
+package com.epam.jwd.onlinetraining.service.core;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.epam.jwd.onlinetraining.dao.api.AccountDao;
 import com.epam.jwd.onlinetraining.dao.api.UserDao;
+import com.epam.jwd.onlinetraining.dao.core.AccountDaoImpl;
+import com.epam.jwd.onlinetraining.dao.db.ConnectionPool;
 import com.epam.jwd.onlinetraining.dao.model.Account;
 import com.epam.jwd.onlinetraining.service.api.AccountService;
 import com.epam.jwd.onlinetraining.service.exception.AccountWithSuchEmailExists;
@@ -48,7 +50,6 @@ public class SimpleAccountService implements AccountService {
             final char[] rawPassword = password.toCharArray();
             final String hashedPassword = hasher.hashToString(MIN_COST, rawPassword);
             Account account = accountDao.create(new Account(hashedPassword, email));
-//            User user = userDao.create(new User(account.getId(), phone, firstName, lastName));
             return Optional.ofNullable(account);
         }
 
@@ -109,5 +110,6 @@ public class SimpleAccountService implements AccountService {
     public Account add(Account account) {
         return accountDao.create(account);
     }
+
 }
 

@@ -6,7 +6,6 @@ import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
 import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
 import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
 import com.epam.jwd.onlinetraining.dao.model.Course;
-import com.epam.jwd.onlinetraining.dao.model.Mentor;
 import com.epam.jwd.onlinetraining.service.api.CourseService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
 import com.epam.jwd.onlinetraining.service.exception.WrongDescriptionException;
@@ -15,17 +14,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-import java.util.Optional;
 
 public enum AddCourseCommand implements Command {
     INSTANCE(ServiceFactory.simple().courseService(), RequestFactory.getInstance(), PropertyContext.instance());
     private static final Logger LOGGER = LogManager.getLogger(AddCourseCommand.class);
 
     private static final String IF_ADDED_ATTRIBUTE = "isAddedMessage";
-    private static final String INVALID_COURSE_MESSAGE = "Course information is invalid";
     private static final String COURSE_JSP_PAGE = "page.manage_courses";
     private static final String ADD_COURSE_JSP_PAGE = "page.add_course";
-    private static final String INDEX_JSP_PATH = "page.index";
     private static final String WRONG_DESCRIPTION_ATTRIBUTE = "wrongDescriptionAttribute";
     private static final String WRONG_DESCRIPTION_MESSAGE = "Description has wrong symbols";
     private static final String WRONG_TITLE_ATTRIBUTE = "wrongTitleAttribute";

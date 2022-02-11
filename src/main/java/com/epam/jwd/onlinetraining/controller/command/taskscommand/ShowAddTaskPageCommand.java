@@ -5,9 +5,6 @@ import com.epam.jwd.onlinetraining.controller.command.common.Command;
 import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
 import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
 import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
-import com.epam.jwd.onlinetraining.dao.model.Task;
-
-import java.util.List;
 
 public enum ShowAddTaskPageCommand implements Command {
     INSTANCE(RequestFactory.getInstance(), PropertyContext.instance());
@@ -15,7 +12,6 @@ public enum ShowAddTaskPageCommand implements Command {
     private static final String ADD_TASK = "page.add_task";
     private static final String ID_REQUEST_PARAM_NAME = "id";
     private static final String COURSE_ID_PARAM = "courseId";
-
 
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;

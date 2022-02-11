@@ -18,9 +18,7 @@ public enum GiveFeedbackCommand implements Command {
     private static final String COURSE_ID_REQUEST_PARAM_NAME = "course_id";
     private static final String USER_ID_REQUEST_PARAM_NAME = "user_id";
     private static final String TASK_ID_REQUEST_PARAM_NAME = "task_id";
-    private static final String FEEDBACK_REQUEST_PARAM_NAME = "feedback";
     private static final String GIVE_FEEDBACK_PAGE = "page.give_feedback";
-    private static final String COURSE_ID_PARAM = "id";
     private static final String TASK_ATTRIBUTE_NAME = "task";
 
     private final TaskService taskService;
@@ -39,10 +37,10 @@ public enum GiveFeedbackCommand implements Command {
         final long userId = Long.parseLong(request.getParameter(USER_ID_REQUEST_PARAM_NAME));
         final long taskId = Long.parseLong(request.getParameter(TASK_ID_REQUEST_PARAM_NAME));
         final Task task = taskService.findTasksByCourseIdTaskIdAndUserId(userId, courseId, taskId);
-        request.addAttributeToJsp(TASK_ATTRIBUTE_NAME, task);
-        request.addAttributeToJsp(COURSE_ID_REQUEST_PARAM_NAME, courseId);
-        request.addAttributeToJsp(USER_ID_REQUEST_PARAM_NAME, userId);
-        request.addAttributeToJsp(TASK_ID_REQUEST_PARAM_NAME, taskId);
-        return requestFactory.createForwardResponse(propertyContext.get(GIVE_FEEDBACK_PAGE));
+        request.addToSession(TASK_ATTRIBUTE_NAME, task);
+        request.addToSession(COURSE_ID_REQUEST_PARAM_NAME, courseId);
+        request.addToSession(USER_ID_REQUEST_PARAM_NAME, userId);
+        request.addToSession(TASK_ID_REQUEST_PARAM_NAME, taskId);
+        return requestFactory.createRedirectResponse(propertyContext.get(GIVE_FEEDBACK_PAGE));
     }
 }

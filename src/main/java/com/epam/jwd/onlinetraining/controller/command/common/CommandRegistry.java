@@ -66,8 +66,6 @@ public enum CommandRegistry {
     SHOW_ADD_ANSWER_PAGE(AddTaskAnswerCommand.INSTANCE, "show_add_answer_page", STUDENT),
     SHOW_CHECK_TASKS_PAGE(ShowTasksToGiveFeedbackCommand.INSTANCE, "show_check_tasks_page", MENTOR),
     DEFAULT(ShowMainPageCommand.INSTANCE, ""),
-
-
     COMPLETE_TASK(CompleteTaskCommand.INSTANCE, "complete_task", STUDENT),
     CHECK_TASK(CheckTaskCommand.INSTANCE, "check_task", MENTOR),
     SHOW_CHECK_STUDENTS_PAGE(ShowCheckStudentsCommandPage.INSTANCE, "check_students", MENTOR);

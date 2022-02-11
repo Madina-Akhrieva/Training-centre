@@ -1,4 +1,4 @@
-package com.epam.jwd.onlinetraining.dao.impl;
+package com.epam.jwd.onlinetraining.dao.core;
 
 import com.epam.jwd.onlinetraining.dao.api.EntityDao;
 import com.epam.jwd.onlinetraining.dao.api.ResultSetExtractor;

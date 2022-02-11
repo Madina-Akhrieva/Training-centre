@@ -8,19 +8,16 @@ import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
 import com.epam.jwd.onlinetraining.dao.model.Account;
 import com.epam.jwd.onlinetraining.service.api.AccountService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
 public enum LoginCommand implements Command {
     INSTANCE(ServiceFactory.simple().accountService(), RequestFactory.getInstance(), PropertyContext.instance());
-    private static final Logger LOGGER = LogManager.getLogger(LoginCommand.class);
 
-    public static final String INDEX_JSP_PATH = "page.index";
-    public static final String LOGIN_JSP_PATH = "page.login";
-    public static final String LOGIN_REQUEST_PARAM_NAME = "email";
-    public static final String PASSWORD_REQUEST_PARAM_NAME = "password";
+    private static final String INDEX_JSP_PATH = "page.index";
+    private static final String LOGIN_JSP_PATH = "page.login";
+    private static final String LOGIN_REQUEST_PARAM_NAME = "email";
+    private static final String PASSWORD_REQUEST_PARAM_NAME = "password";
     private static final String ERROR_LOGIN_PASS_ATTRIBUTE = "errorLoginPassMessage";
     private static final String INVALID_LOGIN_PASS_MESSAGE = "Account doesn't exist. Sign in first please ♥";
     private static final String ACCOUNT_SESSION_ATTRIBUTE_NAME = "account";
@@ -37,9 +34,6 @@ public enum LoginCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-//        if (request.sessionExists() && request.retrieveFromSession(ACCOUNT_SESSION_ATTRIBUTE_NAME).isPresent()) {
-////            throw new UserAlreadyExistsException();
-//        }
         final String login = request.getParameter(LOGIN_REQUEST_PARAM_NAME);
         final String password = request.getParameter(PASSWORD_REQUEST_PARAM_NAME);
         final Optional<Account> account = accountService.authenticate(login, password);
