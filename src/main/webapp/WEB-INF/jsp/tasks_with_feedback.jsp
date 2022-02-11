@@ -1,9 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie.lang.value}"/>
+<fmt:setBundle basename="l10n.page.check_tasks" var="loc"/>
+<fmt:message bundle="${loc}" key="label.logout" var="logout"/>
+<fmt:message bundle="${loc}" key="label.main_page" var="main_page"/>
+<fmt:message bundle="${loc}" key="label.task_title" var="task_title"/>
+<fmt:message bundle="${loc}" key="label.task_description" var="task_description"/>
+<fmt:message bundle="${loc}" key="label.link_to_answer" var="link_to_answer"/>
+<fmt:message bundle="${loc}" key="label.button_feedback" var="button_feedback"/>
+<fmt:message bundle="${loc}" key="label.footer_text" var="footer_text"/>
+
 <html>
 <head>
-	<title>Manage tasks</title>
+	<title>Tasks</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="../css/manage_courses.css">
@@ -12,11 +23,10 @@
 <body>
 
 
-<nav class="black" >
-	TRAINING CENTRE ♥
-	<div class="nav-wrapper" style="color: white">
+<nav class="black">
+	<div class="nav-wrapper">
 		<ul id="nav-mobile" class="right hide-on-med-and-down">
-			<li><a  href="<c:url value="/controller?command=logout"/>">Main page</a></li>
+
 
 			<c:choose>
 				<c:when test="${not empty sessionScope.account}">
@@ -27,6 +37,7 @@
 					<li><a href="<c:url value="/controller?command=show_signup"/>">${signUp}</a></li>
 				</c:otherwise>
 			</c:choose>
+					<li><a href="<c:url value="/controller?command=logout"/>">${main_page}</a></li>
 		</ul>
 	</div>
 </nav>
@@ -37,9 +48,9 @@
 			<table>
 				<thead>
 				<tr>
-					<th>Task title</th>
-					<th>Task description</th>
-					<th>Link to answer</th>
+					<th>${task_title}</th>
+					<th>${task_description}</th>
+					<th>${link_to_answer}</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -50,10 +61,11 @@
 							${task.description}
 					</td>
 					<td>
-						<button class="waves-effect waves-light btn-small black"  type="submit">
-							<a style="color: #ffb507" href="/controller?command=give_feedback&course_id=${requestScope.id}&user_id
+						<button class="waves-effect waves-light btn-small black" type="submit">
+							<a style="color: #ffb507"
+							   href="/controller?command=give_feedback&course_id=${requestScope.id}&user_id
 			=${requestScope.uid}&task_id=${task.id}">
-								Give feedback ♥
+									${button_feedback}
 							</a>
 						</button>
 					</td>
@@ -70,7 +82,7 @@
 
 <footer class="page-footer black">
 	<h6 style="color: #ffb507; margin-left: 40px">
-		With love your training centre ♥
+		${footer_text}
 	</h6>
 	<div class="container">
 		<div class="row">

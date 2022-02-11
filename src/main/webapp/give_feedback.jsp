@@ -1,5 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="jwds" uri="jwd.epam.com" %>
+<fmt:setLocale value="${cookie.lang.value}"/>
+<fmt:setBundle basename="l10n.page.main" var="loc"/>
+<fmt:message bundle="${loc}" key="label.title" var="title"/>
+<fmt:message bundle="${loc}" key="label.manage_courses" var="manageCourses"/>
+<fmt:message bundle="${loc}" key="label.link.login" var="login"/>
+<fmt:message bundle="${loc}" key="label.link.logout" var="logout"/>
+<fmt:message bundle="${loc}" key="label.link.sign_up" var="signUp"/>
+<fmt:message bundle="${loc}" key="label.link.watch_profile" var="watchProfile"/>
+<fmt:message bundle="${loc}" key="label.message_before_signup" var="messageBeforeSignUp"/>
 <html>
 <head>
 	<title>Feedback page</title>
@@ -31,6 +42,7 @@
 			<form action="<c:url
 			value="/controller?command=send_feedback&&course_id=${sessionScope['course_id']}&&user_id
 			=${sessionScope['user_id']}&&task_id=${sessionScope['task_id']}"/>" method="post">
+
 				<textarea name="feedback" style="width: 100%; text-align: left; height: 45%">
 					Enter feedback, please.
 				</textarea>
@@ -49,7 +61,8 @@
 			<div class="title">
 				<div class="row">
 					<div class="col">
-						<h5><b>Task answer is below ♥</b></h5>
+						<h5>Task answer is below ♥</h5>
+						<hr>
 						<h6>${sessionScope.task.taskAnswer}</h6>
 
 					</div>
