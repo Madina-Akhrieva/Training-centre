@@ -1,5 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie.lang.value}"/>
+<fmt:setBundle basename="l10n.page.complete_task" var="loc"/>
+<fmt:message bundle="${loc}" key="label.logout" var="logout"/>
+<fmt:message bundle="${loc}" key="label.main_page" var="main_page"/>
+<fmt:message bundle="${loc}" key="label.task_title" var="task_title"/>
+<fmt:message bundle="${loc}" key="label.task_description" var="task_description"/>
+<fmt:message bundle="${loc}" key="label.link_to_answer" var="link_to_answer"/>
+<fmt:message bundle="${loc}" key="label.add_answer_button" var="add_answer_button"/>
+<fmt:message bundle="${loc}" key="label.footer_text" var="footer_text"/>
 <html>
 <head>
 	<title>Manage Courses</title>
@@ -20,8 +30,8 @@
 						<li><a href="/controller?command=show_accounts">Show users</a></li>
 						<li><a href="/controller?command=manage_courses">Manage courses</a></li>
 					</c:if>
-					<li><a href="/controller?command=logout ">Logout</a></li>
-					<li><a href="/controller?command=main">Main page</a></li>
+					<li><a href="/controller?command=logout ">${logout}</a></li>
+					<li><a href="/controller?command=main">${main_page}</a></li>
 				</c:when>
 				<c:otherwise>
 					<li><a href="/controller?command=show_login">Sign in</a></li>
@@ -42,9 +52,9 @@
 			<table>
 				<thead>
 				<tr>
-					<th>Task title</th>
-					<th>Task description</th>
-					<th>Link to answer</th>
+					<th>${task_title}</th>
+					<th>${task_description}</th>
+					<th>${link_to_answer}</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -58,7 +68,7 @@
 						<button class="waves-effect waves-light btn-small black"  type="submit">
 							<a style="color: #ffb507" href="/controller?command=show_add_answer_page&course_id=${requestScope.id}&user_id
 			=${sessionScope.account.id}&task_id=${task.id}">
-								Add answer ♥
+								${add_answer_button}
 							</a>
 						</button>
 					</td>
@@ -78,7 +88,7 @@
 </div>
 <footer class="page-footer black" >
 	<h6 style="color: #ffb507; margin-left: 40px">
-		With love your training centre ♥
+		${footer_text}
 	</h6>
 	<div class="container">
 		<div class="row">
