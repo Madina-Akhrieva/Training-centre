@@ -16,13 +16,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * com.epam.jwd.onlinetraining.controller.servlet @WebServlet("/controller")
+ * public class Controller
+ * extends HttpServlet
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
 
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
-
-    public static final String COMMAND_PARAM_NAME = "command";
-
+    private static final String COMMAND_PARAM_NAME = "command";
 
     private final RequestFactory requestFactory = RequestFactory.getInstance();
 
@@ -30,7 +36,7 @@ public class Controller extends HttpServlet {
     protected void doGet(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
         LOGGER.trace("caught req and resp in doGet method");
         processRequest(httpRequest, httpResponse);
-     }
+    }
 
     @Override
     protected void doPost(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
@@ -53,10 +59,8 @@ public class Controller extends HttpServlet {
             forwardOrRedirectToResponseLocation(request, response, commandResponse);
         } catch (ServletException e) {
             LOGGER.error("ServletException exception occurred", e);
-            e.printStackTrace();
         } catch (IOException e) {
             LOGGER.error("IO exception occurred ", e);
-            e.printStackTrace();
         }
     }
 

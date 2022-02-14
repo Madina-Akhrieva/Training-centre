@@ -10,9 +10,18 @@ import com.epam.jwd.onlinetraining.service.api.TaskService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * com.epam.jwd.onlinetraining.controller.command.completetaskcommand public enum AddTaskAnswerCommand
+ * extends Enum<AddTaskAnswerCommand>
+ * implements Command
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public enum AddTaskAnswerCommand implements Command {
     INSTANCE(ServiceFactory.simple().taskService(), RequestFactory.getInstance(), PropertyContext.instance());
 
+    public static final String MAIN_PAGE_JSP = "page.main";
     private static final Logger LOGGER = LogManager.getLogger(com.epam.jwd.onlinetraining.controller.command.coursecomamnd.AddCourseCommand.class);
     private static final String IF_ADDED_ATTRIBUTE = "message";
     private static final String INVALID_COURSE_MESSAGE = "Course information is invalid";
@@ -20,6 +29,8 @@ public enum AddTaskAnswerCommand implements Command {
     private static final String COURSE_ID_REQUEST_PARAM_NAME = "course_id";
     private static final String USER_ID_REQUEST_PARAM_NAME = "user_id";
     private static final String TASK_ID_REQUEST_PARAM_NAME = "task_id";
+    private static final String INDEX_JSP_PATH = "page.index";
+
     private static final String FEEDBACK_REQUEST_PARAM_NAME = "feedback";
 
     private final TaskService taskService;
@@ -34,17 +45,22 @@ public enum AddTaskAnswerCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        LOGGER.info("We are in execute method in AddCourseCommand");
-        final long courseId = Long.parseLong(request.getParameter(COURSE_ID_REQUEST_PARAM_NAME));
-        final long userId = Long.parseLong(request.getParameter(USER_ID_REQUEST_PARAM_NAME));
-        final long taskId = Long.parseLong(request.getParameter(TASK_ID_REQUEST_PARAM_NAME));
-        String feedback =  taskService.findFeedbackByCourseIdUserIdAndTaskId(courseId, userId, taskId);
-        request.addToSession(IF_ADDED_ATTRIBUTE, INVALID_COURSE_MESSAGE);
-        request.addToSession(COURSE_ID_REQUEST_PARAM_NAME, courseId);
-        request.addToSession(TASK_ID_REQUEST_PARAM_NAME, taskId);
-        request.addToSession(USER_ID_REQUEST_PARAM_NAME, userId);
-        request.addToSession(FEEDBACK_REQUEST_PARAM_NAME, feedback);
-        return requestFactory.createForwardResponse(propertyContext.get(ADD_ANSWER_PAGE));
+        try {
+            LOGGER.info("We are in execute method in AddCourseCommand");
+            final long courseId = Long.parseLong(request.getParameter(COURSE_ID_REQUEST_PARAM_NAME));
+            final long userId = Long.parseLong(request.getParameter(USER_ID_REQUEST_PARAM_NAME));
+            final long taskId = Long.parseLong(request.getParameter(TASK_ID_REQUEST_PARAM_NAME));
+            String feedback = taskService.findFeedbackByCourseIdUserIdAndTaskId(courseId, userId, taskId);
+            request.addToSession(IF_ADDED_ATTRIBUTE, INVALID_COURSE_MESSAGE);
+            request.addToSession(COURSE_ID_REQUEST_PARAM_NAME, courseId);
+            request.addToSession(TASK_ID_REQUEST_PARAM_NAME, taskId);
+            request.addToSession(USER_ID_REQUEST_PARAM_NAME, userId);
+            request.addToSession(FEEDBACK_REQUEST_PARAM_NAME, feedback);
+            return requestFactory.createForwardResponse(propertyContext.get(ADD_ANSWER_PAGE));
+        } catch (Exception exception) {
+            return requestFactory.createRedirectResponse(propertyContext.get(INDEX_JSP_PATH));
+        }
+
 
     }
 }

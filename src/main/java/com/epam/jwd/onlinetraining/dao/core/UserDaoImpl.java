@@ -17,6 +17,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * com.epam.jwd.onlinetraining.dao.core public class UserDaoImpl
+ * extends CommonDao<User>
+ * implements UserDao
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class UserDaoImpl extends CommonDao<User> implements UserDao {
     private static final Logger LOGGER = LogManager.getLogger(UserDaoImpl.class);
     private static final String INSERT_USER = "INSERT INTO course_user(phone, first_name, last_name,id ) VALUES (?, ?, ?, ?)";
@@ -26,7 +34,7 @@ public class UserDaoImpl extends CommonDao<User> implements UserDao {
     private static final String SELECT_SUBSCRIPTION_INNER_JOIN_WHERE_COURSE_USER_ID = "select cu.id, first_name, last_name, c.id, title from subscription " +
             "inner join course c on c.id = subscription.course_id\n" +
             "inner join course_user cu on  cu.id = subscription.course_user_id where course_user_id = ?";
-    public static final String SELECT_FROM_SUBSCRIPTION_INNER_JOIN_WHERE_COURSE_ID = "select cu.id, first_name, last_name, c.id, title from subscription\n" +
+    private static final String SELECT_FROM_SUBSCRIPTION_INNER_JOIN_WHERE_COURSE_ID = "select cu.id, first_name, last_name, c.id, title from subscription\n" +
             "inner join course c on c.id = subscription.course_id\n" +
             "inner join course_user cu on  cu.id = subscription.course_user_id where c.id=?";
     private static final String ACCOUNT_TABLE_NAME = "account j join role r on r.id_role = j.role_id";
@@ -46,31 +54,9 @@ public class UserDaoImpl extends CommonDao<User> implements UserDao {
         super(pool);
     }
 
-    @Override
-    protected String getTableName() {
-        return COURSE_USER_TABLE_NAME;
-    }
-
-    @Override
-    protected List<String> getFields() {
-        return FIELDS;
-    }
-
-    @Override
-    protected String getIdFieldName() {
-        return FIELD_NAME;
-    }
-
-    @Override
-    protected User extractResult(ResultSet rs) {
-        return null;
-    }
-
-
     public static UserDao getInstance() {
         return Holder.INSTANCE;
     }
-
 
     @Override
     public User create(User user) {
@@ -214,6 +200,25 @@ public class UserDaoImpl extends CommonDao<User> implements UserDao {
         return students;
     }
 
+    @Override
+    protected String getTableName() {
+        return COURSE_USER_TABLE_NAME;
+    }
+
+    @Override
+    protected List<String> getFields() {
+        return FIELDS;
+    }
+
+    @Override
+    protected String getIdFieldName() {
+        return FIELD_NAME;
+    }
+
+    @Override
+    protected User extractResult(ResultSet rs) {
+        return null;
+    }
 
     private static class Holder {
         public static final UserDao INSTANCE = new UserDaoImpl(ConnectionPool.instance());

@@ -1,6 +1,14 @@
 package com.epam.jwd.onlinetraining.service.exception;
 
+/**
+ * com.epam.jwd.onlinetraining.service.exception public class WrongPasswordException
+ * extends Exception
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class WrongPasswordException extends Exception {
+
     public WrongPasswordException() {
         super();
     }

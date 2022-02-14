@@ -5,6 +5,7 @@ import com.epam.jwd.onlinetraining.dao.api.TaskDao;
 import com.epam.jwd.onlinetraining.dao.db.TransactionManager;
 import com.epam.jwd.onlinetraining.dao.model.Task;
 import com.epam.jwd.onlinetraining.service.api.TaskService;
+import com.epam.jwd.onlinetraining.service.exception.EmptyInputException;
 import com.epam.jwd.onlinetraining.service.exception.WrongFeedbackException;
 import com.epam.jwd.onlinetraining.service.exception.WrongLinkException;
 import com.epam.jwd.onlinetraining.service.exception.WrongTitleException;
@@ -16,6 +17,14 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * com.epam.jwd.onlinetraining.service.core public class SimpleTaskService
+ * extends Object
+ * implements TaskService
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class SimpleTaskService implements TaskService {
 
     private static final Logger LOGGER = LogManager.getLogger(SimpleCourseService.class);
@@ -60,29 +69,20 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
-    public boolean update(Task course, String title) {
-        return false;
-    }
-
-    @Override
     public boolean delete(Long id) {
         return false;
     }
 
     @Override
-    public List<Task> findTasksByCourseId(long id) {
-        return taskDao.findTasksByCourseId(id);
-    }
-
-    @Override
-    public Optional<Task> addTaskToCourse(Task task, long courseId) throws WrongLinkException, WrongTitleException {
+    public Optional<Task> addTaskToCourse(Task task, long courseId) throws WrongLinkException, WrongTitleException, EmptyInputException {
         taskValidator.validateTitle(task.getTitle());
         taskValidator.validateLink(task.getDescription());
         return taskDao.addTaskToCourse(task, courseId);
     }
 
     @Override
-    public boolean addTaskAnswerToUser(String answer, long courseUserId, long courseId, long idTask) throws WrongLinkException {
+    public boolean addTaskAnswerToUser(String answer, long courseUserId, long courseId, long idTask) throws WrongLinkException, EmptyInputException {
+
         taskValidator.validateAnswer(answer);
         return taskDao.addTaskToAnswer(answer, courseUserId, courseId, idTask);
     }
@@ -93,7 +93,8 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
-    public boolean addFeedbackToAnswer(String feedback, long userId, long taskId) throws WrongFeedbackException {
+    public boolean addFeedbackToAnswer(String feedback, long userId, long taskId) throws WrongFeedbackException, EmptyInputException {
+
         feedbackValidator.validateFeedback(feedback);
         return taskDao.createFeedbackToAnswer(feedback, userId, taskId);
     }

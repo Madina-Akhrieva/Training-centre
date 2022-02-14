@@ -110,7 +110,6 @@
 									</c:if>
 									<c:if test="${not empty sessionScope.account && sessionScope.account.role eq Role.STUDENT}">
 										<a href="/controller?command=add_course_to_user&&course_id=${course.id}&&user_id=${sessionScope.account.id}">
-											Добавить курс в профиль
 											${add_course}
 										</a>
 									</c:if>

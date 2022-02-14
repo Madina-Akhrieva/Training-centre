@@ -3,6 +3,13 @@ package com.epam.jwd.onlinetraining.dao.model;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * com.epam.jwd.onlinetraining.dao.model public enum Role
+ * extends Enum<Role>
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public enum Role {
 
     UNAUTHORIZED(0),

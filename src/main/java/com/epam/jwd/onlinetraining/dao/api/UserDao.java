@@ -7,6 +7,13 @@ import com.epam.jwd.onlinetraining.dao.model.User;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * com.epam.jwd.onlinetraining.dao.api public interface UserDao
+ * extends EntityDao<User>
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public interface UserDao extends EntityDao<User> {
 
     static UserDao instance() {

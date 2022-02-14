@@ -15,20 +15,22 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * com.epam.jwd.onlinetraining.dao.core public class TaskDaoImpl
+ * extends CommonDao<Task>
+ * implements TaskDao
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
     private static final Logger LOGGER = LogManager.getLogger(TaskDaoImpl.class);
-
     private static final String INSERT_TASK_TO_COURSE = "INSERT INTO task( title, description, course_id) values(?,?, ?) ";
     private static final String SUBSCRIPTION_TABLE_NAME = "subscription  join course c on c.id = subscription.course_id inner join task t on t.course_id = subscription.course_id inner join course_user cu on  cu.id = subscription.course_user_id";
     private static final String SELECT_TITLE_DESCRIPTION_FROM_SUBSCRIPTION_WHERE_ID = "select id_task, t.title, c.description from" + " " + SUBSCRIPTION_TABLE_NAME + " " + " where t.course_id=? and course_user_id=?";
     private static final String SELECT_TITLE_DESCRIPTION_FROM_TASK_WHERE_ID = "select id_task, title, description from task t where t.course_id = ?";
     private static final String ADD_ANSWER_SQL_EXPRESSION = "insert into answer_table(task_id, answer, course_user_id) values (?, ?, ?)";
     private static final String UPDATE_FEEDBACK_SQL_EXPRESSION = "update  answer_table set feedback=? where task_id=? and course_user_id=?";
-    private static final String SELECT_TITLE_DESCRIPTION_FROM_TASK_WHERE_USER_COURSE_TASK_ID = "SELECT task_answer, course_user_id, c.id, id_task\n" +
-            "FROM subscription" +
-            "         join course c on c.id = subscription.course_id" +
-            "         inner join task t on t.course_id = subscription.course_id" +
-            "         inner join course_user cu on cu.id = subscription.course_user_id where course_user_id=? and c.id=? and id_task=?";
     private static final String ID_TASK_COLUMN_NAME = "id_task";
     private static final String TITLE_COLUMN_NAME = "t.title";
     private static final String DESCRIPTION_COLUMN_NAME = "description";
@@ -38,6 +40,11 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
     private static final String COURSE_ID_COLUMN_NAME = "c.id";
     private static final String TASK_ID_COLUMN_NAME = "id_task";
     private static final String ANSWER_COLUMN_NAME = "task_answer";
+    private static final String SELECT_TITLE_DESCRIPTION_FROM_TASK_WHERE_USER_COURSE_TASK_ID = "SELECT task_answer, course_user_id, c.id, id_task\n" +
+            "FROM subscription" +
+            "         join course c on c.id = subscription.course_id" +
+            "         inner join task t on t.course_id = subscription.course_id" +
+            "         inner join course_user cu on cu.id = subscription.course_user_id where course_user_id=? and c.id=? and id_task=?";
     private static final List<String> FIELDS = Arrays.asList(
             "id", "t.title", "description"
     );
@@ -46,10 +53,6 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
 
     protected TaskDaoImpl(ConnectionPool pool) {
         super(pool);
-    }
-
-    private static class Holder {
-        public static final TaskDao INSTANCE = new TaskDaoImpl(ConnectionPool.instance());
     }
 
     public static TaskDao getInstance() {
@@ -191,7 +194,7 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
 
     @Override
     public String readFeedbackByCourseIdUserIdAndTaskId(long courseId, long userId, long taskId) {
-        String feedback="";
+        String feedback = "";
         try (Connection connection = pool.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
                      SELECT_FEEDBACK_FROM_ANSWER_TABLE)) {
@@ -208,10 +211,23 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-        return feedback ;
+        return feedback;
     }
 
+    @Override
+    public List<Task> read() {
+        return null;
+    }
 
+    @Override
+    public Optional<Task> read(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Task create(Task entity) {
+        return null;
+    }
 
     @Override
     protected String getTableName() {
@@ -232,24 +248,14 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
     protected Task extractResult(ResultSet rs) {
         return null;
     }
+
+    private static class Holder {
+        public static final TaskDao INSTANCE = new TaskDaoImpl(ConnectionPool.instance());
+    }
+
     @Override
     public List<Task> read() {
         return null;
     }
-
-    @Override
-    public Optional<Task> read(Long id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Task create(Task entity) {
-        return null;
-    }
-
-
-
-
-
 
 }

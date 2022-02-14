@@ -20,6 +20,10 @@
 <div class="main-w3layouts wrapper">
 	<h1>${updateCourseTitle}</h1>
 	<c:choose>
+		<c:when test="${not empty sessionScope.emptyInputsMessage}">
+			<p style="color:red; text-align: center">${sessionScope['emptyInputsMessage']}</p>
+			${sessionScope.remove('emptyInputsMessage')}
+		</c:when>
 		<c:when test="${not empty sessionScope.wrongDescriptionAttribute}">
 			<p style="color:red; text-align: center">${sessionScope['wrongDescriptionAttribute']}</p>
 			${sessionScope.remove('wrongDescriptionAttribute')}
@@ -39,8 +43,9 @@
 			      method="post">
 				<input class="text" type="text" name="title" placeholder=${title_placeholder}
 				       maxlength="70" minlength="2"
-<%--				       pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$" --%>
-				       required value="${course.title}">
+				       pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$"
+				       required
+				       value="${course.title}">
 				<br><br>
 				<select name="learning_language" id="learning_language" class="text"
 				        value="<c:out value='${course.learningLanguage}'/>" required>
@@ -61,7 +66,7 @@
 				</select>
 				<input class="text w3lpass" type="text" name="description"  placeholder=${course_description_placeholder}
 				       maxlength="70" minlength="2"
-<%--				       pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$" --%>
+				       pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$"
 				       required>
 				<input type="submit" value=${button_update_course}>
 				<p><a href="/controller?command=manage_courses"> ${return_message}</a></p>

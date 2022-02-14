@@ -27,8 +27,21 @@
 		TRAINING CENTRE ♥
 		<ul id="nav-mobile" class="right hide-on-med-and-down">
 			<li style=" color: #1aff00; margin-right: 100px">
-				${sessionScope['successfulDeleteMessage']}
-				${sessionScope.remove('successfulDeleteMessage')}
+					<c:choose>
+						<c:when test="${not empty sessionScope.successfulDeleteMessage}">
+							<p style="color:#1aff00; text-align: center">${sessionScope['successfulDeleteMessage']}</p>
+							${sessionScope.remove('successfulDeleteMessage')}
+						</c:when>
+						<c:when test="${not empty sessionScope.successfulEditMessage}">
+							<h6 style="color:#1aff00; text-align: center">${sessionScope['successfulEditMessage']}</h6>
+							${sessionScope.remove('successfulEditMessage')}
+						</c:when>
+						<c:otherwise>
+							<h6 style="color:#1aff00; text-align: center;">${sessionScope.successfulAddMessage}</h6>
+							${sessionScope.remove('successfulAddMessage')}
+
+						</c:otherwise>
+					</c:choose>
 			</li>
 			<c:choose>
 				<c:when test="${not empty sessionScope.account}">

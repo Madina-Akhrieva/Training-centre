@@ -8,6 +8,7 @@ import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
 import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.service.api.CourseService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
+import com.epam.jwd.onlinetraining.service.exception.EmptyInputException;
 import com.epam.jwd.onlinetraining.service.exception.WrongDescriptionException;
 import com.epam.jwd.onlinetraining.service.exception.WrongTitleException;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +16,14 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * com.epam.jwd.onlinetraining.controller.command.coursecomamnd public enum AddCourseCommand
+ * extends Enum<AddCourseCommand>
+ * implements Command
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public enum AddCourseCommand implements Command {
     INSTANCE(ServiceFactory.simple().courseService(), RequestFactory.getInstance(), PropertyContext.instance());
     private static final Logger LOGGER = LogManager.getLogger(AddCourseCommand.class);
@@ -26,9 +35,13 @@ public enum AddCourseCommand implements Command {
     private static final String WRONG_DESCRIPTION_MESSAGE = "Description has wrong symbols";
     private static final String WRONG_TITLE_ATTRIBUTE = "wrongTitleAttribute";
     private static final String WRONG_TITLE_MESSAGE = "Title contains wrong symbols. Check once more please ♥";
-    private static final String SUCCESSFUL_SIGNUP_ATTRIBUTE = "successfulSignupMessage";
-    private static final String SUCCESSFUL_SIGNUP_MESSAGE_TEXT = "Course is added successfully ♥";
+    private static final String SUCCESSFUL_ADD_ATTRIBUTE = "successfulAddMessage";
+    private static final String SUCCESSFUL_ADD_MESSAGE_TEXT = "Course is added successfully ♥";
     private static final String COURSES_ATTRIBUTE_NAME = "courses";
+    private static final String EMPTY_INPUTS_ATTRIBUTE = "emptyInputsMessage";
+    private static final Object EMPTY_INPUTS_MESSAGE_TEXT = "None input is allowed to be empty!";
+    private static final String INDEX_JSP_PATH = "page.index";
+
 
     private final CourseService courseService;
     private final RequestFactory requestFactory;
@@ -60,8 +73,15 @@ public enum AddCourseCommand implements Command {
             LOGGER.warn("WrongTitleException is caught");
             request.addToSession(WRONG_TITLE_ATTRIBUTE, WRONG_TITLE_MESSAGE);
             return requestFactory.createRedirectResponse(propertyContext.get(ADD_COURSE_JSP_PAGE));
+        } catch (EmptyInputException e) {
+            LOGGER.warn("Empty inputs exception");
+            request.addAttributeToJsp(EMPTY_INPUTS_ATTRIBUTE, EMPTY_INPUTS_MESSAGE_TEXT);
+            request.addToSession(EMPTY_INPUTS_ATTRIBUTE, EMPTY_INPUTS_MESSAGE_TEXT);
+            return requestFactory.createRedirectResponse(propertyContext.get(ADD_COURSE_JSP_PAGE));
+        } catch (Exception exception) {
+            return requestFactory.createRedirectResponse(propertyContext.get(INDEX_JSP_PATH));
         }
-        request.addToSession(SUCCESSFUL_SIGNUP_ATTRIBUTE, SUCCESSFUL_SIGNUP_MESSAGE_TEXT);
+        request.addToSession(SUCCESSFUL_ADD_ATTRIBUTE, SUCCESSFUL_ADD_MESSAGE_TEXT);
         return requestFactory.createForwardResponse(propertyContext.get(COURSE_JSP_PAGE));
 
 

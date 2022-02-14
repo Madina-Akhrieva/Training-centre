@@ -6,6 +6,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+/**
+ * com.epam.jwd.onlinetraining.controller.core public class WrappingCommandRequest
+ * extends Object
+ * implements CommandRequest
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class WrappingCommandRequest implements CommandRequest {
 
     private final HttpServletRequest request;

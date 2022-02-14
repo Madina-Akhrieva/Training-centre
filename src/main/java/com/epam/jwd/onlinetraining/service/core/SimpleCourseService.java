@@ -7,6 +7,7 @@ import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.Mentor;
 
 import com.epam.jwd.onlinetraining.service.api.CourseService;
+import com.epam.jwd.onlinetraining.service.exception.EmptyInputException;
 import com.epam.jwd.onlinetraining.service.exception.WrongDescriptionException;
 import com.epam.jwd.onlinetraining.service.exception.WrongTitleException;
 import com.epam.jwd.onlinetraining.service.validator.CourseValidator;
@@ -18,6 +19,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 
+/**
+ * com.epam.jwd.onlinetraining.service.core public class SimpleCourseService
+ * extends Object
+ * implements CourseService
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class SimpleCourseService implements CourseService {
     private static final Logger LOGGER = LogManager.getLogger(SimpleCourseService.class);
 
@@ -62,7 +71,7 @@ public class SimpleCourseService implements CourseService {
     }
 
     @Override
-    public boolean update(Course course, String title) throws WrongDescriptionException, WrongTitleException {
+    public boolean update(Course course, String title) throws WrongDescriptionException, WrongTitleException, EmptyInputException {
         courseValidator.validateTitle(course.getTitle());
         courseValidator.validateDescription(course.getDescription());
         LOGGER.info("The course we got is: {}", course);
@@ -77,9 +86,9 @@ public class SimpleCourseService implements CourseService {
 
 
     @Override
-    public Course create(Course course) throws WrongDescriptionException, WrongTitleException {
-        courseValidator.validateDescription(course.getDescription());
+    public Course create(Course course) throws WrongDescriptionException, WrongTitleException, EmptyInputException {
         courseValidator.validateTitle(course.getTitle());
+        courseValidator.validateDescription(course.getDescription());
         return courseDao.create(course);
     }
 

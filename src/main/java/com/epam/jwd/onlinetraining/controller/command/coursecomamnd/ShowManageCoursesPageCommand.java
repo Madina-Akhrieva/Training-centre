@@ -14,12 +14,22 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * com.epam.jwd.onlinetraining.controller.command.coursecomamnd public enum ShowManageCoursesPageCommand
+ * extends Enum<ShowManageCoursesPageCommand>
+ * implements Command
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public enum ShowManageCoursesPageCommand implements Command {
     INSTANCE(ServiceFactory.simple().serviceFor(Course.class),
             RequestFactory.getInstance(), PropertyContext.instance());
 
     private static final String COURSES_ATTRIBUTE_NAME = "courses";
     private static final String MANAGE_COURSES = "page.manage_courses";
+    private static final String INDEX_JSP_PATH = "page.index";
+
 
     private final EntityService<Course> service;
     private final RequestFactory requestFactory;
@@ -33,8 +43,13 @@ public enum ShowManageCoursesPageCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        final List<Course> courses = service.findAll();
-        request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, courses);
-        return requestFactory.createForwardResponse(propertyContext.get(MANAGE_COURSES));
+        try {
+            final List<Course> courses = service.findAll();
+            request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, courses);
+            return requestFactory.createForwardResponse(propertyContext.get(MANAGE_COURSES));
+        } catch (Exception exception) {
+            return requestFactory.createRedirectResponse(propertyContext.get(INDEX_JSP_PATH));
+        }
+
     }
 }

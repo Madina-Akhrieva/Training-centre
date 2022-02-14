@@ -8,6 +8,7 @@ import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
 import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.service.api.CourseService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
+import com.epam.jwd.onlinetraining.service.exception.EmptyInputException;
 import com.epam.jwd.onlinetraining.service.exception.WrongDescriptionException;
 import com.epam.jwd.onlinetraining.service.exception.WrongTitleException;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +16,14 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * com.epam.jwd.onlinetraining.controller.command.coursecomamnd public enum SubmitEditCourseCommand
+ * extends Enum<SubmitEditCourseCommand>
+ * implements Command
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public enum SubmitEditCourseCommand implements Command {
     INSTANCE(ServiceFactory.simple().courseService(), RequestFactory.getInstance(), PropertyContext.instance());
 
@@ -31,6 +40,10 @@ public enum SubmitEditCourseCommand implements Command {
     private static final String SUCCESSFUL_EDIT_ATTRIBUTE = "successfulEditMessage";
     private static final String SUCCESSFUL_EDIT_MESSAGE_TEXT = "Course is edited successfully ♥";
     private static final String COURSE_ID_REQUEST_ATTRIBUTE_NAME = "courseId";
+    private static final String EMPTY_INPUTS_ATTRIBUTE = "emptyInputsMessage";
+    private static final Object EMPTY_INPUTS_MESSAGE_TEXT = "None input is allowed to be empty!";
+    private static final String INDEX_JSP_PATH = "page.index";
+
 
     private final CourseService courseService;
     private final RequestFactory requestFactory;
@@ -66,6 +79,13 @@ public enum SubmitEditCourseCommand implements Command {
             request.addToSession(WRONG_TITLE_ATTRIBUTE, WRONG_TITLE_MESSAGE);
             return requestFactory.createRedirectResponse(propertyContext.get(EDIT_COURSE_JSP_PAGE));
 
+        } catch (EmptyInputException e) {
+            LOGGER.warn("Empty inputs exception");
+            request.addAttributeToJsp(EMPTY_INPUTS_ATTRIBUTE, EMPTY_INPUTS_MESSAGE_TEXT);
+            request.addToSession(EMPTY_INPUTS_ATTRIBUTE, EMPTY_INPUTS_MESSAGE_TEXT);
+            return requestFactory.createRedirectResponse(propertyContext.get(EDIT_COURSE_JSP_PAGE));
+        } catch (Exception exception) {
+            return requestFactory.createRedirectResponse(propertyContext.get(INDEX_JSP_PATH));
         }
         request.addToSession(SUCCESSFUL_EDIT_ATTRIBUTE, SUCCESSFUL_EDIT_MESSAGE_TEXT);
         return requestFactory.createForwardResponse(propertyContext.get(MANAGE_COURSES_JSP_PAGE));

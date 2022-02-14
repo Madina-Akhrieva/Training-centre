@@ -7,6 +7,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
 
+/**
+ * com.epam.jwd.onlinetraining.dao.db public class ThreadLocalTransactionManager
+ * extends Object
+ * implements TransactionManager
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class ThreadLocalTransactionManager implements TransactionManager {
 
     private static final Logger LOGGER = LogManager.getLogger(ThreadLocalTransactionManager.class);

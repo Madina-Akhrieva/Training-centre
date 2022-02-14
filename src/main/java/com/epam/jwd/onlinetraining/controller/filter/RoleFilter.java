@@ -23,6 +23,15 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * com.epam.jwd.onlinetraining.controller.filter @WebFilter(urlPatterns = "/controller")
+ * public class RoleFilter
+ * extends Object
+ * implements Filter
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 @WebFilter(urlPatterns = "/controller")
 public class RoleFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger(RoleFilter.class);

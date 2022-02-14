@@ -8,6 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * com.epam.jwd.onlinetraining.controller.core public enum SimpleRequestFactory
+ * extends Enum<SimpleRequestFactory>
+ * implements RequestFactory
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public enum SimpleRequestFactory implements RequestFactory {
 
     INSTANCE;

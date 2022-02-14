@@ -13,6 +13,13 @@ import java.util.Optional;
 
 import static java.lang.String.format;
 
+/**
+ * com.epam.jwd.onlinetraining.controller.tag public class WelcomeUserTag
+ * extends TagSupport
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class WelcomeUserTag extends TagSupport {
     public static final String ACCOUNT_SESSION_PARAM = "account";
     private static final Logger LOGGER = LogManager.getLogger(WelcomeUserTag.class);

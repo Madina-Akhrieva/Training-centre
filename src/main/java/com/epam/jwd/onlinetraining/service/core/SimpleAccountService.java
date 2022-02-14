@@ -8,6 +8,7 @@ import com.epam.jwd.onlinetraining.dao.db.ConnectionPool;
 import com.epam.jwd.onlinetraining.dao.model.Account;
 import com.epam.jwd.onlinetraining.service.api.AccountService;
 import com.epam.jwd.onlinetraining.service.exception.AccountWithSuchEmailExists;
+import com.epam.jwd.onlinetraining.service.exception.EmptyInputException;
 import com.epam.jwd.onlinetraining.service.exception.WrongMailException;
 import com.epam.jwd.onlinetraining.service.exception.WrongPasswordException;
 import com.epam.jwd.onlinetraining.service.validator.AccountValidator;
@@ -18,9 +19,19 @@ import java.util.Optional;
 
 import static at.favre.lib.crypto.bcrypt.BCrypt.MIN_COST;
 
+/**
+ * com.epam.jwd.onlinetraining.service.core public class SimpleAccountService
+ * extends Object
+ * implements AccountService
+ *
+ *  @author Madina Akhrieva
+ *  @version 1.0
+ */
 public class SimpleAccountService implements AccountService {
 
     public static final byte[] DUMMY_PASSWORD = "password".getBytes(StandardCharsets.UTF_8);
+    public static final String EMPTY_STRING = "";
+    public static final String INPUTS_ARE_EMPTY_MESSAGE = "Inputs are empty";
     private final AccountValidator accountValidator;
     private final AccountDao accountDao;
     private final UserDao userDao;
@@ -35,12 +46,12 @@ public class SimpleAccountService implements AccountService {
         this.verifier = verifier;
     }
 
+    private void protectFromTimingAttack(byte[] enteredPassword) {
+        verifier.verify(enteredPassword, DUMMY_PASSWORD);
+    }
 
     @Override
-    public Optional<Account> register(String email, String password) throws WrongMailException, WrongPasswordException, AccountWithSuchEmailExists {
-        if (email == null || password == null) {
-            return Optional.empty();
-        }
+    public Optional<Account> register(String email, String password) throws WrongMailException, WrongPasswordException, AccountWithSuchEmailExists, EmptyInputException {
         accountValidator.validateMail(email);
         accountValidator.validatePassword(password);
         final Optional<Account> readAccount = accountDao.readAccountByEmail(email);
@@ -56,20 +67,15 @@ public class SimpleAccountService implements AccountService {
     }
 
     @Override
-    public Optional<Account> findByMail(String mail) {
-        return accountDao.readAccountByEmail(mail);
-    }
-
-    @Override
     public Optional<Account> findById(long id) {
         return accountDao.readAccountById(id);
     }
 
     @Override
-    public Optional<Account> authenticate(String mail, String password) {
+    public Optional<Account> authenticate(String mail, String password) throws EmptyInputException, Exception {
 
-        if (mail == null || password == null) {
-            return Optional.empty();
+        if (mail==EMPTY_STRING|| password == EMPTY_STRING) {
+            throw new EmptyInputException(INPUTS_ARE_EMPTY_MESSAGE);
         }
         final byte[] enteredPassword = password.getBytes(StandardCharsets.UTF_8);
         final Optional<Account> readAccount = accountDao.readAccountByEmail(mail);
@@ -84,10 +90,6 @@ public class SimpleAccountService implements AccountService {
             protectFromTimingAttack(enteredPassword);
             return Optional.empty();
         }
-    }
-
-    private void protectFromTimingAttack(byte[] enteredPassword) {
-        verifier.verify(enteredPassword, DUMMY_PASSWORD);
     }
 
     @Override

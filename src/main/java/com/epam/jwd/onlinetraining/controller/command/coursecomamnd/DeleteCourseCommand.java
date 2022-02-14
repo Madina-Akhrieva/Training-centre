@@ -13,6 +13,14 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * com.epam.jwd.onlinetraining.controller.command.coursecomamnd public enum DeleteCourseCommand
+ * extends Enum<DeleteCourseCommand>
+ * implements Command
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public enum DeleteCourseCommand implements Command {
     INSTANCE(ServiceFactory.simple().courseService(), RequestFactory.getInstance(), PropertyContext.instance());
 
@@ -25,6 +33,8 @@ public enum DeleteCourseCommand implements Command {
     private static final Object IS_NOT_DELETED_MESSAGE = "Course is not deleted successfully!";
     private static final String SUCCESSFUL_DELETE_ATTRIBUTE = "successfulDeleteMessage";
     private static final String SUCCESSFUL_DELETE_MESSAGE_TEXT = "Course is deleted successfully ♥";
+    private static final String INDEX_JSP_PATH = "page.index";
+
 
     private final CourseService courseService;
     private final RequestFactory requestFactory;
@@ -39,18 +49,23 @@ public enum DeleteCourseCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        LOGGER.trace("deleteCourseCommand ");
-        long id = Long.parseLong(request.getParameter(ID_REQUEST_PARAM_NAME));
-        boolean isDeleted = courseService.delete(id);
-        if (isDeleted) {
-            request.addAttributeToJsp(DELETED_MESSAGE_ATTRIBUTE, IS_DELETED_MESSAGE);
-        } else {
-            request.addAttributeToJsp(DELETED_MESSAGE_ATTRIBUTE, IS_NOT_DELETED_MESSAGE);
+        try {
+            LOGGER.trace("deleteCourseCommand ");
+            long id = Long.parseLong(request.getParameter(ID_REQUEST_PARAM_NAME));
+            boolean isDeleted = courseService.delete(id);
+            if (isDeleted) {
+                request.addAttributeToJsp(DELETED_MESSAGE_ATTRIBUTE, IS_DELETED_MESSAGE);
+            } else {
+                request.addAttributeToJsp(DELETED_MESSAGE_ATTRIBUTE, IS_NOT_DELETED_MESSAGE);
+            }
+            final List<Course> courses = courseService.findAll();
+            request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, courses);
+            request.addToSession(SUCCESSFUL_DELETE_ATTRIBUTE, SUCCESSFUL_DELETE_MESSAGE_TEXT);
+            return requestFactory.createForwardResponse(propertyContext.get(MANAGE_COURSES_PAGE));
+        } catch (Exception exception) {
+            return requestFactory.createRedirectResponse(propertyContext.get(INDEX_JSP_PATH));
         }
-        final List<Course> courses = courseService.findAll();
-        request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, courses);
-        request.addToSession(SUCCESSFUL_DELETE_ATTRIBUTE, SUCCESSFUL_DELETE_MESSAGE_TEXT);
-        return requestFactory.createForwardResponse(propertyContext.get(MANAGE_COURSES_PAGE));
+
     }
 
 }

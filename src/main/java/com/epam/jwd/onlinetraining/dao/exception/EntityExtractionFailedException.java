@@ -1,6 +1,13 @@
 package com.epam.jwd.onlinetraining.dao.exception;
 
-public class EntityExtractionFailedException extends Exception{
+/**
+ * com.epam.jwd.onlinetraining.dao.exception public class EntityExtractionFailedException
+ * extends Exception
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
+public class EntityExtractionFailedException extends Exception {
 
     public EntityExtractionFailedException(String message) {
         super(message);

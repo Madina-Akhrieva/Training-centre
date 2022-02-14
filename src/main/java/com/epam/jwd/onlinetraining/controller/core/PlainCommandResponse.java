@@ -4,6 +4,14 @@ import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
 
 import java.util.Objects;
 
+/**
+ * com.epam.jwd.onlinetraining.controller.core public class PlainCommandResponse
+ * extends Object
+ * implements CommandResponse
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class PlainCommandResponse implements CommandResponse {
 
     private final boolean redirect;

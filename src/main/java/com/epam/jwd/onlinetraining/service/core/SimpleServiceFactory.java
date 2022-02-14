@@ -21,6 +21,14 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
+/**
+ * com.epam.jwd.onlinetraining.service.core public class SimpleServiceFactory
+ * extends Object
+ * implements ServiceFactory
+ *
+ *  @author Madina Akhrieva
+ *  @version 1.0
+ */
 public class SimpleServiceFactory implements ServiceFactory {
 
     public static final SimpleServiceFactory INSTANCE = new SimpleServiceFactory();

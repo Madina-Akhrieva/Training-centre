@@ -7,6 +7,12 @@ import com.epam.jwd.onlinetraining.dao.model.Task;
 import com.epam.jwd.onlinetraining.dao.model.User;
 import com.epam.jwd.onlinetraining.service.core.SimpleServiceFactory;
 
+/**
+ * com.epam.jwd.onlinetraining.service.api public interface ServiceFactory
+ *
+ *  @author Madina Akhrieva
+ *  @version 1.0
+ */
 public interface ServiceFactory {
 
     <T extends Entity> EntityService<T> serviceFor(Class<T> modelClass);

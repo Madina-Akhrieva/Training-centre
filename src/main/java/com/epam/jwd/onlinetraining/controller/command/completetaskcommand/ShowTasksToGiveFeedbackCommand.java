@@ -11,6 +11,14 @@ import com.epam.jwd.onlinetraining.service.api.TaskService;
 
 import java.util.List;
 
+/**
+ * com.epam.jwd.onlinetraining.controller.command.completetaskcommand public enum ShowTasksToGiveFeedbackCommand
+ * extends Enum<ShowTasksToGiveFeedbackCommand>
+ * implements Command
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public enum ShowTasksToGiveFeedbackCommand implements Command {
     INSTANCE(ServiceFactory.simple().taskService(), RequestFactory.getInstance(), PropertyContext.instance());
 
@@ -19,6 +27,8 @@ public enum ShowTasksToGiveFeedbackCommand implements Command {
     private static final String COURSE_ID_PARAM = "id";
     private static final String TASKS_ATTRIBUTE_NAME = "tasks";
     private static final String USER_ID_REQUEST_PARAM_NAME = "uid";
+    private static final String INDEX_JSP_PATH = "page.index";
+
 
     private final TaskService taskService;
     private final RequestFactory requestFactory;
@@ -32,14 +42,18 @@ public enum ShowTasksToGiveFeedbackCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        long courseId = Long.parseLong(request.getParameter(ID_REQUEST_PARAM_NAME));
-        long userId = Long.parseLong(request.getParameter(USER_ID_REQUEST_PARAM_NAME));
-//        final List<Task> tasks = taskService.findAll(courseId);
-        final List<Task> tasks = taskService.findAllTasksByCourseIdAndUserId(courseId, userId);
-        request.addAttributeToJsp(COURSE_ID_PARAM, courseId);
-        request.addAttributeToJsp(USER_ID_REQUEST_PARAM_NAME, userId);
-        request.addAttributeToJsp(TASKS_ATTRIBUTE_NAME, tasks);
+        try {
+            long courseId = Long.parseLong(request.getParameter(ID_REQUEST_PARAM_NAME));
+            long userId = Long.parseLong(request.getParameter(USER_ID_REQUEST_PARAM_NAME));
+            final List<Task> tasks = taskService.findAllTasksByCourseIdAndUserId(courseId, userId);
+            request.addAttributeToJsp(COURSE_ID_PARAM, courseId);
+            request.addAttributeToJsp(USER_ID_REQUEST_PARAM_NAME, userId);
+            request.addAttributeToJsp(TASKS_ATTRIBUTE_NAME, tasks);
 
-        return requestFactory.createForwardResponse(propertyContext.get(LEAVE_FEEDBACK));
+            return requestFactory.createForwardResponse(propertyContext.get(LEAVE_FEEDBACK));
+        } catch (Exception exception) {
+            return requestFactory.createRedirectResponse(propertyContext.get(INDEX_JSP_PATH));
+        }
+
     }
 }

@@ -8,6 +8,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * com.epam.jwd.onlinetraining.dao.api @FunctionalInterface
+ * public interface ResultSetExtractor<T>
+ *
+ * @param <T>
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 @FunctionalInterface
 public interface ResultSetExtractor<T> {
 

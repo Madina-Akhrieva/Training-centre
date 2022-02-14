@@ -38,6 +38,12 @@ import static com.epam.jwd.onlinetraining.dao.model.Role.MENTOR;
 import static com.epam.jwd.onlinetraining.dao.model.Role.STUDENT;
 import static com.epam.jwd.onlinetraining.dao.model.Role.UNAUTHORIZED;
 
+/**
+ * com.epam.jwd.onlinetraining.controller.command.common public enum CommandRegistry extends Enum<CommandRegistry>
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public enum CommandRegistry {
 
     MAIN_PAGE(ShowMainPageCommand.INSTANCE, "main_page"),
@@ -80,14 +86,6 @@ public enum CommandRegistry {
         this.allowedRoles = roles != null && roles.length > 0 ? Arrays.asList(roles) : Role.valuesAsList();
     }
 
-    public Command getCommand() {
-        return command;
-    }
-
-    public List<Role> getAllowedRoles() {
-        return allowedRoles;
-    }
-
     static Command of(String name) {
         for (CommandRegistry constant : values()) {
             if (constant.path.equalsIgnoreCase(name)) {
@@ -96,4 +94,14 @@ public enum CommandRegistry {
         }
         return DEFAULT.command;
     }
+
+    public Command getCommand() {
+        return command;
+    }
+
+    public List<Role> getAllowedRoles() {
+        return allowedRoles;
+    }
+
+
 }

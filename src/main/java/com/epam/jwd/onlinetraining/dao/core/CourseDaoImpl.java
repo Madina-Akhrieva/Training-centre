@@ -16,15 +16,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * com.epam.jwd.onlinetraining.dao.core public final class CourseDaoImpl
+ * extends CommonDao<Course>
+ * implements CourseDao
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao {
 
     private static final Logger LOGGER = LogManager.getLogger(CourseDaoImpl.class);
-
-    private static final String SQL_DELETE_COURSE = "DELETE FROM course WHERE  id=,";
     private static final String INSERT_COURSE = "INSERT INTO course( title, learning_language, description) values(?,?,?)  ";
     private static final String SELECT_TITLE_LEARNING_LANGUAGE_DESCRIPTION_FROM_COURSE_WHERE_ID = "select title, learning_language, description from course c where c.id = ?";
     private static final String SELECT_MENTOR_ID_FROM_COURSE = "select mentor_id from course c where c.id = ?";
-
     private static final String COURSE = "course";
     private static final String ID_FIELD_NAME = "id";
     private static final String TITLE_FIELD_NAME = "title";
@@ -32,15 +37,13 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
     private static final String TITLE_COLUMN_NAME = "title";
     private static final String LEARNING_LANGUAGE_COLUMN_NAME = "learning_language";
     private static final String DESCRIPTION_COLUMN_NAME = "description";
-
+    private static final String UPDATE_COURSE_WHERE_TITLE = "update course set title = ?, learning_language = ?, description = ? where title = ?";
+    private static final String DELETE_COURSE_WHERE_ID = "delete from course where id=?";
+    private static final String FOREIGN_KEY_CHECKS_VALUE_0 = "SET FOREIGN_KEY_CHECKS=0";
+    private static final String FOREIGN_KEY_CHECKS_VALUE_1 = "SET FOREIGN_KEY_CHECKS=1";
     private static final List<String> FIELDS = Arrays.asList(
             "id", "title", "learning_language", "description"
     );
-    private static final String UPDATE_COURSE_WHERE_TITLE = "update course set title = ?, learning_language = ?, description = ? where title = ?";
-    private static final String DELETE_COURSE_WHERE_ID = "delete from course where id=?";
-
-    public static final String FOREIGN_KEY_CHECKS_VALUE_0="SET FOREIGN_KEY_CHECKS=0";
-    public static final String FOREIGN_KEY_CHECKS_VALUE_1="SET FOREIGN_KEY_CHECKS=1";
 
     protected CourseDaoImpl(ConnectionPool pool) {
         super(pool);
@@ -48,36 +51,6 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
 
     public static CourseDao getInstance() {
         return Holder.INSTANCE;
-    }
-
-    private static class Holder {
-        public static final CourseDao INSTANCE = new CourseDaoImpl(ConnectionPool.instance());
-    }
-
-    @Override
-    protected String getTableName() {
-        return COURSE;
-    }
-
-    @Override
-    protected List<String> getFields() {
-        return FIELDS;
-    }
-
-    @Override
-    protected String getIdFieldName() {
-        return ID_FIELD_NAME;
-    }
-
-
-    @Override
-    protected Course extractResult(ResultSet rs) throws SQLException {
-        return new Course(
-                rs.getLong(ID_FIELD_NAME),
-                rs.getString(TITLE_FIELD_NAME),
-                rs.getString(LEARNING_LANGUAGE_COLUMN_NAME),
-                rs.getString(DESCRIPTION_FIELD_NAME)
-        );
     }
 
     @Override
@@ -142,18 +115,6 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
         return false;
     }
 
-
-    private long extractMentorId(ResultSet rs) throws EntityExtractionFailedException {
-        try {
-            return rs.getLong("mentor_id");
-        } catch (SQLException e) {
-            LOGGER.error("sql exception occurred extracting entity from ResultSet", e);
-            throw new EntityExtractionFailedException("couldn't extract entity", e);
-        }
-    }
-
-
-
     @Override
     public Boolean delete(Long id) {
         try (Connection connection = pool.takeConnection();
@@ -195,6 +156,90 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
         }
 
         return course;
+    }
+
+
+    @Override
+    protected String getTableName() {
+        return COURSE;
+    }
+
+    @Override
+    protected List<String> getFields() {
+        return FIELDS;
+    }
+
+    @Override
+    protected String getIdFieldName() {
+        return ID_FIELD_NAME;
+    }
+
+
+    @Override
+    protected Course extractResult(ResultSet rs) throws SQLException {
+        return new Course(
+                rs.getLong(ID_FIELD_NAME),
+                rs.getString(TITLE_FIELD_NAME),
+                rs.getString(LEARNING_LANGUAGE_COLUMN_NAME),
+                rs.getString(DESCRIPTION_FIELD_NAME)
+        );
+    }
+
+
+
+    private long extractMentorId(ResultSet rs) throws EntityExtractionFailedException {
+        try {
+            return rs.getLong("mentor_id");
+        } catch (SQLException e) {
+            LOGGER.error("sql exception occurred extracting entity from ResultSet", e);
+            throw new EntityExtractionFailedException("couldn't extract entity", e);
+        }
+    }
+
+    private static class Holder {
+        public static final CourseDao INSTANCE = new CourseDaoImpl(ConnectionPool.instance());
+    }
+
+
+    @Override
+    protected String getTableName() {
+        return COURSE;
+    }
+
+    @Override
+    protected List<String> getFields() {
+        return FIELDS;
+    }
+
+    @Override
+    protected String getIdFieldName() {
+        return ID_FIELD_NAME;
+    }
+
+
+    @Override
+    protected Course extractResult(ResultSet rs) throws SQLException {
+        return new Course(
+                rs.getLong(ID_FIELD_NAME),
+                rs.getString(TITLE_FIELD_NAME),
+                rs.getString(LEARNING_LANGUAGE_COLUMN_NAME),
+                rs.getString(DESCRIPTION_FIELD_NAME)
+        );
+    }
+
+
+
+    private long extractMentorId(ResultSet rs) throws EntityExtractionFailedException {
+        try {
+            return rs.getLong("mentor_id");
+        } catch (SQLException e) {
+            LOGGER.error("sql exception occurred extracting entity from ResultSet", e);
+            throw new EntityExtractionFailedException("couldn't extract entity", e);
+        }
+    }
+
+    private static class Holder {
+        public static final CourseDao INSTANCE = new CourseDaoImpl(ConnectionPool.instance());
     }
 
 

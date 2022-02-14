@@ -3,6 +3,14 @@ package com.epam.jwd.onlinetraining.dao.db;
 import java.sql.Connection;
 import java.util.Optional;
 
+/**
+ * com.epam.jwd.onlinetraining.dao.db public final class TransactionConnectionPool
+ * extends Object
+ * implements ConnectionPool
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public final class TransactionConnectionPool implements ConnectionPool {
 
     private final ConnectionPool connectionPool;

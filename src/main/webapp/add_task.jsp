@@ -22,6 +22,10 @@
 <div class="main-w3layouts wrapper">
 	<h1>${add_task_title}</h1>
 	<c:choose>
+		<c:when test="${not empty sessionScope.emptyInputsMessage}">
+			<p style="color:red; text-align: center">${sessionScope['emptyInputsMessage']}</p>
+			${sessionScope.remove('emptyInputsMessage')}
+		</c:when>
 		<c:when test="${not empty sessionScope.wrongTitleAttribute}">
 			<h6 style="color:red; text-align: center">${sessionScope['wrongTitleAttribute']}</h6>
 			${sessionScope.remove('wrongTitleAttribute')}
@@ -38,14 +42,22 @@
 	<div class="main-agileinfo">
 		<div class="agileits-top">
 			<form action="/controller?command=add_task&id=${courseId}" method="post">
-				<input class="text" type="text" name="title"  placeholder=${title_placeholder}
-				       maxlength="70" minlength="2"
-<%--				       pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$"--%>
-				       required="">
+				<input class="text" type="text" name="title"
+				       maxlength=70 minlength=2
+				       pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$"
+				       required
+
+				       placeholder=${title_placeholder}
+				>
 				<br><br>
-				<input class="text" type="text" name="description" placeholder=${add_task_title}
-<%--				       pattern = "(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"--%>
-				       required="">
+				<input  class="text" type="text" name="description"
+						        pattern = "(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"
+								       required
+                       placeholder=${task_link_placeholder}
+
+				>
+				<br><br>
+
 				<input type="submit" value=${button_add_task}>
 				<p>
 					<a href="/controller?command=manage_courses">

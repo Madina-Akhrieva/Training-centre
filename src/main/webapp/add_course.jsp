@@ -34,6 +34,10 @@
 <div class="main-w3layouts wrapper">
 	<h1>${addCourseTitle}</h1>
 	<c:choose>
+		<c:when test="${not empty sessionScope.emptyInputsMessage}">
+			<p style="color:red; text-align: center">${sessionScope['emptyInputsMessage']}</p>
+			${sessionScope.remove('emptyInputsMessage')}
+		</c:when>
 		<c:when test="${not empty sessionScope.wrongDescriptionAttribute}">
 			<h6 style="color:red; text-align: center">${sessionScope['wrongDescriptionAttribute']}</h6>
 			${sessionScope.remove('wrongDescriptionAttribute')}
@@ -50,10 +54,12 @@
 	<div class="main-agileinfo">
 		<div class="agileits-top">
 			<form name="course-form" action="/controller?command=add_course" method="post">
-				<input class="text" type="text" name="title" placeholder=${title_placeholder}
+				<input class="text" type="text" name="title"
 				       maxlength="70" minlength="2"
-<%--				       pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$" --%>
-				       required>
+				       pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$"
+				       required
+				       placeholder=${title_placeholder}
+				>
 
 				<br><br>
 
@@ -79,10 +85,11 @@
 				</select>
 
 				<input class="text w3lpass" type="text" name="description"
-				       placeholder=${course_description_placeholder}
 				       maxlength="70" minlength="2"
-<%--				       pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$"  --%>
-				       required>
+				       required
+				       pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$"
+				       placeholder=${course_description_placeholder}
+				       >
 
 				<input type="submit" value${add_course_button}>
 				<p><a href="/controller?command=manage_courses"> ${return_message}</a></p>

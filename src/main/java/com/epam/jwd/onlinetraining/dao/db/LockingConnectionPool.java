@@ -15,6 +15,14 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * com.epam.jwd.onlinetraining.dao.db public class LockingConnectionPool
+ * extends Object
+ * implements ConnectionPool
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class LockingConnectionPool implements ConnectionPool {
 
     private static final Logger LOGGER = LogManager.getLogger(LockingConnectionPool.class);
@@ -22,29 +30,25 @@ public class LockingConnectionPool implements ConnectionPool {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/onlinecourse";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "12345678";
+    private boolean initialized = false;
 
     private final ReentrantLock lock = new ReentrantLock();
     private final Queue<ProxyConnection> availableConnections = new ConcurrentLinkedDeque<>();
     private final List<ProxyConnection> givenAwayConnections = new CopyOnWriteArrayList<>();
 
-    private boolean initialized = false;
 
 
     public static LockingConnectionPool getInstance() {
         return Holder.INSTANCE;
     }
 
-    private static class Holder {
-        private final static LockingConnectionPool INSTANCE = new LockingConnectionPool();
-    }
-
     @Override
-    public  boolean isInitialized() {
+    public boolean isInitialized() {
         return initialized;
     }
 
     @Override
-    public  boolean init() {
+    public boolean init() {
         lock.lock();
         try {
             if (!initialized) {
@@ -61,7 +65,7 @@ public class LockingConnectionPool implements ConnectionPool {
 
 
     @Override
-    public  boolean shutDown() {
+    public boolean shutDown() {
         lock.lock();
         try {
             if (initialized) {
@@ -77,7 +81,7 @@ public class LockingConnectionPool implements ConnectionPool {
     }
 
     @Override
-    public  Connection takeConnection() throws InterruptedException {
+    public Connection takeConnection() throws InterruptedException {
         final ProxyConnection connection;
         lock.lock();
         try {
@@ -94,7 +98,7 @@ public class LockingConnectionPool implements ConnectionPool {
 
     @Override
     @SuppressWarnings("SuspiciousMethodCalls")
-    public  void returnConnection(Connection connection) {
+    public void returnConnection(Connection connection) {
         lock.lock();
         try {
             if (givenAwayConnections.remove(connection)) {
@@ -115,6 +119,7 @@ public class LockingConnectionPool implements ConnectionPool {
             LOGGER.error("couldn't register drivers", e);
         }
     }
+
     private void initializeConnections(int amount, boolean failOnConnectionException) {
         try {
             for (int i = 0; i < amount; i++) {
@@ -162,6 +167,10 @@ public class LockingConnectionPool implements ConnectionPool {
         } catch (SQLException e) {
             LOGGER.error("Could not close connection", e);
         }
+    }
+
+    private static class Holder {
+        private final static LockingConnectionPool INSTANCE = new LockingConnectionPool();
     }
 
 }

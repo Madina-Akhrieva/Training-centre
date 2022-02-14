@@ -11,12 +11,22 @@ import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
 
 import java.util.List;
 
+/**
+ * com.epam.jwd.onlinetraining.controller.command.coursecomamnd public enum ShowEditCourseCommand
+ * extends Enum<ShowEditCourseCommand>
+ * implements Command
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public enum ShowEditCourseCommand implements Command {
     INSTANCE(ServiceFactory.simple().serviceFor(Course.class),
             RequestFactory.getInstance(), PropertyContext.instance());
 
     private static final String COURSES_ATTRIBUTE_NAME = "courses";
     private static final String MAIN_PAGE = "page.edit_course";
+    private static final String INDEX_JSP_PATH = "page.index";
+
 
     private final EntityService<Course> service;
     private final RequestFactory requestFactory;
@@ -30,9 +40,14 @@ public enum ShowEditCourseCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        final List<Course> courses = service.findAll();
+        try {
+            final List<Course> courses = service.findAll();
+            request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, courses);
+            return requestFactory.createForwardResponse(propertyContext.get(MAIN_PAGE));
+        } catch (Exception exception) {
+            return requestFactory.createRedirectResponse(propertyContext.get(INDEX_JSP_PATH));
+        }
 
-        request.addAttributeToJsp(COURSES_ATTRIBUTE_NAME, courses);
-        return requestFactory.createForwardResponse(propertyContext.get(MAIN_PAGE));
+
     }
 }

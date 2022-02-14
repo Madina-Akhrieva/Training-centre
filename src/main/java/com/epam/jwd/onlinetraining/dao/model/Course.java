@@ -3,6 +3,14 @@ package com.epam.jwd.onlinetraining.dao.model;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * com.epam.jwd.onlinetraining.dao.model public class Course
+ * extends Object
+ * implements Entity
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class Course implements Entity {
 
     private Long id;

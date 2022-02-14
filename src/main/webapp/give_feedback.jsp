@@ -25,6 +25,10 @@
 				<h5>${feedback_title}</h5>
 				<c:choose>
 
+					<c:when test="${not empty sessionScope.emptyInputsMessage}">
+						<p style="color:red; text-align: center">${sessionScope['emptyInputsMessage']}</p>
+						${sessionScope.remove('emptyInputsMessage')}
+					</c:when>
 					<c:when test="${not empty sessionScope.wrongFeedbackAttribute}">
 						<h6 style="color:red; text-align: center">${sessionScope['wrongFeedbackAttribute']}</h6>
 						${sessionScope.remove('wrongFeedbackAttribute')}
@@ -41,8 +45,11 @@
 			value="/controller?command=send_feedback&&course_id=${sessionScope['course_id']}&&user_id
 			=${sessionScope['user_id']}&&task_id=${sessionScope['task_id']}"/>" method="post">
 
-				<input name="feedback" style="width: 100%; text-align: left; height: 45%";
-				   placeholder=${feedback_placeholder}/>
+				<input name="feedback" style="width: 100%; text-align: left; height: 45%"
+				       required
+				       placeholder=${feedback_placeholder}
+
+				/>
 
 
 				<button type="submit" class="btn">${send_feedback_button}</button>

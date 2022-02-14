@@ -24,6 +24,10 @@
 					<div class="col">
 						<h5><b>${complete_task_text}</b></h5>
 						<c:choose>
+							<c:when test="${not empty sessionScope.emptyInputsMessage}">
+								<p style="color:red; text-align: center">${sessionScope['emptyInputsMessage']}</p>
+								${sessionScope.remove('emptyInputsMessage')}
+							</c:when>
 							<c:when test="${not empty sessionScope.wrongLinkAttribute}">
 								<h6 style="color:red; text-align: center">${sessionScope['wrongLinkAttribute']}</h6>
 								${sessionScope.remove('wrongLinkAttribute')}
@@ -43,7 +47,9 @@
 			=${sessionScope.account.id}&task_id=${sessionScope['task_id']}"/>" method="post" >
 				<input name="answer"
 				       pattern = "(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"
-				       placeholder=${link_placeholder} />
+				       required
+				       placeholder=${link_placeholder}
+				/>
 				<button type="submit"
 				        class="btn">${complete_task_text}</button>
 			</form>

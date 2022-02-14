@@ -6,10 +6,20 @@ import com.epam.jwd.onlinetraining.controller.command.common.CommandRequest;
 import com.epam.jwd.onlinetraining.controller.command.common.CommandResponse;
 import com.epam.jwd.onlinetraining.controller.command.common.PropertyContext;
 
+/**
+ * com.epam.jwd.onlinetraining.controller.command.logincommand public enum ShowLoginPageCommand
+ * extends Enum<ShowLoginPageCommand>
+ * implements Command
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public enum ShowLoginPageCommand implements Command {
     INSTANCE(RequestFactory.getInstance(), PropertyContext.instance());
 
     private static final String LOGIN_PAGE = "page.login";
+    private static final String INDEX_JSP_PATH = "page.index";
+
 
     private final RequestFactory requestFactory;
     private final PropertyContext propertyContext;
@@ -21,7 +31,11 @@ public enum ShowLoginPageCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        return requestFactory.createForwardResponse(propertyContext.get(LOGIN_PAGE));
+        try {
+            return requestFactory.createForwardResponse(propertyContext.get(LOGIN_PAGE));
+        } catch (Exception exception) {
+            return requestFactory.createRedirectResponse(propertyContext.get(INDEX_JSP_PATH));
+        }
     }
 }
 

@@ -11,6 +11,7 @@ import com.epam.jwd.onlinetraining.service.api.AccountService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
 import com.epam.jwd.onlinetraining.service.api.UserService;
 import com.epam.jwd.onlinetraining.service.exception.AccountWithSuchEmailExists;
+import com.epam.jwd.onlinetraining.service.exception.EmptyInputException;
 import com.epam.jwd.onlinetraining.service.exception.WrongFirstNameException;
 import com.epam.jwd.onlinetraining.service.exception.WrongLastNameException;
 import com.epam.jwd.onlinetraining.service.exception.WrongMailException;
@@ -23,6 +24,14 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+/**
+ * com.epam.jwd.onlinetraining.controller.command.logincommand public enum SignupCommand
+ * extends Enum<SignupCommand>
+ * implements Command
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public enum SignupCommand implements Command {
     INSTANCE(ServiceFactory.simple().accountService(), ServiceFactory.simple().userService(), RequestFactory.getInstance(), PropertyContext.instance());
 
@@ -51,6 +60,8 @@ public enum SignupCommand implements Command {
     private static final String WRONG_PHONE_MESSAGE_TEXT = "Phone is not suitable ♥";
     private static final String WRONG_LASTNAME_MESSAGE_TEXT = "Lastname is not suitable ♥";
     private static final String WRONG_FIRSTNAME_MESSAGE_TEXT = "Firstname is not suitable ♥";
+    private static final String EMPTY_INPUTS_ATTRIBUTE = "emptyInputsMessage";
+    private static final Object EMPTY_INPUTS_MESSAGE_TEXT = "None input is allowed to be empty!";
 
     private final AccountService accountService;
     private final UserService userService;
@@ -113,7 +124,17 @@ public enum SignupCommand implements Command {
             request.addToSession(WRONG_LASTNAME_ATTRIBUTE, WRONG_LASTNAME_MESSAGE_TEXT);
             return requestFactory.createRedirectResponse(propertyContext.get(LOGIN_JSP_PATH));
         } catch (WrongPhoneLength wrongPhoneLength) {
-            wrongPhoneLength.printStackTrace();
+            LOGGER.warn("Wrong phone exception");
+            request.addAttributeToJsp(WRONG_PHONE_ATTRIBUTE, WRONG_PHONE_MESSAGE_TEXT);
+            request.addToSession(WRONG_PHONE_ATTRIBUTE, WRONG_PHONE_MESSAGE_TEXT);
+            return requestFactory.createRedirectResponse(propertyContext.get(LOGIN_JSP_PATH));
+        } catch (EmptyInputException e) {
+            LOGGER.warn("Empty inputs exception");
+            request.addAttributeToJsp(EMPTY_INPUTS_ATTRIBUTE, EMPTY_INPUTS_MESSAGE_TEXT);
+            request.addToSession(EMPTY_INPUTS_ATTRIBUTE, EMPTY_INPUTS_MESSAGE_TEXT);
+            return requestFactory.createRedirectResponse(propertyContext.get(LOGIN_JSP_PATH));
+        } catch (Exception exception) {
+            return requestFactory.createRedirectResponse(propertyContext.get(INDEX_JSP_PATH));
         }
         request.addAttributeToJsp(SUCCESSFUL_SIGNUP_ATTRIBUTE, SUCCESSFUL_SIGNUP_MESSAGE_TEXT);
         request.addToSession(SUCCESSFUL_SIGNUP_ATTRIBUTE, SUCCESSFUL_SIGNUP_MESSAGE_TEXT);

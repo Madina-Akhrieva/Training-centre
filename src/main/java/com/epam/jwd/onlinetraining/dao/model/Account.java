@@ -5,6 +5,14 @@ import java.util.Objects;
 import static com.epam.jwd.onlinetraining.dao.model.Role.STUDENT;
 import static com.epam.jwd.onlinetraining.dao.model.Role.valueOf;
 
+/**
+ * com.epam.jwd.onlinetraining.dao.model public class Account
+ * extends Object
+ * implements Entity
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class Account implements Entity {
 
     private Long id;

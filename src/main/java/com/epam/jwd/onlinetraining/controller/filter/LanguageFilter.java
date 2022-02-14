@@ -12,6 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+ * com.epam.jwd.onlinetraining.controller.filter @WebFilter(urlPatterns = "/*")
+ * public class LanguageFilter
+ * extends Object
+ * implements Filter
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 @WebFilter(urlPatterns = "/*")
 public class LanguageFilter implements Filter {
 

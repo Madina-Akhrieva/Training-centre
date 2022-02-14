@@ -11,18 +11,33 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * com.epam.jwd.onlinetraining.dao.core public final class MentorDaoImpl
+ * extends CommonDao<Mentor>
+ * implements MentorDao
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public final class MentorDaoImpl extends CommonDao<Mentor> implements MentorDao {
     private static final Logger LOGGER = LogManager.getLogger(MentorDaoImpl.class);
-
+    private static final String MENTOR_TABLE_NAME = "mentor";
+    private static final String ID_FIELD_NAME = "id";
+    private static final String EXPERIENCE_FIELD_NAME = "experience";
+    private static final String POSITION_FIELD_NAME = "position";
+    private static final String PEN_NAME_FIELD_NAME = "pen_name";
     private static final List<String> FIELDS = Arrays.asList(
             "id", "experience", "position", "pen_name"
     );
 
-    public static final String MENTOR_TABLE_NAME = "mentor";
-    public static final String ID_FIELD_NAME = "id";
-    public static final String EXPERIENCE_FIELD_NAME = "experience";
-    public static final String POSITION_FIELD_NAME = "position";
-    public static final String PEN_NAME_FIELD_NAME = "pen_name";
+    public static MentorDao getInstance() {
+        return Holder.INSTANCE;
+    }
+
+    @Override
+    public Mentor create(Mentor entity) {
+        return null;
+    }
 
     protected MentorDaoImpl(ConnectionPool pool) {
         super(pool);
@@ -53,19 +68,10 @@ public final class MentorDaoImpl extends CommonDao<Mentor> implements MentorDao 
         );
     }
 
-
-    public static MentorDao getInstance() {
-        return Holder.INSTANCE;
-    }
-
-
-    @Override
-    public Mentor create(Mentor entity) {
-        return null;
-    }
-
     private static class Holder {
         public static final MentorDao INSTANCE = new MentorDaoImpl(ConnectionPool.instance());
     }
+
+
 
 }

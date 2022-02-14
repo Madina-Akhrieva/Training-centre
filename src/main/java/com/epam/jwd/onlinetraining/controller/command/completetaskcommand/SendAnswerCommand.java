@@ -9,6 +9,7 @@ import com.epam.jwd.onlinetraining.dao.model.Task;
 import com.epam.jwd.onlinetraining.service.api.CourseService;
 import com.epam.jwd.onlinetraining.service.api.ServiceFactory;
 import com.epam.jwd.onlinetraining.service.api.TaskService;
+import com.epam.jwd.onlinetraining.service.exception.EmptyInputException;
 import com.epam.jwd.onlinetraining.service.exception.WrongLinkException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +17,14 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 
+/**
+ * com.epam.jwd.onlinetraining.controller.command.completetaskcommand public enum SendAnswerCommand
+ * extends Enum<SendAnswerCommand>
+ * implements Command
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public enum SendAnswerCommand implements Command {
     INSTANCE(ServiceFactory.simple().taskService(), RequestFactory.getInstance(), PropertyContext.instance());
     private static final Logger LOGGER = LogManager.getLogger(SendAnswerCommand.class);
@@ -24,6 +33,8 @@ public enum SendAnswerCommand implements Command {
     private static final String USER_ID_REQUEST_PARAM_NAME = "user_id";
     private static final String TASK_ID_REQUEST_PARAM_NAME = "task_id";
     private static final String LINK_ANSWER_REQUEST_PARAM_NAME = "answer";
+    private static final String INDEX_JSP_PATH = "page.index";
+
     private static final String COMPLETE_TASK = "page.add_answer";
     private static final String COURSE_ID_PARAM = "course_id";
     private static final String TASKS_ATTRIBUTE_NAME = "tasks";
@@ -31,6 +42,8 @@ public enum SendAnswerCommand implements Command {
     private static final String WRONG_LINK_MESSAGE = "Check link to answer once more please ♥";
     private static final String SUCCESSFUL_ADD_ATTRIBUTE = "successfulAddMessage";
     private static final String SUCCESSFUL_ADD_MESSAGE_TEXT = "Answer is successfully added ♥";
+    private static final String EMPTY_INPUTS_ATTRIBUTE = "emptyInputsMessage";
+    private static final Object EMPTY_INPUTS_MESSAGE_TEXT = "None input is allowed to be empty!";
 
     private final TaskService taskService;
     private final RequestFactory requestFactory;
@@ -44,6 +57,7 @@ public enum SendAnswerCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
+
         try {
             final long courseId = Long.parseLong(request.getParameter(COURSE_ID_REQUEST_PARAM_NAME));
             final long userId = Long.parseLong(request.getParameter(USER_ID_REQUEST_PARAM_NAME));
@@ -58,6 +72,13 @@ public enum SendAnswerCommand implements Command {
             LOGGER.warn("WrongLinkException is caught");
             request.addToSession(WRONG_LINK_ATTRIBUTE, WRONG_LINK_MESSAGE);
             return requestFactory.createRedirectResponse(propertyContext.get(COMPLETE_TASK));
+        } catch (EmptyInputException e) {
+            LOGGER.warn("Empty inputs exception");
+            request.addAttributeToJsp(EMPTY_INPUTS_ATTRIBUTE, EMPTY_INPUTS_MESSAGE_TEXT);
+            request.addToSession(EMPTY_INPUTS_ATTRIBUTE, EMPTY_INPUTS_MESSAGE_TEXT);
+            return requestFactory.createRedirectResponse(propertyContext.get(COMPLETE_TASK));
+        } catch (Exception exception) {
+            return requestFactory.createRedirectResponse(propertyContext.get(INDEX_JSP_PATH));
         }
         request.addToSession(SUCCESSFUL_ADD_ATTRIBUTE, SUCCESSFUL_ADD_MESSAGE_TEXT);
         return requestFactory.createRedirectResponse(propertyContext.get(COMPLETE_TASK));

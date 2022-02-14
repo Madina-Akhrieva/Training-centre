@@ -3,6 +3,14 @@ package com.epam.jwd.onlinetraining.dao.db;
 import java.sql.Connection;
 import java.util.Objects;
 
+/**
+ * com.epam.jwd.onlinetraining.dao.db public class SimpleTransactionId
+ * extends Object
+ * implements TransactionId
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class SimpleTransactionId implements TransactionId {
 
     private final Connection connection;

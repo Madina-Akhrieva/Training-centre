@@ -19,6 +19,14 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+/**
+ * com.epam.jwd.onlinetraining.dao.db public class ProxyConnection
+ * extends Object
+ * implements Connection
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class ProxyConnection implements Connection {
 
     private final Connection connection;

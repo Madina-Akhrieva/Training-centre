@@ -1,5 +1,12 @@
 package com.epam.jwd.onlinetraining.service.exception;
 
+/**
+ * com.epam.jwd.onlinetraining.service.exception public class WrongMailException
+ * extends Exception
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class WrongMailException extends Exception {
 
     public WrongMailException() {

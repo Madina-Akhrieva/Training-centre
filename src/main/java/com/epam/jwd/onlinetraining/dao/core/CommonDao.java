@@ -23,13 +23,19 @@ import java.util.Optional;
 import static java.lang.String.format;
 import static java.lang.String.join;
 
+/**
+ * com.epam.jwd.onlinetraining.dao.core public abstract class CommonDao<T extends Entity>
+ * extends Object
+ * implements EntityDao<T>
+ *
+ * @param <T>
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public abstract class CommonDao<T extends Entity> implements EntityDao<T> {
 
     private static final Logger LOGGER = LogManager.getLogger(CommonDao.class);
-
     protected static final String SPACE = " ";
-
-
     protected static final String SELECT_ALL_FROM = "select %s from ";
     protected static final String WHERE_FIELD = "where %s = ?";
 

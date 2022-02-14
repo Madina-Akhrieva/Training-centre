@@ -6,6 +6,7 @@ import com.epam.jwd.onlinetraining.dao.db.TransactionManager;
 import com.epam.jwd.onlinetraining.dao.model.Course;
 import com.epam.jwd.onlinetraining.dao.model.User;
 import com.epam.jwd.onlinetraining.service.api.UserService;
+import com.epam.jwd.onlinetraining.service.exception.EmptyInputException;
 import com.epam.jwd.onlinetraining.service.exception.WrongFirstNameException;
 import com.epam.jwd.onlinetraining.service.exception.WrongLastNameException;
 import com.epam.jwd.onlinetraining.service.exception.WrongPhoneException;
@@ -17,6 +18,14 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * com.epam.jwd.onlinetraining.service.core public class SimpleUserService
+ * extends Object
+ * implements UserService
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class SimpleUserService implements UserService {
 
     private static final Logger LOGGER = LogManager.getLogger(SimpleUserService.class);
@@ -51,11 +60,7 @@ public class SimpleUserService implements UserService {
     }
 
     @Override
-    public Optional<User> register(Long id, String phone, String firstname, String lastname) throws WrongFirstNameException, WrongPhoneException, WrongLastNameException, WrongPhoneLength {
-
-        if (phone == null || firstname == null || lastname == null) {
-            return Optional.empty();
-        }
+    public Optional<User> register(Long id, String phone, String firstname, String lastname) throws WrongFirstNameException, WrongPhoneException, WrongLastNameException, WrongPhoneLength, EmptyInputException {
         userValidator.validateFirstname(firstname);
         userValidator.validateLastname(lastname);
         userValidator.validatePhone(phone);

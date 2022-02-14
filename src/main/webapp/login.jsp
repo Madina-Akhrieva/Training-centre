@@ -31,13 +31,15 @@
 	<div class="form-container sign-up-container">
 		<form name="login-form" action="/controller?command=login" method="post">
 			<h1>${signTitle}</h1>
-			<c:if test="${not empty requestScope.errorLoginPassMessage}">
-				<p style="color:red">${requestScope.errorLoginPassMessage}</p>
-			</c:if>
-			<input type="email" placeholder=${mailPlaceholder} name="email" maxlength="50"
-			       minlength="7" required=""/>
-			<input type="password" placeholder=${passwordPlaceholder} name="password" pattern="^[a-zA-Z0-9]+$"
-			       maxlength="17" minlength="7" required=""/>
+
+			<input type="email" placeholder=${mailPlaceholder} name="email"
+<%--			       maxlength="50"--%>
+<%--			       minlength="7" required=""--%>
+			/>
+			<input type="password" placeholder=${passwordPlaceholder} name="password"
+<%--			       pattern="^[a-zA-Z0-9]+$"--%>
+<%--			       maxlength="17" minlength="7" required=""--%>
+			/>
 			<button type="submit">${signInButton}</button>
 		</form>
 	</div>
@@ -45,6 +47,14 @@
 		<form name="signup-form" action="/controller?command=signup" method="post">
 			<h1>${createAccount}</h1>
 			<c:choose>
+				<c:when test="${not empty sessionScope.errorLoginPassMessage}">
+					<p style="color:red">${sessionScope['errorLoginPassMessage']}</p>
+					${sessionScope.remove('errorLoginPassMessage')}
+				</c:when>
+				<c:when test="${not empty sessionScope.emptyInputsMessage}">
+					<p style="color:red">${sessionScope['emptyInputsMessage']}</p>
+					${sessionScope.remove('emptyInputsMessage')}
+				</c:when>
 				<c:when test="${not empty sessionScope.wrongPasswordMessage}">
 					<p style="color:red">${sessionScope['wrongPasswordMessage']}</p>
 					${sessionScope.remove('wrongPasswordMessage')}
@@ -76,28 +86,37 @@
 					<p style="color:red">${sessionScope['errorLoginPassMessage']}</p>
 					${sessionScope.remove('errorLoginPassMessage')}
 				</c:when>
+
 				<c:otherwise>
 					<p style="color:#1aff00">${sessionScope['successfulSignupMessage']}</p>
 				</c:otherwise>
 			</c:choose>
 			<input id="signup-input" type="email" placeholder=${mailPlaceholder}
-			       maxlength="50" minlength="7" required=""/>
-			<input id="password-input" type="password" maxlength="17" minlength="7" required=""
+			       maxlength="50" minlength="7" name="email" />
+			<input id="password-input" type="password"
+<%--			       maxlength="17" minlength="7"--%>
+<%--			       required=""--%>
+<%--			       pattern="^[a-zA-Z0-9]+$"--%>
 			       placeholder=${passwordPlaceholder}
-			       pattern="^[a-zA-Z0-9]+$"
 			       name="password"/>
 			<input id="signup-input" type="text" placeholder=${firstnamePlaceholder}
-			       name="firstname" maxlength="50" minlength="2"
+			       name="firstname"
+<%--			       maxlength="50" minlength="2"--%>
 <%--			       pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$"--%>
-			       required=""/>
+<%--			       required=""--%>
+			/>
 			<input id="signup-input" type="text" placeholder=${lastnamePlaceholder}
-			       name="lastname" maxlength="50" minlength="2"
+			       name="lastname"
+<%--			       maxlength="50" minlength="2"--%>
 <%--			       pattern="^[a-zA-Z][0-9a-zA-Z .,'-]*$"--%>
-			       required=""/>
+<%--			       required=""--%>
+			/>
 			<input id="signup-input" type="tel" name="phone" placeholder=${phonePlaceholder}
-			       name="phone" maxlength="13" minlength="13"
+			       name="phone"
+<%--			       maxlength="13" minlength="13"--%>
 <%--			       pattern="[\+]375\d{2}\d{3}\d{2}\d{2}"--%>
-			       required=""/>
+<%--			       required=""--%>
+			/>
 			<button type="submit">${signUpButton}</button>
 		</form>
 	</div>

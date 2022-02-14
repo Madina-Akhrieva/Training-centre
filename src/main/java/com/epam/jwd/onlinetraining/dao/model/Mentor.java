@@ -2,6 +2,13 @@ package com.epam.jwd.onlinetraining.dao.model;
 
 import java.util.Objects;
 
+/**
+ * com.epam.jwd.onlinetraining.dao.model public class Mentor
+ * extends User
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class Mentor extends User {
 
     private int experience;

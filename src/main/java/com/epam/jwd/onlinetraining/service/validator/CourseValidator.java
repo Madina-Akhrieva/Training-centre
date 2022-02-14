@@ -1,10 +1,19 @@
 package com.epam.jwd.onlinetraining.service.validator;
+
+import com.epam.jwd.onlinetraining.service.exception.EmptyInputException;
 import com.epam.jwd.onlinetraining.service.exception.WrongDescriptionException;
 import com.epam.jwd.onlinetraining.service.exception.WrongTitleException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * com.epam.jwd.onlinetraining.service.validator public class CourseValidator
+ * extends Object
+ *
+ * @author Madina Akhrieva
+ * @version 1.0
+ */
 public class CourseValidator {
     public static final String TITLE_CONTAINS_FORBIDDEN_CHARACTERS_MESSAGE = "Title contains forbidden characters";
     private static final String DESCRIPTION_CONTAINS_FORBIDDEN_SYMBOLS = "Description contains forbidden symbols";
@@ -18,8 +27,17 @@ public class CourseValidator {
             Pattern.compile("^[a-zA-Z][0-9a-zA-Z .,'-]*$", Pattern.CASE_INSENSITIVE);
     private static final Pattern VALID_DESCRIPTION_REGEX =
             Pattern.compile("^[a-zA-Z][0-9a-zA-Z .,'-]*$", Pattern.CASE_INSENSITIVE);
+    public static final String EMPTY_STRING = "";
+    public static final String EMPTY_INPUT_EXCEPTION_MESSAGE = "Title Inputs are empty";
 
-    public void validateTitle(String title) throws WrongTitleException {
+    public static CourseValidator getInstance() {
+        return CourseValidator.Holder.INSTANCE;
+    }
+
+    public void validateTitle(String title) throws WrongTitleException, EmptyInputException {
+        if (title == EMPTY_STRING) {
+            throw new EmptyInputException(EMPTY_INPUT_EXCEPTION_MESSAGE);
+        }
         if (title.length() < MIN_LENGTH) {
             throw new WrongTitleException(MIN_TITLE_LENGTH_EXCEPTION_MESSAGE);
         }
@@ -31,13 +49,16 @@ public class CourseValidator {
         }
     }
 
-    public static boolean matchTitlePattern(String title) {
+    public boolean matchTitlePattern(String title) {
         Matcher matcher = VALID_TITLE_REGEX.matcher(title);
         return matcher.find();
     }
 
 
-    public void validateDescription(String description) throws WrongDescriptionException {
+    public void validateDescription(String description) throws WrongDescriptionException, EmptyInputException {
+        if (description == "") {
+            throw new EmptyInputException(EMPTY_INPUT_EXCEPTION_MESSAGE);
+        }
         if (description.length() < MIN_LENGTH) {
             throw new WrongDescriptionException(MIN_DESCRIPTION_LENGTH_EXCEPTION_MESSAGE);
         }
@@ -49,15 +70,10 @@ public class CourseValidator {
         }
     }
 
-    public static boolean matchDescriptionPattern(String description) {
+    public boolean matchDescriptionPattern(String description) {
         Matcher matcher = VALID_DESCRIPTION_REGEX.matcher(description);
         return matcher.find();
     }
-
-    public static CourseValidator getInstance() {
-        return CourseValidator.Holder.INSTANCE;
-    }
-
 
     private static class Holder {
         public static final CourseValidator INSTANCE = new CourseValidator();
