@@ -253,9 +253,4 @@ public class TaskDaoImpl extends CommonDao<Task> implements TaskDao {
         public static final TaskDao INSTANCE = new TaskDaoImpl(ConnectionPool.instance());
     }
 
-    @Override
-    public List<Task> read() {
-        return null;
-    }
-
 }

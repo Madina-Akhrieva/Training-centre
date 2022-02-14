@@ -60,8 +60,8 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
             return executePreparedForGenericEntity(SELECT_MENTOR_ID_FROM_COURSE,
                     this::extractMentorId,
                     st -> st.setLong(1, id));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (InterruptedException interruptedException) {
+            LOGGER.warn("InterruptedException is caught");
         }
         return Optional.empty();
     }
@@ -83,11 +83,10 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
                 course = new Course(id, title, learning_language, description);
             }
 
-        } catch (InterruptedException e) {
-            LOGGER.warn("exception", e);
-            e.printStackTrace();
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            LOGGER.warn("SQLException is caught");
+        } catch (InterruptedException interruptedException) {
+            LOGGER.warn("InterruptedException is caught");
         }
 
         return course;
@@ -108,9 +107,9 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
             return rowUpdated;
 
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            LOGGER.warn("SQLException is caught");
         } catch (InterruptedException interruptedException) {
-            interruptedException.printStackTrace();
+            LOGGER.warn("InterruptedException is caught");
         }
         return false;
     }
@@ -127,9 +126,9 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
             return rowUpdated;
 
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            LOGGER.warn("SQLException is caught");
         } catch (InterruptedException interruptedException) {
-            interruptedException.printStackTrace();
+            LOGGER.warn("InterruptedException is caught");
         }
         return false;
     }
@@ -148,54 +147,14 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
             if (resultSet.next()) {
                 course.setId(resultSet.getLong(1));
             }
-        } catch (InterruptedException e) {
-            LOGGER.warn("exception", e);
-            e.printStackTrace();
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            LOGGER.warn("SQLException is caught");
+        } catch (InterruptedException interruptedException) {
+            LOGGER.warn("InterruptedException is caught");
         }
-
         return course;
     }
 
-
-    @Override
-    protected String getTableName() {
-        return COURSE;
-    }
-
-    @Override
-    protected List<String> getFields() {
-        return FIELDS;
-    }
-
-    @Override
-    protected String getIdFieldName() {
-        return ID_FIELD_NAME;
-    }
-
-
-    @Override
-    protected Course extractResult(ResultSet rs) throws SQLException {
-        return new Course(
-                rs.getLong(ID_FIELD_NAME),
-                rs.getString(TITLE_FIELD_NAME),
-                rs.getString(LEARNING_LANGUAGE_COLUMN_NAME),
-                rs.getString(DESCRIPTION_FIELD_NAME)
-        );
-    }
-
-
-
-    private long extractMentorId(ResultSet rs) throws EntityExtractionFailedException {
-        try {
-            return rs.getLong("mentor_id");
-        } catch (SQLException e) {
-            LOGGER.error("sql exception occurred extracting entity from ResultSet", e);
-            throw new EntityExtractionFailedException("couldn't extract entity", e);
-        }
-    }
-
     private static class Holder {
         public static final CourseDao INSTANCE = new CourseDaoImpl(ConnectionPool.instance());
     }
@@ -228,7 +187,6 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
     }
 
 
-
     private long extractMentorId(ResultSet rs) throws EntityExtractionFailedException {
         try {
             return rs.getLong("mentor_id");
@@ -236,10 +194,6 @@ public final class CourseDaoImpl extends CommonDao<Course> implements CourseDao 
             LOGGER.error("sql exception occurred extracting entity from ResultSet", e);
             throw new EntityExtractionFailedException("couldn't extract entity", e);
         }
-    }
-
-    private static class Holder {
-        public static final CourseDao INSTANCE = new CourseDaoImpl(ConnectionPool.instance());
     }
 
 
